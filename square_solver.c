@@ -1,9 +1,10 @@
 #include <math.h>
-#include <stdio.h>
+
+#include "square_solver.h"
 
 #define EPS 1e-14
 
-signed char solveLinear(double B, double C, double *x) {
+static signed char solveLinear(double B, double C, double *x) {
     if (fabs(B) < EPS) return fabs(C) < EPS ? -1 : 0;
     *x = -C/B;
     return 1;
