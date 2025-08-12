@@ -2,15 +2,13 @@
 
 #include "square_solver.h"
 
-#define WRONG_INPUT_MESSAGE "Wrong input\n"
-
 int main(void) {
     double a = 0, b = 0, c = 0;
     
     printf("ax^2 + bx + c = 0\n");
     printf("Enter a, b and c:\n");
     if (scanf("%lf %lf %lf", &a, &b, &c) != 3) {
-        printf(WRONG_INPUT_MESSAGE);
+        printf("Wrong input\n");
         return -1;
     }
     printf("Solving...\n");
