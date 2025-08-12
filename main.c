@@ -16,18 +16,15 @@ int main(void) {
     printf("Solving...\n");
 
     double x1 = 0, x2 = 0;
-    int count = solveSquareEquation(a, b, c, &x1, &x2);
-    if (count == -1) {
+    RootCount count = solveSquareEquation(a, b, c, &x1, &x2);
+    if (count == INF) {
         printf("x is any real number\n");
-    } else if (count == 0) {
+    } else if (count == ZERO) {
         printf("x is not real number\n");
-    } else if (count == 1) {
+    } else if (count == ONE) {
         printf("x = %lf\n", x1);
-    } else if (count == 2) {
+    } else if (count == TWO) {
         printf("x1 = %lf\nx2 = %lf\n", x1, x2);
-    } else {
-        printf("Some error\n");
-        return -2;
     }
     return 0;
 }
