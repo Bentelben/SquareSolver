@@ -5,18 +5,18 @@
 #define WRONG_INPUT_MESSAGE "Wrong input\n"
 
 int main(void) {
-    double A, B, C;
+    double a = 0, b = 0, c = 0;
     
-    printf("Ax^2 + Bx + C = 0\n");
-    printf("Enter A, B and C:\n");
-    if (scanf("%lf %lf %lf", &A, &B, &C) != 3) {
+    printf("ax^2 + bx + c = 0\n");
+    printf("Enter a, b and c:\n");
+    if (scanf("%lf %lf %lf", &a, &b, &c) != 3) {
         printf(WRONG_INPUT_MESSAGE);
         return -1;
     }
     printf("Solving...\n");
 
-    double x1, x2;
-    signed char count = solveSquareEquation(A, B, C, &x1, &x2);
+    double x1 = 0, x2 = 0;
+    int count = solveSquareEquation(a, b, c, &x1, &x2);
     if (count == -1) {
         printf("x is any real number\n");
     } else if (count == 0) {

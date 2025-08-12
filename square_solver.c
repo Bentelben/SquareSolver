@@ -4,37 +4,37 @@
 
 #define EPS 1e-14
 
-static signed char solveLinear(double B, double C, double *x) {
-    if (fabs(B) < EPS) return fabs(C) < EPS ? -1 : 0;
-    *x = -C/B;
+static int solveLinear(double b, double c, double *x) {
+    if (fabs(b) < EPS) return fabs(c) < EPS ? -1 : 0;
+    *x = -c/b;
     return 1;
 }
 
-signed char solveSquareEquation(double A, double B, double C, double *x1, double *x2) {
-    // Bx + C = 0
-    if (fabs(A) < EPS) return solveLinear(B, C, x1);
-    // Ax^2 + C = 0
-    if (fabs(B) < EPS) {
-        if (fabs(C) < EPS) {
+int solveSquareEquation(double a, double b, double c, double *x1, double *x2) {
+    // bx + c = 0
+    if (fabs(a) < EPS) return solveLinear(b, c, x1);
+    // ax^2 + c = 0
+    if (fabs(b) < EPS) {
+        if (fabs(c) < EPS) {
             *x1 = 0;
             return 1;
-        } else if ((C > 0) != (A > 0)) {
-            *x1 = sqrt(-C/A);
+        } else if ((c > 0) != (a > 0)) {
+            *x1 = sqrt(-c/a);
             *x2 = -*x1;
             return 2;
         } else return 0;
     }
-    // Ax^2 + Bx + C = 0
-    double D = B*B - 4.*A*C;
-    if (fabs(D) < EPS) {
-        *x1 = -B/(2.*A);
+    // ax^2 + bx + c = 0
+    double d = b*b - 4*a*c;
+    if (fabs(d) < EPS) {
+        *x1 = -b/(2*a);
         return 1;
-    } else if (D < 0) {
+    } else if (d < 0) {
         return 0;
     } else {
-        D = sqrt(D);
-        *x1 = (-B - D)/(2.*A);
-        *x2 = (-B + D)/(2.*A);
+        d = sqrt(d);
+        *x1 = (-b - d)/(2*a);
+        *x2 = (-b + d)/(2*a);
         return 2;
     }
     return 0;
