@@ -18,17 +18,16 @@ int main(void) {
     double x1, x2;
     signed char count = solveSquareEquation(A, B, C, &x1, &x2);
     if (count == -1) {
-        printf("x is any real number");
+        printf("x is any real number\n");
     } else if (count == 0) {
-        printf("x is not real number");
+        printf("x is not real number\n");
     } else if (count == 1) {
-        printf("x = %lf", x1);
+        printf("x = %lf\n", x1);
     } else if (count == 2) {
-        printf("x1 = %lf\nx2 = %lf", x1, x2);
+        printf("x1 = %lf\nx2 = %lf\n", x1, x2);
     } else {
         printf("Some error\n");
         return -2;
     }
-    printf("\n");
     return 0;
 }
