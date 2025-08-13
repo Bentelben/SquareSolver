@@ -1,5 +1,5 @@
-#ifndef SQUARE_SOLVER_H
-#define SQUARE_SOLVER_H
+#ifndef SQUARE_SOLVER_HPP
+#define SQUARE_SOLVER_HPP
 
 enum RootCount {INF, ZERO, ONE, TWO};
 

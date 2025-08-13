@@ -1,6 +1,6 @@
 #include <math.h>
 
-#include "square_solver.h"
+#include "square_solver.hpp"
 
 static const double EPS = 1e-14;
 

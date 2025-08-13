@@ -4,8 +4,8 @@ COMPILER_FLAGS := -D _DEBUG -ggdb3 -std=c++17 -O0 -Wall -Wextra -Weffc++ -Waggre
 OUT := a.out
 OBJECT_DIR := objects/
 
-SOURCE_EXT := c
-HEADER_EXT := h
+SOURCE_EXT := cpp
+HEADER_EXT := hpp
 
 source_files := $(wildcard *.$(SOURCE_EXT))
 header_files := $(wildcard *.$(HEADER_EXT))

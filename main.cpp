@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "square_solver.h"
+#include "square_solver.hpp"
 
 int main(void) {
     double a = 0, b = 0, c = 0;
