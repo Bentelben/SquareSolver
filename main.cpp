@@ -15,14 +15,23 @@ int main() {
 
     double x1 = 0, x2 = 0;
     const RootCount count = solveSquareEquation(a, b, c, &x1, &x2);
-    if (count == INF) {
-        printf("x is any real number\n");
-    } else if (count == ZERO) {
-        printf("x is not real number\n");
-    } else if (count == ONE) {
-        printf("x = %lf\n", x1);
-    } else if (count == TWO) {
-        printf("x1 = %lf\nx2 = %lf\n", x1, x2);
+
+    switch (count) {
+        case INF:
+            printf("x is any real number\n");
+            break;
+        case ZERO:
+            printf("x is not real number\n");
+            break;
+        case ONE:
+            printf("x = %lf\n", x1);
+            break;
+        case TWO:
+            printf("x1 = %lf\nx2 = %lf\n", x1, x2);
+            break;
+        default:
+            printf("Error\n");
+            break;
     }
     return 0;
 }
