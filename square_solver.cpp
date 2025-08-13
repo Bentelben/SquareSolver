@@ -9,21 +9,11 @@ static RootCount solveLinear(const double b, const double c, double *const x) {
     return ONE;
 }
 
-RootCount solveSquareEquation(const double a, const double b, const double c, double *const x1, double *const x2) {
-    // bx + c = 0
+RootCount solveSquareEquation(const double a, double b, double c, double *const x1, double *const x2) {
     if (isZero(a)) return solveLinear(b, c, x1);
-    // ax^2 + c = 0
-    if (isZero(b)) {
-        if (isZero(c)) {
-            *x1 = 0;
-            return ONE;
-        } else if ((c > 0) != (a > 0)) {
-            *x1 = sqrt(-c/a);
-            *x2 = -*x1;
-            return TWO;
-        } else return ZERO;
-    }
-    // ax^2 + bx + c = 0
+    if (isZero(b)) b = 0;
+    if (isZero(c)) c = 0;
+
     const double discriminant = b*b - 4*a*c;
     if (isZero(discriminant)) {
         *x1 = -b/(2*a);
@@ -38,5 +28,3 @@ RootCount solveSquareEquation(const double a, const double b, const double c, do
     }
     return ZERO;
 }
-
-
