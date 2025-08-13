@@ -1,21 +1,20 @@
 #include <math.h>
 
 #include "square_solver.hpp"
-
-static const double EPS = 1e-14;
+#include "double_comparator.hpp"
 
 static RootCount solveLinear(const double b, const double c, double *const x) {
-    if (fabs(b) < EPS) return fabs(c) < EPS ? INF : ZERO;
+    if (isZero(b)) return isZero(c) ? INF : ZERO;
     *x = -c/b;
     return ONE;
 }
 
 RootCount solveSquareEquation(const double a, const double b, const double c, double *const x1, double *const x2) {
     // bx + c = 0
-    if (fabs(a) < EPS) return solveLinear(b, c, x1);
+    if (isZero(a)) return solveLinear(b, c, x1);
     // ax^2 + c = 0
-    if (fabs(b) < EPS) {
-        if (fabs(c) < EPS) {
+    if (isZero(b)) {
+        if (isZero(c)) {
             *x1 = 0;
             return ONE;
         } else if ((c > 0) != (a > 0)) {
@@ -26,7 +25,7 @@ RootCount solveSquareEquation(const double a, const double b, const double c, do
     }
     // ax^2 + bx + c = 0
     const double discriminant = b*b - 4*a*c;
-    if (fabs(discriminant) < EPS) {
+    if (isZero(discriminant)) {
         *x1 = -b/(2*a);
         return ONE;
     } else if (discriminant < 0) {
