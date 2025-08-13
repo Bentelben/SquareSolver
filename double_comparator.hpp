@@ -1,6 +1,6 @@
 #ifndef DOUBLE_COMPARATOR_HPP
 #define DOUBLE_COMPARATOR_HPP
 
-int isZero(double x);
+bool isZero(double x);
 
 #endif
