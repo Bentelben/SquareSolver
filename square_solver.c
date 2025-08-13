@@ -2,7 +2,7 @@
 
 #include "square_solver.h"
 
-#define EPS 1e-14
+static const double EPS = 1e-14;
 
 static RootCount solveLinear(double b, double c, double *x) {
     if (fabs(b) < EPS) return fabs(c) < EPS ? INF : ZERO;
