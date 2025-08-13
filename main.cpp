@@ -2,7 +2,7 @@
 
 #include "square_solver.hpp"
 
-int main(void) {
+int main() {
     double a = 0, b = 0, c = 0;
     
     printf("ax^2 + bx + c = 0\n");
@@ -14,7 +14,7 @@ int main(void) {
     printf("Solving...\n");
 
     double x1 = 0, x2 = 0;
-    RootCount count = solveSquareEquation(a, b, c, &x1, &x2);
+    const RootCount count = solveSquareEquation(a, b, c, &x1, &x2);
     if (count == INF) {
         printf("x is any real number\n");
     } else if (count == ZERO) {

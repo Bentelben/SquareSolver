@@ -3,6 +3,6 @@
 
 enum RootCount {INF, ZERO, ONE, TWO};
 
-RootCount solveSquareEquation(double a, double b, double c, double *x1, double *x2);
+RootCount solveSquareEquation(const double a, const double b, const double c, double *const x1, double *const x2);
 
 #endif

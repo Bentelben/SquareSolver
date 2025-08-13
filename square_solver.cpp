@@ -4,13 +4,13 @@
 
 static const double EPS = 1e-14;
 
-static RootCount solveLinear(double b, double c, double *x) {
+static RootCount solveLinear(const double b, const double c, double *const x) {
     if (fabs(b) < EPS) return fabs(c) < EPS ? INF : ZERO;
     *x = -c/b;
     return ONE;
 }
 
-RootCount solveSquareEquation(double a, double b, double c, double *x1, double *x2) {
+RootCount solveSquareEquation(const double a, const double b, const double c, double *const x1, double *const x2) {
     // bx + c = 0
     if (fabs(a) < EPS) return solveLinear(b, c, x1);
     // ax^2 + c = 0
@@ -25,16 +25,16 @@ RootCount solveSquareEquation(double a, double b, double c, double *x1, double *
         } else return ZERO;
     }
     // ax^2 + bx + c = 0
-    double d = b*b - 4*a*c;
-    if (fabs(d) < EPS) {
+    const double discriminant = b*b - 4*a*c;
+    if (fabs(discriminant) < EPS) {
         *x1 = -b/(2*a);
         return ONE;
-    } else if (d < 0) {
+    } else if (discriminant < 0) {
         return ZERO;
     } else {
-        d = sqrt(d);
-        *x1 = (-b - d)/(2*a);
-        *x2 = (-b + d)/(2*a);
+        const double discriminant_root = sqrt(discriminant);
+        *x1 = (-b - discriminant_root)/(2*a);
+        *x2 = (-b + discriminant_root)/(2*a);
         return TWO;
     }
     return ZERO;
