@@ -32,10 +32,10 @@ void writeOut(const RootCount root_count, const double x1, const double x2) {
             printf("x is not real number\n");
             break;
         case ONE:
-            printf("x = %lf\n", x1);
+            printf("x = %g\n", x1);
             break;
         case TWO:
-            printf("x1 = %lf\nx2 = %lf\n", x1, x2);
+            printf("x1 = %g\nx2 = %g\n", x1, x2);
             break;
         default:
             printf("Error\n");
