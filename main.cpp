@@ -24,9 +24,11 @@ int readIn(double *const a, double *const b, double *const c) {
     return 0;
 }
 
-void writeOut(const RootCount root_count, double x1, double x2) {
+void writeOut(RootCount root_count, double x1, double x2) {
     if (isZero(x1)) x1 = 0;
     if (isZero(x2)) x2 = 0;
+    if (isZero(x1) && isZero(x2)) root_count = ONE;
+
     switch (root_count) {
         case INF:
             printf("x is any real number\n");
