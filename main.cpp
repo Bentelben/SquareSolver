@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "square_solver.hpp"
+#include "double_comparator.hpp"
 
 int readIn(double *a, double *b, double *c);
 void writeOut(RootCount root_count, double x1, double x2);
@@ -23,7 +24,9 @@ int readIn(double *const a, double *const b, double *const c) {
     return 0;
 }
 
-void writeOut(const RootCount root_count, const double x1, const double x2) {
+void writeOut(const RootCount root_count, double x1, double x2) {
+    if (isZero(x1)) x1 = 0;
+    if (isZero(x2)) x2 = 0;
     switch (root_count) {
         case INF:
             printf("x is any real number\n");
