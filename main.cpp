@@ -27,7 +27,7 @@ int readIn(double *const a, double *const b, double *const c) {
 void writeOut(RootCount root_count, double x1, double x2) {
     if (isZero(x1)) x1 = 0;
     if (isZero(x2)) x2 = 0;
-    if (isZero(x1) && isZero(x2)) root_count = ONE;
+    if (root_count == TWO && isZero(x1) && isZero(x2)) root_count = ONE;
 
     switch (root_count) {
         case INF:
