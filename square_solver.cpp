@@ -1,4 +1,5 @@
 #include <math.h>
+#include <assert.h>
 
 #include "square_solver.hpp"
 #include "double_comparator.hpp"
@@ -10,6 +11,9 @@ static RootCount solveLinear(const double b, const double c, double *const x) {
 }
 
 RootCount solveSquareEquation(const double a, const double b, const double c, double *const x1, double *const x2) {
+    assert(x1 != NULL);
+    assert(x2 != NULL);
+
     if (isZero(a)) return solveLinear(b, c, x1);
 
     const double discriminant = b*b - 4*a*c;

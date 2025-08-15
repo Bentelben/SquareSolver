@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <assert.h>
 
 #include "square_solver.hpp"
 #include "double_comparator.hpp"
@@ -15,6 +16,10 @@ int main() {
 }
 
 int readIn(double *const a, double *const b, double *const c) {
+    assert(a != NULL);
+    assert(b != NULL);
+    assert(c != NULL);
+
     printf("ax^2 + bx + c = 0\n");
     printf("Enter a, b and c:\n");
     if (scanf("%lf %lf %lf", a, b, c) != 3) {
