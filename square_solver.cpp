@@ -11,6 +11,9 @@ static RootCount solveLinear(const double b, const double c, double *const x) {
 }
 
 RootCount solveSquareEquation(const double a, const double b, const double c, double *const x1, double *const x2) {
+    assert(!isnan(a));
+    assert(!isnan(b));
+    assert(!isnan(c));
     assert(x1 != NULL);
     assert(x2 != NULL);
 

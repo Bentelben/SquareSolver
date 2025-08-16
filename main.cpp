@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 #include <assert.h>
 
 #include "square_solver.hpp"
@@ -8,7 +9,7 @@ int readIn(double *a, double *b, double *c);
 void writeOut(RootCount root_count, double x1, double x2);
 
 int main() {
-    double a = 0, b = 0, c = 0, x1 = 0, x2 = 0;
+    double a = NAN, b = NAN, c = NAN, x1 = NAN, x2 = NAN;
     if (readIn(&a, &b, &c) != 0) return -1;
     printf("Solving...\n");
     const RootCount root_count = solveSquareEquation(a, b, c, &x1, &x2);
