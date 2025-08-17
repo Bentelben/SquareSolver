@@ -9,9 +9,10 @@ int readIn(double *a, double *b, double *c);
 void writeOut(RootCount root_count, double x1, double x2);
 
 int main() {
-    double a = NAN, b = NAN, c = NAN, x1 = NAN, x2 = NAN;
+    double a = NAN, b = NAN, c = NAN;
     if (readIn(&a, &b, &c) != 0) return -1;
     printf("Solving...\n");
+    double x1 = NAN, x2 = NAN;
     const RootCount root_count = solveSquareEquation(a, b, c, &x1, &x2);
     writeOut(root_count, x1, x2);
 }
