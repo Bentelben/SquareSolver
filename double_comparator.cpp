@@ -9,5 +9,5 @@ bool isEqual(const double a, const double b) {
 }
 
 bool isZero(const double x) {
-    return fabs(x) < EPS;
+    return isEqual(x, 0);
 }
