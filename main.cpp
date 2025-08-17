@@ -49,7 +49,8 @@ void writeOut(RootCount root_count, double x1, double x2) {
             break;
         case TWO:
             assert(!isnan(x1) && !isnan(x2));
-            printf("x1 = %g\nx2 = %g\n", x1, x2);
+            printf("x1 = %g\n", x1);
+            printf("x2 = %g\n", x2);
             break;
         default:
             assert(0);
