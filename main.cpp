@@ -44,9 +44,11 @@ void writeOut(RootCount root_count, double x1, double x2) {
             printf("x is not real number\n");
             break;
         case ONE:
+            assert(!isnan(x1));
             printf("x = %g\n", x1);
             break;
         case TWO:
+            assert(!isnan(x1) && !isnan(x2));
             printf("x1 = %g\nx2 = %g\n", x1, x2);
             break;
         default:
