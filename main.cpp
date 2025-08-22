@@ -21,6 +21,7 @@ int readIn(double *const a, double *const b, double *const c) {
     assert(a != NULL);
     assert(b != NULL);
     assert(c != NULL);
+    assert( (a != b) && (b != c) && (a != c) );
 
     printf("ax^2 + bx + c = 0\n");
     printf("Enter a, b and c:\n");
