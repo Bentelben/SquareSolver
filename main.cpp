@@ -8,7 +8,7 @@
 const size_t ATTEMPT_COUNT = 5;
 
 int readOneDouble(const char name, double *ptr);
-int readIn(double *const coefficients, const size_t COEFFICIENT_COUNT);
+int readIn(double *const coefficients, const size_t coefficient_count);
 void writeOut(RootCount root_count, double x1, double x2);
 
 int main() {
@@ -43,12 +43,14 @@ int readOneDouble(const char name, double *const ptr) {
     return -1;
 }
 
-int readIn(double *const coefficients, const size_t COEFFICIENT_COUNT) {
+int readIn(double *const coefficients, const size_t coefficient_count) {
+    assert(coefficients != NULL);
+
     for (size_t i = 0; i < ATTEMPT_COUNT; i++) {
         if (i > 0) printf("Attemt %lu/%lu\n", i+1, ATTEMPT_COUNT);
         
         bool isRead = true;
-        for (size_t j = 0; j < COEFFICIENT_COUNT; j++) {
+        for (size_t j = 0; j < coefficient_count; j++) {
             if (readOneDouble('a' + (char)j, coefficients + j) != 0) {
                 printf("Wrong input\n\n");
                 while (getchar() != '\n');
