@@ -5,7 +5,7 @@ OUT := a.out
 OBJECT_DIR := objects/
 
 SOURCE_EXT := cpp
-HEADER_EXT := hpp
+HEADER_EXT := h
 
 source_files := $(wildcard *.$(SOURCE_EXT))
 header_files := $(wildcard *.$(HEADER_EXT))

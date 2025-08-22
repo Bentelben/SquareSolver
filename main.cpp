@@ -2,8 +2,8 @@
 #include <math.h>
 #include <assert.h>
 
-#include "square_solver.hpp"
-#include "double_comparator.hpp"
+#include "square_solver.h"
+#include "double_comparator.h"
 
 int readIn(double *a, double *b, double *c);
 void writeOut(RootCount root_count, double x1, double x2);
