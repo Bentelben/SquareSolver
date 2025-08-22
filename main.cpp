@@ -6,6 +6,7 @@
 #include "double_comparator.h"
 
 int readIn(double *a, double *b, double *c);
+int readOneDouble(const char* name, double *ptr);
 void writeOut(RootCount root_count, double x1, double x2);
 
 int main() {
@@ -20,15 +21,27 @@ int main() {
     writeOut(root_count, x1, x2);
 }
 
+int readOneDouble(const char* name, double *const ptr) {
+    assert(ptr != NULL);
+    
+    printf("Enter %s: ", name);
+    char separator_char = 0;
+    if (scanf("%lf%c", ptr, &separator_char) != 2 || separator_char != '\n')
+        return -1;
+    
+    return 0;
+}
+
 int readIn(double *const a, double *const b, double *const c) {
-    assert(a != NULL);
-    assert(b != NULL);
-    assert(c != NULL);
     assert( (a != b) && (b != c) && (a != c) );
 
     printf("ax^2 + bx + c = 0\n");
-    printf("Enter a, b and c:\n");
-    if (scanf("%lf %lf %lf", a, b, c) != 3) {
+    
+    if (
+        readOneDouble("a", a) != 0 ||
+        readOneDouble("b", b) != 0 ||
+        readOneDouble("c", c) != 0
+    ) {
         printf("Wrong input\n");
         return -1;
     }
