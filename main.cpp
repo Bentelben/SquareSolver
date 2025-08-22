@@ -14,7 +14,7 @@ int main() {
     if (readIn(&a, &b, &c) != 0)
         return -1;
 
-    printf("Solving %gx^2 + %gx + %g = 0`\n", a, b, c);
+    printf("Solving %gx^2 + %gx + %g = 0\n", a, b, c);
 
     double x1 = NAN, x2 = NAN;
     const RootCount root_count = solveSquareEquation(a, b, c, &x1, &x2);
