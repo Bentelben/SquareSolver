@@ -10,6 +10,15 @@ static RootCount solveLinear(const double b, const double c, double *const x) {
     return ONE;
 }
 
+//! Solve square equation a*x^2 + b*x + c = 0
+//!
+//! @param[in]  a  a-coefficient
+//! @param[in]  b  b-coefficient
+//! @param[in]  c  c-coefficient
+//! @param[out] x1 First root
+//! @param[out] x2 Second root
+//!
+//! @return Number of roots 
 RootCount solveSquareEquation(const double a, const double b, const double c, double *const x1, double *const x2) {
     assert(!isnan(a));
     assert(!isnan(b));
