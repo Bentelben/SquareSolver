@@ -5,7 +5,12 @@
 #include "double_comparator.hpp"
 
 static RootCount solveLinear(const double b, const double c, double *const x) {
-    if (isZero(b)) return isZero(c) ? INF : ZERO;
+    if (isZero(b)) {
+        if (isZero(c))
+            return INF;
+        else
+            return ZERO;
+    }
     *x = -c/b;
     return ONE;
 }
@@ -27,10 +32,12 @@ RootCount solveSquareEquation(const double a, const double b, const double c, do
     assert(x2 != NULL);
     assert(x1 != x2);
 
-    if (isZero(a)) return solveLinear(b, c, x1);
+    if (isZero(a))
+        return solveLinear(b, c, x1);
 
     const double discriminant = b*b - 4*a*c;
-    if (discriminant < 0) return ZERO;
+    if (discriminant < 0)
+        return ZERO;
     const double discriminant_root = sqrt(discriminant);
 
     if (isZero(discriminant_root)) {

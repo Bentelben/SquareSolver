@@ -10,8 +10,11 @@ void writeOut(RootCount root_count, double x1, double x2);
 
 int main() {
     double a = NAN, b = NAN, c = NAN;
-    if (readIn(&a, &b, &c) != 0) return -1;
+    if (readIn(&a, &b, &c) != 0)
+        return -1;
+
     printf("Solving...\n");
+
     double x1 = NAN, x2 = NAN;
     const RootCount root_count = solveSquareEquation(a, b, c, &x1, &x2);
     writeOut(root_count, x1, x2);
@@ -35,7 +38,9 @@ int readIn(double *const a, double *const b, double *const c) {
 void writeOut(RootCount root_count, double x1, double x2) {
     if (isZero(x1)) x1 = 0;
     if (isZero(x2)) x2 = 0;
-    if (root_count == TWO && isEqual(x1, x2)) root_count = ONE;
+
+    if (root_count == TWO && isEqual(x1, x2))
+        root_count = ONE;
 
     switch (root_count) {
         case INF:
