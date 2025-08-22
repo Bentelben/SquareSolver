@@ -14,7 +14,7 @@ int main() {
     if (readIn(&a, &b, &c) != 0)
         return -1;
 
-    printf("Solving...\n");
+    printf("Solving %gx^2 + %gx + %g = 0`\n", a, b, c);
 
     double x1 = NAN, x2 = NAN;
     const RootCount root_count = solveSquareEquation(a, b, c, &x1, &x2);
@@ -25,27 +25,34 @@ int readOneDouble(const char* name, double *const ptr) {
     assert(ptr != NULL);
     
     printf("Enter %s: ", name);
-    char separator_char = 0;
-    if (scanf("%lf%c", ptr, &separator_char) != 2 || separator_char != '\n')
-        return -1;
-    
-    return 0;
+    char next_char = 0;
+    const int read_result = scanf("%lf%c", ptr, &next_char); 
+    if (read_result == 1 || (read_result == 2 && next_char == '\n'))
+        return 0;
+    return -1;
 }
 
 int readIn(double *const a, double *const b, double *const c) {
     assert( (a != b) && (b != c) && (a != c) );
 
-    printf("ax^2 + bx + c = 0\n");
+    const int ATTEMPT_COUNT = 5;
+
+    for (int i = 0; i < ATTEMPT_COUNT; i++) {
+        if (i > 0) printf("Attemt %d/%d\n", i+1, ATTEMPT_COUNT);
+        printf("ax^2 + bx + c = 0\n");
     
-    if (
-        readOneDouble("a", a) != 0 ||
-        readOneDouble("b", b) != 0 ||
-        readOneDouble("c", c) != 0
-    ) {
-        printf("Wrong input\n");
-        return -1;
+        if (
+            readOneDouble("a", a) != 0 ||
+            readOneDouble("b", b) != 0 ||
+            readOneDouble("c", c) != 0
+        ) {
+            printf("Wrong input\n\n");
+            while (getchar() != '\n');
+            continue;
+        }
+        return 0;
     }
-    return 0;
+    return -1;
 }
 
 void writeOut(RootCount root_count, double x1, double x2) {
