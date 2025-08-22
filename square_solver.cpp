@@ -16,6 +16,7 @@ RootCount solveSquareEquation(const double a, const double b, const double c, do
     assert(!isnan(c));
     assert(x1 != NULL);
     assert(x2 != NULL);
+    assert(x1 != x2);
 
     if (isZero(a)) return solveLinear(b, c, x1);
 
