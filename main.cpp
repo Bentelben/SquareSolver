@@ -2,6 +2,7 @@
 #include <math.h>
 #include <assert.h>
 
+#include "tester.h"
 #include "input_reader.h"
 #include "square_solver.h"
 #include "double_comparator.h"
@@ -9,6 +10,9 @@
 void writeOut(RootCount nRoots, double x1, double x2);
 
 int main() {
+    if (testSquareSolver() == -1)
+        return -1;
+
     const size_t N_COEFFICIENT = 3;
     double coefficients[N_COEFFICIENT] = {};
     for (size_t i = 0; i < N_COEFFICIENT; i++) coefficients[i] = NAN;
