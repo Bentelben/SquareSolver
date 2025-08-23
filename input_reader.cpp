@@ -15,6 +15,12 @@ static int readOneDouble(const char name, double *const ptr) {
     return -1;
 }
 
+//! Reads coefficients for polynom  of power coefficient_count-1 from console
+//!
+//! @param[out] coefficients      Array of coefficients
+//! @param[in]  coefficient_count Length of array
+//!
+//! @return Zero on success and negative value on error
 int readIn(double *const coefficients, const size_t coefficient_count) {
     assert(coefficients != NULL);
 
