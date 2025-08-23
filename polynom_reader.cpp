@@ -1,6 +1,8 @@
 #include "polynom_reader.h"
-#include <stdio.h>
 
+#include "polynom_printer.h"
+
+#include <stdio.h>
 #include <assert.h>
 
 static void ClearStdinBuffer();
@@ -22,9 +24,12 @@ int ReadNCoefficients(double *const resultCoefficients, const size_t nCoefficien
     assert(resultCoefficients != NULL);
     assert(nCoefficient > 0);
 
+    PrintLetterPolynom(nCoefficient-1);
+
     for (size_t i = 0; i < nCoefficient; i++)
-        if (ReadCoefficient('a' + (char)i, resultCoefficients + i) != 0)
+        if (ReadCoefficient(GetCoefficientName(i), resultCoefficients + i) != 0)
             return -1;
+    PrintPolynom(resultCoefficients, nCoefficient);
     return 0;
 }
 
