@@ -1,7 +1,7 @@
 #ifndef DOUBLE_COMPARATOR_H
 #define DOUBLE_COMPARATOR_H
 
-bool isEqual(double, double);
-bool isZero(double);
+bool isEqual(double value1, double value2);
+bool isZero(double value);
 
 #endif

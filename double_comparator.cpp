@@ -10,8 +10,8 @@ static const double EPS = 1e-14;
 //! @param[in] b Second value
 //!
 //! @return True if equal and false in other cases
-bool isEqual(const double a, const double b) {
-    return fabs(a - b) < EPS;
+bool isEqual(const double value1, const double value2) {
+    return fabs(value1 - value2) < EPS;
 }
 
 //! Test if value is zero
@@ -19,6 +19,6 @@ bool isEqual(const double a, const double b) {
 //! @param[in] x Value
 //!
 //! @return True if x is zero and false in other cases
-bool isZero(const double x) {
-    return isEqual(x, 0);
+bool isZero(const double value) {
+    return isEqual(value, 0);
 }
