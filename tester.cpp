@@ -12,7 +12,10 @@ struct Test_squareSolver {
     double x1, x2;
 };
 
-static void UnitTestSquareSolver(double a, double b, double c, RootCount answer_nRoots, double answer_x1, double answer_x2) {
+static void UnitTestSquareSolver(
+        const double a, const double b, const double c,
+        RootCount answer_nRoots, const double answer_x1, const double answer_x2
+    ) {
     double x1 = 0, x2 = 0;
     RootCount nRoots = SolveSquareEquation(a, b, c, &x1, &x2);
     if ( !(nRoots == answer_nRoots && IsEqual(x1, answer_x1) && IsEqual(x2, answer_x2)) ) {
@@ -26,7 +29,7 @@ static void UnitTestSquareSolver(double a, double b, double c, RootCount answer_
 int TestSquareSolver() {
     printf("Testing...\n");
 
-    Test_squareSolver tests[] = {
+    const Test_squareSolver tests[] = {
         { 0,  0,  0, INF,  0,  0},
         { 1,  2,  1, ONE, -1,  0},
         { 1,  2, -3, TWO, -3,  1},
@@ -38,10 +41,11 @@ int TestSquareSolver() {
     };
 
     for (size_t i = 0; i < sizeof(tests)/sizeof(*tests); i++)
-        UnitTestSquareSolver(tests[i].a, tests[i].b, tests[i].c, tests[i].nRoots, tests[i].x1, tests[i].x2); 
+        UnitTestSquareSolver(
+            tests[i].a, tests[i].b, tests[i].c,
+            tests[i].nRoots, tests[i].x1, tests[i].x2
+        ); 
 
     printf("Done testing\n\n");
     return 0;
 }
-
-
