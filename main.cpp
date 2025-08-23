@@ -2,18 +2,16 @@
 #include <math.h>
 #include <assert.h>
 
+#include "input_reader.h"
 #include "square_solver.h"
 #include "double_comparator.h"
 
-const size_t ATTEMPT_COUNT = 5;
-
-int readOneDouble(const char name, double *ptr);
-int readIn(double *const coefficients, const size_t coefficient_count);
 void writeOut(RootCount root_count, double x1, double x2);
 
 int main() {
     const size_t COEFFICIENT_COUNT = 3;
-    double coefficients[COEFFICIENT_COUNT];
+    double coefficients[COEFFICIENT_COUNT] = {};
+    for (size_t i = 0; i < COEFFICIENT_COUNT; i++) coefficients[i] = NAN;
     
     printf("ax^2 + bx + c = 0\n");
 
@@ -30,37 +28,6 @@ int main() {
         &x1, &x2
     );
     writeOut(root_count, x1, x2);
-}
-
-int readOneDouble(const char name, double *const ptr) {
-    assert(ptr != NULL);
-    
-    printf("Enter %c: ", name);
-    char next_char = 0;
-    const int read_result = scanf("%lf%c", ptr, &next_char); 
-    if (read_result == 1 || (read_result == 2 && next_char == '\n'))
-        return 0;
-    return -1;
-}
-
-int readIn(double *const coefficients, const size_t coefficient_count) {
-    assert(coefficients != NULL);
-
-    for (size_t i = 0; i < ATTEMPT_COUNT; i++) {
-        if (i > 0) printf("Attemt %lu/%lu\n", i+1, ATTEMPT_COUNT);
-        
-        bool isRead = true;
-        for (size_t j = 0; j < coefficient_count; j++) {
-            if (readOneDouble('a' + (char)j, coefficients + j) != 0) {
-                printf("Wrong input\n\n");
-                while (getchar() != '\n');
-                isRead = false;
-                break;
-            }
-        }
-        if (isRead) return 0;
-    }
-    return -1;
 }
 
 void writeOut(RootCount root_count, double x1, double x2) {
