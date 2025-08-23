@@ -6,7 +6,7 @@
 #include "square_solver.h"
 #include "double_comparator.h"
 
-void writeOut(RootCount root_count, double x1, double x2);
+void writeOut(RootCount nRoots, double x1, double x2);
 
 int main() {
     const size_t COEFFICIENT_COUNT = 3;
@@ -21,23 +21,23 @@ int main() {
     printf("Solving %gx^2 %+gx %+g = 0\n", coefficients[0], coefficients[1], coefficients[2]);
 
     double x1 = NAN, x2 = NAN;
-    const RootCount root_count = solveSquareEquation(
+    const RootCount nRoots = solveSquareEquation(
         coefficients[0],
         coefficients[1], 
         coefficients[2], 
         &x1, &x2
     );
-    writeOut(root_count, x1, x2);
+    writeOut(nRoots, x1, x2);
 }
 
-void writeOut(RootCount root_count, double x1, double x2) {
+void writeOut(RootCount nRoots, double x1, double x2) {
     if (isZero(x1)) x1 = 0;
     if (isZero(x2)) x2 = 0;
 
-    if (root_count == TWO && isEqual(x1, x2))
-        root_count = ONE;
+    if (nRoots == TWO && isEqual(x1, x2))
+        nRoots = ONE;
 
-    switch (root_count) {
+    switch (nRoots) {
         case INF:
             printf("x is any real number\n");
             break;
