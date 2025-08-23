@@ -18,7 +18,7 @@ int main() {
     if (readIn(coefficients, COEFFICIENT_COUNT) != 0)
         return -1;
 
-    printf("Solving %gx^2 + %gx + %g = 0\n", coefficients[0], coefficients[1], coefficients[2]);
+    printf("Solving %gx^2 %+gx %+g = 0\n", coefficients[0], coefficients[1], coefficients[2]);
 
     double x1 = NAN, x2 = NAN;
     const RootCount root_count = solveSquareEquation(
