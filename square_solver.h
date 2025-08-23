@@ -1,7 +1,13 @@
 #ifndef SQUARE_SOLVER_H
 #define SQUARE_SOLVER_H
 
-enum RootCount {ZERO, ONE, TWO, INF};
+enum RootCount {
+    INF = -1,
+    ZERO,
+    ONE,
+    TWO,
+    INF
+};
 
 //! Solve square equation a*x^2 + b*x + c = 0
 //!
