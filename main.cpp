@@ -9,17 +9,19 @@
 
 void WriteOut(RootCount nRoots, double x1, double x2);
 
+const size_t N_COEFFICIENT = 3;
+const size_t READ_ATTEMPT_LIMIT = 5;
+
 int main() {
     if (TestSquareSolver() == -1)
         return -1;
 
-    const size_t N_COEFFICIENT = 3;
     double coefficients[N_COEFFICIENT] = {};
     for (size_t i = 0; i < N_COEFFICIENT; i++) coefficients[i] = NAN;
     
     printf("ax^2 + bx + c = 0\n");
 
-    if (ReadIn(coefficients, N_COEFFICIENT) != 0)
+    if (ReadIn(coefficients, N_COEFFICIENT, READ_ATTEMPT_LIMIT) != 0)
         return -1;
 
     printf("Solving %gx^2 %+gx %+g = 0\n", coefficients[0], coefficients[1], coefficients[2]);

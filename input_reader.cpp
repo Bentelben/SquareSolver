@@ -3,9 +3,9 @@
 
 #include <assert.h>
 
-const size_t ATTEMPT_COUNT = 5;
+static void ClearStdinBuffer();
 
-static int ReadCoefficient(const char coefficientName, double *const resultValue) {
+int ReadCoefficient(const char coefficientName, double *const resultValue) {
     assert(resultValue != NULL);
     
     printf("Enter %c: ", coefficientName);
@@ -18,31 +18,34 @@ static int ReadCoefficient(const char coefficientName, double *const resultValue
     return -1;
 }
 
+int ReadNCoefficients(double *const resultCoefficients, const size_t nCoefficient) {
+    assert(resultCoefficients != NULL);
+    assert(nCoefficient > 0);
+
+    for (size_t i = 0; i < nCoefficient; i++)
+        if (ReadCoefficient('a' + (char)i, resultCoefficients + i) != 0)
+            return -1;
+    return 0;
+}
+
+int ReadIn(double *const resultCoefficients, const size_t nCoefficient, const size_t attemptLimit) {
+    assert(resultCoefficients != NULL);
+    assert(nCoefficient > 0);
+
+    for (size_t i = 0; i < attemptLimit; i++) {
+        if (i > 0)
+            printf("Attemt %lu/%lu\n", i+1, attemptLimit);
+        if (ReadNCoefficients(resultCoefficients, nCoefficient) != -1)
+            return 0;
+        printf("Wrong input\n\n");
+        ClearStdinBuffer();
+    }
+    return -1;
+}
+
 static void ClearStdinBuffer() {
     int c = '\0';
     do {
         c = getchar();
     } while (c != EOF && c != '\n');
 }
-
-int ReadIn(double *const coefficients, const size_t nCoefficient) {
-    assert(coefficients != NULL);
-
-    for (size_t i = 0; i < ATTEMPT_COUNT; i++) {
-        if (i > 0) printf("Attemt %lu/%lu\n", i+1, ATTEMPT_COUNT);
-        
-        bool isRead = true;
-        for (size_t j = 0; j < nCoefficient; j++) {
-            if (ReadCoefficient('a' + (char)j, coefficients + j) != 0) {
-                printf("Wrong input\n\n");
-                isRead = false;
-                ClearStdinBuffer();
-                break;
-            }
-        }
-        if (isRead) return 0;
-    }
-    return -1;
-}
-
-
