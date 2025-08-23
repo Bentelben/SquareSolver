@@ -4,13 +4,15 @@
 
 const size_t ATTEMPT_COUNT = 5;
 
-static int ReadOneDouble(const char name, double *const ptr) {
-    assert(ptr != NULL);
+static int ReadCoefficient(const char coefficientName, double *const resultValue) {
+    assert(resultValue != NULL);
     
-    printf("Enter %c: ", name);
-    char next_char = 0;
-    const int read_result = scanf("%lf%c", ptr, &next_char); 
-    if (read_result == 1 || (read_result == 2 && next_char == '\n'))
+    printf("Enter %c: ", coefficientName);
+    if (scanf("%lf", resultValue) != 1)
+        return -1;
+    
+    int nextChar = getchar();
+    if (nextChar == EOF || nextChar == '\n')
         return 0;
     return -1;
 }
@@ -30,7 +32,7 @@ int ReadIn(double *const coefficients, const size_t nCoefficient) {
         
         bool isRead = true;
         for (size_t j = 0; j < nCoefficient; j++) {
-            if (ReadOneDouble('a' + (char)j, coefficients + j) != 0) {
+            if (ReadCoefficient('a' + (char)j, coefficients + j) != 0) {
                 printf("Wrong input\n\n");
                 isRead = false;
                 ClearStdinBuffer();
