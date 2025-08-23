@@ -12,6 +12,6 @@ enum RootCount {ZERO, ONE, TWO, INF};
 //! @param[out] x2 Second root
 //!
 //! @return Number of roots 
-RootCount solveSquareEquation(double a, double b, double c, double *x1, double *x2);
+RootCount SolveSquareEquation(double a, double b, double c, double *x1, double *x2);
 
 #endif

@@ -7,6 +7,6 @@
 //! @param[in]  nCoefficient Length of array
 //!
 //! @return Zero on success and negative value on error
-int readIn(double *coefficients, size_t nCoefficient);
+int ReadIn(double *coefficients, size_t nCoefficient);
 
 #endif

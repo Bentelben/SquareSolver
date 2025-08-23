@@ -7,10 +7,10 @@
 #include "square_solver.h"
 #include "double_comparator.h"
 
-void writeOut(RootCount nRoots, double x1, double x2);
+void WriteOut(RootCount nRoots, double x1, double x2);
 
 int main() {
-    if (testSquareSolver() == -1)
+    if (TestSquareSolver() == -1)
         return -1;
 
     const size_t N_COEFFICIENT = 3;
@@ -19,26 +19,26 @@ int main() {
     
     printf("ax^2 + bx + c = 0\n");
 
-    if (readIn(coefficients, N_COEFFICIENT) != 0)
+    if (ReadIn(coefficients, N_COEFFICIENT) != 0)
         return -1;
 
     printf("Solving %gx^2 %+gx %+g = 0\n", coefficients[0], coefficients[1], coefficients[2]);
 
     double x1 = NAN, x2 = NAN;
-    const RootCount nRoots = solveSquareEquation(
+    const RootCount nRoots = SolveSquareEquation(
         coefficients[0],
         coefficients[1], 
         coefficients[2], 
         &x1, &x2
     );
-    writeOut(nRoots, x1, x2);
+    WriteOut(nRoots, x1, x2);
 }
 
-void writeOut(RootCount nRoots, double x1, double x2) {
-    if (isZero(x1)) x1 = 0;
-    if (isZero(x2)) x2 = 0;
+void WriteOut(RootCount nRoots, double x1, double x2) {
+    if (IsZero(x1)) x1 = 0;
+    if (IsZero(x2)) x2 = 0;
 
-    if (nRoots == TWO && isEqual(x1, x2))
+    if (nRoots == TWO && IsEqual(x1, x2))
         nRoots = ONE;
 
     switch (nRoots) {

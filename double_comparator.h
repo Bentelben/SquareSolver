@@ -7,13 +7,13 @@
 //! @param[in] value2 Second value
 //!
 //! @return True if values are equal
-bool isEqual(double value1, double value2);
+bool IsEqual(double value1, double value2);
 
 //! Test if value is zero
 //!
 //! @param[in] value The value
 //!
 //! @return True if value is zero
-bool isZero(double value);
+bool IsZero(double value);
 
 #endif

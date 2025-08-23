@@ -4,7 +4,7 @@
 
 const size_t ATTEMPT_COUNT = 5;
 
-static int readOneDouble(const char name, double *const ptr) {
+static int ReadOneDouble(const char name, double *const ptr) {
     assert(ptr != NULL);
     
     printf("Enter %c: ", name);
@@ -15,14 +15,14 @@ static int readOneDouble(const char name, double *const ptr) {
     return -1;
 }
 
-static void clearStdinBuffer() {
+static void ClearStdinBuffer() {
     int c = '\0';
     do {
         c = getchar();
     } while (c != EOF && c != '\n');
 }
 
-int readIn(double *const coefficients, const size_t nCoefficient) {
+int ReadIn(double *const coefficients, const size_t nCoefficient) {
     assert(coefficients != NULL);
 
     for (size_t i = 0; i < ATTEMPT_COUNT; i++) {
@@ -30,10 +30,10 @@ int readIn(double *const coefficients, const size_t nCoefficient) {
         
         bool isRead = true;
         for (size_t j = 0; j < nCoefficient; j++) {
-            if (readOneDouble('a' + (char)j, coefficients + j) != 0) {
+            if (ReadOneDouble('a' + (char)j, coefficients + j) != 0) {
                 printf("Wrong input\n\n");
                 isRead = false;
-                clearStdinBuffer();
+                ClearStdinBuffer();
                 break;
             }
         }
