@@ -3,32 +3,25 @@ COMPILER_FLAGS := -D _DEBUG -ggdb3 -std=c++17 -O0 -Wall -Wextra -Weffc++ -Waggre
 
 OUT := a.out
 MAIN := main
-
-OBJECT_DIR := objects
-DEPENDENCY_DIR := dependencies
-
-SOURCE_EXT := cpp
+BUILD_DIR := build
 
 source_files := $(MAIN) double_comparator square_solver input_reader tester
 
-objects := $(source_files:%=$(OBJECT_DIR)/%.o)
-
-$(OUT): $(objects)
+$(OUT): $(source_files:%=$(BUILD_DIR)/%.o)
 	$(COMPILER) $(COMPILER_FLAGS) $^
 
-include $(source_files:%=$(DEPENDENCY_DIR)/%.d)
+include $(source_files:%=$(BUILD_DIR)/%.d)
 
-$(OBJECT_DIR)/%.o : %.$(SOURCE_EXT)
-	mkdir -p $(OBJECT_DIR)
+$(BUILD_DIR)/%.o: %.cpp
+	mkdir -p $(BUILD_DIR)
 	$(COMPILER) $(COMPILER_FLAGS) $< -c -o $@
 
-$(DEPENDENCY_DIR)/%.d: %.$(SOURCE_EXT)
-	mkdir -p $(DEPENDENCY_DIR)
-	$(COMPILER) -MP -MMD -E $< -MF $@ -MT $(OBJECT_DIR)/$(<:%.$(SOURCE_EXT)=%.o) > /dev/null
+$(BUILD_DIR)/%.d: %.cpp
+	mkdir -p $(BUILD_DIR)
+	$(COMPILER) -MP -MMD -E $< -MF $@ -MT $(@:%.cpp=%.o) > /dev/null
 
 .PHONY: clean
 
 clean:
-	-rm -r $(OBJECT_DIR)
-	-rm -r $(DEPENDENCY_DIR)
+	-rm -r $(BUILD_DIR)
 	-rm $(OUT)
