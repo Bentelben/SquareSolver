@@ -1,6 +1,6 @@
 #include "tester.h"
 #include "square_solver.h"
-#include "input_reader.h"
+#include "polynom_reader.h"
 #include "double_comparator.h"
 
 #include <stdio.h>

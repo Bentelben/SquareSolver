@@ -1,4 +1,4 @@
-#include "input_reader.h"
+#include "polynom_reader.h"
 #include <stdio.h>
 
 #include <assert.h>

@@ -5,8 +5,7 @@ enum RootCount {
     INF = -1,
     ZERO,
     ONE,
-    TWO,
-    INF
+    TWO
 };
 
 //! Solve square equation a*x^2 + b*x + c = 0

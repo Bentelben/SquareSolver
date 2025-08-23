@@ -5,12 +5,12 @@ OUT := a.out
 MAIN := main
 BUILD_DIR := build
 
-source_files := $(MAIN) double_comparator square_solver input_reader tester
+source_files := $(MAIN) double_comparator square_solver polynom_reader tester
 
 $(OUT): $(source_files:%=$(BUILD_DIR)/%.o)
 	$(COMPILER) $(COMPILER_FLAGS) $^
 
-include $(source_files:%=$(BUILD_DIR)/%.d)
+-include $(source_files:%=$(BUILD_DIR)/%.d)
 
 $(BUILD_DIR)/%.o: %.cpp
 	mkdir -p $(BUILD_DIR)
