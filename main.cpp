@@ -9,13 +9,13 @@
 void writeOut(RootCount nRoots, double x1, double x2);
 
 int main() {
-    const size_t COEFFICIENT_COUNT = 3;
-    double coefficients[COEFFICIENT_COUNT] = {};
-    for (size_t i = 0; i < COEFFICIENT_COUNT; i++) coefficients[i] = NAN;
+    const size_t N_COEFFICIENT = 3;
+    double coefficients[N_COEFFICIENT] = {};
+    for (size_t i = 0; i < N_COEFFICIENT; i++) coefficients[i] = NAN;
     
     printf("ax^2 + bx + c = 0\n");
 
-    if (readIn(coefficients, COEFFICIENT_COUNT) != 0)
+    if (readIn(coefficients, N_COEFFICIENT) != 0)
         return -1;
 
     printf("Solving %gx^2 %+gx %+g = 0\n", coefficients[0], coefficients[1], coefficients[2]);
