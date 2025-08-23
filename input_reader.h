@@ -1,6 +1,8 @@
 #ifndef INPUT_READER_H
 #define INPUT_READER_H
 
+#include <stdlib.h>
+
 //! Reads coefficients for polynom  of power coefficient_count-1 from console
 //!
 //! @param[out] coefficients Array of coefficients
