@@ -1,10 +1,10 @@
-#include <stdio.h>
-#include <math.h>
-
 #include "tester.h"
 
-#include "double_comparator.h"
 #include "square_solver.h"
+#include "double_comparator.h"
+
+#include <stdio.h>
+#include <math.h>
 
 struct Test_squareSolver {
     double a, b, c;

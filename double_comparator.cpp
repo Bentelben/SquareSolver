@@ -1,6 +1,6 @@
-#include <math.h>
-
 #include "double_comparator.h"
+
+#include <math.h>
 
 static const double EPS = 1e-14;
 

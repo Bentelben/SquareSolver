@@ -1,8 +1,8 @@
-#include <math.h>
-#include <assert.h>
-
 #include "square_solver.h"
 #include "double_comparator.h"
+
+#include <math.h>
+#include <assert.h>
 
 static RootCount SolveLinear(const double b, const double c, double *const x) {
     if (IsZero(b)) {

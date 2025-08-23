@@ -1,6 +1,7 @@
-#include <stdio.h>
-#include <assert.h>
 #include "input_reader.h"
+#include <stdio.h>
+
+#include <assert.h>
 
 const size_t ATTEMPT_COUNT = 5;
 

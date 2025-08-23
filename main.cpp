@@ -1,11 +1,11 @@
+#include "tester.h"
+#include "square_solver.h"
+#include "input_reader.h"
+#include "double_comparator.h"
+
 #include <stdio.h>
 #include <math.h>
 #include <assert.h>
-
-#include "tester.h"
-#include "input_reader.h"
-#include "square_solver.h"
-#include "double_comparator.h"
 
 void WriteOut(RootCount nRoots, double x1, double x2);
 
