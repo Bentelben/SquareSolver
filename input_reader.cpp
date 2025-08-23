@@ -28,7 +28,7 @@ int ReadNCoefficients(double *const resultCoefficients, const size_t nCoefficien
     return 0;
 }
 
-int ReadIn(double *const resultCoefficients, const size_t nCoefficient, const size_t attemptLimit) {
+int ReadNCoefficientsWithAttempts(double *const resultCoefficients, const size_t nCoefficient, const size_t attemptLimit) {
     assert(resultCoefficients != NULL);
     assert(nCoefficient > 0);
 

@@ -21,7 +21,7 @@ int main() {
     
     printf("ax^2 + bx + c = 0\n");
 
-    if (ReadIn(coefficients, N_COEFFICIENT, READ_ATTEMPT_LIMIT) != 0)
+    if (ReadNCoefficientsWithAttempts(coefficients, N_COEFFICIENT, READ_ATTEMPT_LIMIT) != 0)
         return -1;
 
     printf("Solving %gx^2 %+gx %+g = 0\n", coefficients[0], coefficients[1], coefficients[2]);

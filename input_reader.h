@@ -26,6 +26,6 @@ int ReadNCoefficients(double *const resultCoefficients, const size_t nCoefficien
 //! @param[in]  attemptLimit Max count of attempts to read
 //!
 //! @return Zero on success
-int ReadIn(double *resultCoefficients, size_t nCoefficient, size_t attemptLimit);
+int ReadNCoefficientsWithAttempts(double *resultCoefficients, size_t nCoefficient, size_t attemptLimit);
 
 #endif
