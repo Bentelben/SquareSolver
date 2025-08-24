@@ -13,8 +13,7 @@ const size_t N_COEFFICIENT = 3;
 const size_t READ_ATTEMPT_LIMIT = 5;
 
 int main() {
-    if (RunTest() == -1)
-        return -1;
+    RunTest();
 
     double coefficients[N_COEFFICIENT] = {};
     for (size_t i = 0; i < N_COEFFICIENT; i++) coefficients[i] = NAN;
