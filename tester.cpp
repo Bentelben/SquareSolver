@@ -3,26 +3,12 @@
 #include "square_solver.h"
 #include "display_controller.h"
 #include "double_comparator.h"
+#include "buffer_cleaner.h"
 
 #include <stdio.h>
 #include <math.h>
 
-struct Test {
-    double a, b, c;
-    RootCount nRoots;
-    double x1, x2;
-};
-
-const Test tests[] = {
-    { 0,  0,  0, INF,  0,  0},
-    { 1,  2,  1, ONE, -1,  0},
-    { 1,  2, -3, TWO, -3,  1},
-    { 1,  0,  0, ONE,  0,  0},
-    {-1,  0,  0, ONE,  0,  0},
-    { 0,  1,  0, ONE,  0,  0},
-    { 0, -1,  0, ONE,  0,  0},
-    { 0,  0,  1, ZERO, 0,  0}
-};
+const char *TEST_FILENAME = "test.txt";
 
 static void TestSquareSolver(
     const double a, const double b, const double c,
@@ -48,9 +34,16 @@ static void TestSquareSolver(
 int RunTest() {
     printf("Testing...\n");
 
-    for (size_t i = 0; i < sizeof(tests)/sizeof(*tests); i++)
-        TestSquareSolver(tests[i].a, tests[i].b, tests[i].c, tests[i].nRoots, tests[i].x1, tests[i].x2);
+    FILE *testFile = fopen(TEST_FILENAME, "r");
+    CleanBufferLine(testFile);
 
+    double a = 0, b = 0, c = 0;
+    RootCount nRoots = INF;
+    double x1 = NAN, x2 = NAN;
+
+    while (fscanf(testFile, "%lg %lg %lg %d %lg %lg", &a, &b, &c, (int*)&nRoots, &x1, &x2) == 6)
+        TestSquareSolver(a, b, c, nRoots, x1, x2);
+    
     printf("Done testing\n\n");
     return 0;
 }

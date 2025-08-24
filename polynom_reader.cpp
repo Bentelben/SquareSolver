@@ -1,11 +1,10 @@
 #include "polynom_reader.h"
 
 #include "polynom_printer.h"
+#include "buffer_cleaner.h"
 
 #include <stdio.h>
 #include <assert.h>
-
-static void ClearStdinBuffer();
 
 int ReadCoefficient(const char coefficientName, double *const resultValue) {
     assert(resultValue != NULL);
@@ -43,14 +42,7 @@ int ReadNCoefficientsWithAttempts(double *const resultCoefficients, const size_t
         if (ReadNCoefficients(resultCoefficients, nCoefficient) != -1)
             return 0;
         printf("Wrong input\n\n");
-        ClearStdinBuffer();
+        CleanBufferLine(stdin);
     }
     return -1;
-}
-
-static void ClearStdinBuffer() {
-    int c = '\0';
-    do {
-        c = getchar();
-    } while (c != EOF && c != '\n');
 }
