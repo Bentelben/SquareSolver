@@ -1,7 +1,7 @@
 #include "tester.h"
 
 #include "square_solver.h"
-#include "printer.h"
+#include "display_controller.h"
 #include "double_comparator.h"
 
 #include <stdio.h>

@@ -1,4 +1,4 @@
-#include "printer.h"
+#include "display_controller.h"
 
 #include <stdio.h>
 

@@ -5,7 +5,7 @@ OUT := a.out
 MAIN := main
 BUILD_DIR := build
 
-source_files := $(MAIN) double_comparator square_solver polynom_reader polynom_printer tester printer
+source_files := $(MAIN) double_comparator square_solver polynom_reader polynom_printer tester display_controller
 
 $(OUT): $(source_files:%=$(BUILD_DIR)/%.o)
 	$(COMPILER) $(COMPILER_FLAGS) $^
