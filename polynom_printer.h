@@ -3,8 +3,22 @@
 
 #include <stdlib.h>
 
+//! Returns coefficient name for polynom
+//!
+//! @param[in]  index Coefficient index
+//!
+//! @return Coefficient name
 char GetCoefficientName(size_t index);
+
+//! Prints polynom with letter coefficients
+//!
+//! @param[in]  polynomPower Power of polynom
 void PrintLetterPolynom(size_t polynomPower);
-void PrintPolynom(const double *coefficients, size_t nCoefficients);
+
+//! Prints polynom with specific coefficients
+//!
+//! @param[in] coefficients  Coefficients of polynom
+//! @param[in] nCoefficients Count of coefficients
+void PrintPolynom(double *coefficients, size_t nCoefficients);
 
 #endif
