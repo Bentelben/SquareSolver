@@ -18,13 +18,13 @@ void PrintLetterPolynom(const size_t polynomPower) {
     printf("%c = 0\n", GetCoefficientName(polynomPower));
 }
 
-void PrintPolynom(const double *const coefficients, const size_t nCoefficients) {
+void PrintPolynom(double *const coefficients, const size_t nCoefficients) {
     bool isFirst = true;
     for (size_t i = 0; i < nCoefficients; i++) {
         if (IsZero(coefficients[i])) continue;
 
-        double absValue = fabs(coefficients[i]);
-        bool isPositive = coefficients[i] > 0;
+        const double absValue = fabs(coefficients[i]);
+        const bool isPositive = coefficients[i] > 0;
 
         if (!isPositive) printf("-");
         else if (!isFirst) printf("+");

@@ -11,9 +11,7 @@ static void PrintControlSequence(const int n, const int m) {
 }
 
 void SetColor(const Color color, const ColorBrightness brightness, const ColorType type) {
-    int code = (int)color;
-    code += int(brightness);
-    code += int(type);
+    const int code = (int)color + (int)brightness + (int)type;
     PrintControlSequence(0, code);
 };
 

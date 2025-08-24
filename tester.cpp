@@ -26,10 +26,10 @@ const Test tests[] = {
 
 static void TestSquareSolver(
     const double a, const double b, const double c,
-    RootCount answer_nRoots, const double answer_x1, const double answer_x2
+    const RootCount answer_nRoots, const double answer_x1, const double answer_x2
 ) {
     double x1 = 0, x2 = 0;
-    RootCount nRoots = SolveSquareEquation(a, b, c, &x1, &x2);
+    const RootCount nRoots = SolveSquareEquation(a, b, c, &x1, &x2);
     if (nRoots == answer_nRoots && IsEqual(x1, answer_x1) && IsEqual(x2, answer_x2)) {
         SetColor(GREEN, NORMAL, FOREGROUND);
         printf("OK\n");

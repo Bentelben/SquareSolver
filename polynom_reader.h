@@ -9,7 +9,7 @@
 //! @param[out] resultValue     Value of parsed coefficient
 //!
 //! @return Zero on success
-int ReadCoefficient(const char coefficientName, double *const resultValue);
+int ReadCoefficient(char coefficientName, double *resultValue);
 
 //! Reads coefficients for polynom of power nCoefficient-1 from stdin
 //!
@@ -17,7 +17,7 @@ int ReadCoefficient(const char coefficientName, double *const resultValue);
 //! @param[in]  nCoefficient       Length of array
 //!
 //! @return Zero on success
-int ReadNCoefficients(double *const resultCoefficients, const size_t nCoefficient);
+int ReadNCoefficients(double *resultCoefficients, size_t nCoefficient);
 
 //! Makes attempts to read coefficients for polynom of power coefficient_count-1 from stdin
 //!

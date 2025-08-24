@@ -14,7 +14,7 @@ int ReadCoefficient(const char coefficientName, double *const resultValue) {
     if (scanf("%lf", resultValue) != 1)
         return -1;
     
-    int nextChar = getchar();
+    const int nextChar = getchar();
     if (nextChar == EOF || nextChar == '\n')
         return 0;
     return -1;
