@@ -7,7 +7,7 @@
 #include <math.h>
 #include <assert.h>
 
-void WriteOut(RootCount nRoots, double x1, double x2);
+static void PrintRoots(RootCount nRoots, double x1, double x2);
 
 const size_t N_COEFFICIENT = 3;
 const size_t READ_ATTEMPT_LIMIT = 5;
@@ -29,10 +29,10 @@ int main() {
         coefficients[2], 
         &x1, &x2
     );
-    WriteOut(nRoots, x1, x2);
+    PrintRoots(nRoots, x1, x2);
 }
 
-void WriteOut(RootCount nRoots, double x1, double x2) {
+static void PrintRoots(RootCount nRoots, double x1, double x2) {
     if (IsZero(x1)) x1 = 0;
     if (IsZero(x2)) x2 = 0;
 
