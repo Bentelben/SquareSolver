@@ -33,7 +33,6 @@ static void TestSquareSolver(
     if (nRoots == answer_nRoots && IsEqual(x1, answer_x1) && IsEqual(x2, answer_x2)) {
         SetColor(GREEN, NORMAL, FOREGROUND);
         printf("OK\n");
-        ResetTextAttributes();
     }
     else {
         SetColor(RED, NORMAL, BACKGROUND);
@@ -42,8 +41,8 @@ static void TestSquareSolver(
         printf("a = %g b = %g c = %g\n", a, b, c);
         printf("got answer nRoots = %d x1 = %g x2 = %g\n", nRoots, x1, x2);
         printf("should be  nRoots = %d x1 = %g x2 = %g\n\n", nRoots, answer_x1, answer_x2);
-        ResetTextAttributes();
     }
+    ResetTextAttributes();
 }
 
 int RunTest() {
