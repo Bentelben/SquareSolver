@@ -13,7 +13,7 @@ const size_t N_COEFFICIENT = 3;
 const size_t READ_ATTEMPT_LIMIT = 5;
 
 int main() {
-    if (TestSquareSolver() == -1)
+    if (RunTest() == -1)
         return -1;
 
     double coefficients[N_COEFFICIENT] = {};
@@ -29,6 +29,7 @@ int main() {
         coefficients[2], 
         &x1, &x2
     );
+    printf("Solving...\n\n");
     PrintRoots(nRoots, x1, x2);
 }
 
