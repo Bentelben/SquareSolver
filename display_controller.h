@@ -11,6 +11,7 @@ enum Color {
     CYAN,
     WHITE
 };
+
 enum ColorBrightness {
     NORMAL = 0,
     BRIGHT = 60

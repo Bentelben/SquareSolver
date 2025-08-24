@@ -6,11 +6,11 @@ static const char *const ESCAPE_STRING = "\033[";
 static const char *const SEPARATOR_STRING = ";";
 static const char *const CLOSING_STRING = "m";
 
-static void PrintControlSequence(int n, int m) {
+static void PrintControlSequence(const int n, const int m) {
     printf("%s%d%s%d%s", ESCAPE_STRING, n, SEPARATOR_STRING, m, CLOSING_STRING);
 }
 
-void SetColor(Color color, ColorBrightness brightness, ColorType type) {
+void SetColor(const Color color, const ColorBrightness brightness, const ColorType type) {
     int code = (int)color;
     code += int(brightness);
     code += int(type);
