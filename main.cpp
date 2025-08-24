@@ -1,62 +1,33 @@
-#include "tester.h"
-#include "square_solver.h"
-#include "polynom_reader.h"
-#include "double_comparator.h"
+#include "commands.h"
+#include "argument_parser.h"
 
 #include <stdio.h>
+#include <string.h>
 #include <math.h>
 #include <assert.h>
 
-static void PrintRoots(RootCount nRoots, double x1, double x2);
 
-const size_t N_COEFFICIENT = 3;
-const size_t READ_ATTEMPT_LIMIT = 5;
+Flag FLAGS[] = {
+    {"help",   0, "Prints this text", PrintHelpCommand},
+    {"test",   0, "Runs test", TestCommand},
+    {"notest", 0, "Runs program without test", NoTestCommand}
+};
+int FLAGS_LENGTH = sizeof(FLAGS)/sizeof(*FLAGS);
 
-int main() {
-    RunTest();
 
-    double coefficients[N_COEFFICIENT] = {};
-    for (size_t i = 0; i < N_COEFFICIENT; i++) coefficients[i] = NAN;
-    
-    if (ReadNCoefficientsWithAttempts(coefficients, N_COEFFICIENT, READ_ATTEMPT_LIMIT) != 0)
-        return -1;
+bool shouldRunDefault = true;
 
-    double x1 = NAN, x2 = NAN;
-    const RootCount nRoots = SolveSquareEquation(
-        coefficients[0],
-        coefficients[1], 
-        coefficients[2], 
-        &x1, &x2
-    );
-    printf("Solving...\n\n");
-    PrintRoots(nRoots, x1, x2);
-}
-
-static void PrintRoots(RootCount nRoots, double x1, double x2) {
-    if (IsZero(x1)) x1 = 0;
-    if (IsZero(x2)) x2 = 0;
-
-    if (nRoots == TWO && IsEqual(x1, x2))
-        nRoots = ONE;
-
-    switch (nRoots) {
-        case INF:
-            printf("x is any real number\n");
-            break;
-        case ZERO:
-            printf("x is not real number\n");
-            break;
-        case ONE:
-            assert(!isnan(x1));
-            printf("x = %g\n", x1);
-            break;
-        case TWO:
-            assert(!isnan(x1) && !isnan(x2));
-            printf("x1 = %g\n", x1);
-            printf("x2 = %g\n", x2);
-            break;
-        default:
-            assert(0);
-            break;
+int main(int argc, char *argv[]) {
+    int err = ParseFlags(argv, FLAGS, FLAGS_LENGTH);
+    if (err == -1) {
+        printf("Unknown flag\n");
+        PrintHelpCommand(NULL, 0);
+    } else if (err == -2) {
+        printf("Incorrect flag argument count\n");
+        PrintHelpCommand(NULL, 0);
     }
+    if (shouldRunDefault) DefaultCommand(NULL, 0);
+    return 0;
 }
+
+

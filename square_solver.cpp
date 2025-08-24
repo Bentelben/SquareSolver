@@ -1,5 +1,5 @@
 #include "square_solver.h"
-#include "double_comparator.h"
+#include "utils/double_comparator.h"
 
 #include <math.h>
 #include <assert.h>

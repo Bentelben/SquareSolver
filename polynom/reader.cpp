@@ -1,7 +1,7 @@
-#include "polynom_reader.h"
+#include "reader.h"
 
-#include "polynom_printer.h"
-#include "buffer_cleaner.h"
+#include "printer.h"
+#include "../utils/buffer_cleaner.h"
 
 #include <stdio.h>
 #include <assert.h>

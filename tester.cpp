@@ -1,9 +1,9 @@
 #include "tester.h"
 
 #include "square_solver.h"
-#include "display_controller.h"
-#include "double_comparator.h"
-#include "buffer_cleaner.h"
+#include "utils/display_controller.h"
+#include "utils/double_comparator.h"
+#include "utils/buffer_cleaner.h"
 
 #include <stdio.h>
 #include <math.h>

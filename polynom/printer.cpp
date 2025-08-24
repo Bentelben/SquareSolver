@@ -1,6 +1,6 @@
-#include "polynom_printer.h"
+#include "printer.h"
 
-#include "double_comparator.h"
+#include "../utils/double_comparator.h"
 
 #include <stdio.h>
 #include <math.h>

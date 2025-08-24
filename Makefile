@@ -5,7 +5,7 @@ OUT := a.out
 MAIN := main
 BUILD_DIR := build
 
-source_files := $(MAIN) double_comparator square_solver polynom_reader polynom_printer tester display_controller buffer_cleaner
+source_files := $(MAIN) utils/double_comparator utils/display_controller utils/buffer_cleaner utils/display_controller polynom/reader polynom/printer tester argument_parser commands square_solver
 
 $(OUT): $(source_files:%=$(BUILD_DIR)/%.o)
 	$(COMPILER) $(COMPILER_FLAGS) $^
@@ -13,12 +13,12 @@ $(OUT): $(source_files:%=$(BUILD_DIR)/%.o)
 -include $(source_files:%=$(BUILD_DIR)/%.d)
 
 $(BUILD_DIR)/%.o: %.cpp
-	mkdir -p $(BUILD_DIR)
+	mkdir -p $(@D)
 	$(COMPILER) $(COMPILER_FLAGS) $< -c -o $@
 
 $(BUILD_DIR)/%.d: %.cpp
-	mkdir -p $(BUILD_DIR)
-	$(COMPILER) -MP -MMD -E $< -MF $@ -MT $(@:%.cpp=%.o) > /dev/null
+	mkdir -p $(@D)
+	$(COMPILER) -MP -MMD -E $< -MF $@ -MT $(@:%.d=%.o) > /dev/null
 
 .PHONY: clean
 
