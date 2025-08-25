@@ -20,7 +20,7 @@ const size_t READ_ATTEMPT_LIMIT = 5;
 extern Flag FLAGS[];
 extern int FLAGS_LENGTH;
 
-extern char* test_filename;
+extern const char* test_filename;
 extern bool test_shouldCompareNRoots;
 extern bool test_verbose;
 extern bool test_ignore;
@@ -52,17 +52,20 @@ bool TestCommand(char *args[], int nArgs) {
 }
 bool Test_set_filenameCommand(char *args[], int nArgs) {
     assert(nArgs == 1);
+    assert(args != NULL);
 
     test_filename = args[0];
     return true;
 }bool Test_set_shouldCompareNRootsCommand(char *args[], int nArgs) {
     assert(nArgs == 1);
+    assert(args != NULL);
 
     test_shouldCompareNRoots = ParseBoolean(args[0]);
     return true;
 }
 bool Test_set_verboseCommand(char *args[], int nArgs) {
     assert(nArgs == 1);
+    assert(args != NULL);
 
     test_verbose = ParseBoolean(args[0]);
     return true;

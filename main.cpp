@@ -20,7 +20,7 @@ test (default true)",                      Test_set_verboseCommand             }
 };
 int FLAGS_LENGTH = sizeof(FLAGS)/sizeof(*FLAGS);
 
-char *test_filename = "test.txt";
+const char *test_filename = "test.txt";
 bool test_shouldCompareNRoots = true;
 bool test_verbose = true;
 bool test_ignore = false;

@@ -42,7 +42,7 @@ static bool TestSquareSolver(
     return false;
 }
 
-int RunTest(char *filename, const bool shouldCompareNRoots, const bool verbose) {
+int RunTest(const char *filename, const bool shouldCompareNRoots, const bool verbose) {
     printf("Testing...\n");
 
     FILE *testFile = fopen(filename, "r");
