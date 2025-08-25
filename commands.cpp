@@ -43,7 +43,7 @@ bool PrintHelpCommand(char *args[], int nArgs, void *context) {
     assert(nArgs == 0);
     (void)context;
 
-    printf("help\n");
+    printf("Here is help:\n");
     PrintArgumentInfo(FLAGS, FLAGS_LENGTH);
     return false;
 }

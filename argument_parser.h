@@ -4,10 +4,9 @@
 #include <stdlib.h>
 
 enum ParseCode {
-    PC_NO_ERROR_CONTINUE      = 0,
-    PC_NO_ERROR_STOP          = 1,
-    PC_ERROR_UNKNOWN_FLAG     = 2,
-    PC_ERROR_WRONG_WORD_COUNT = 3
+    PC_NO_ERROR               = 0,
+    PC_ERROR_UNKNOWN_FLAG     = 1,
+    PC_ERROR_WRONG_WORD_COUNT = 2
 };
 
 struct Flag {

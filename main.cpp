@@ -8,6 +8,7 @@
 
 
 extern const Flag FLAGS[] = {
+    {NULL,                  NULL, 0, "Solves square equation",    DefaultCommand                      },
     {"help",                "h",  0, "Prints this text",          PrintHelpCommand                    },
     {"test",                "T",  0, "Runs test",                 TestCommand                         },
     {"test-filename",       "Tf", 1, "Set name of file for test", Test_set_filenameCommand            },
@@ -33,10 +34,7 @@ int main(int argc, char *argv[]) {
 
     ParseCode err = ParseFlags(argv, argc, FLAGS, FLAGS_LENGTH, (void*)&context);
     switch (err) {
-        case PC_NO_ERROR_CONTINUE:
-            DefaultCommand(NULL, 0, (void*)&context);
-            break;
-        case PC_NO_ERROR_STOP:
+        case PC_NO_ERROR:
             break;
         case PC_ERROR_UNKNOWN_FLAG:
             printf("Unknown flag\n");
