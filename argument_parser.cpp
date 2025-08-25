@@ -19,25 +19,27 @@ static Flag *ParseFlag(char *arg, Flag flags[], int nFlags) {
     return NULL;
 }
 
-int ParseFlags(char *argv[], Flag flags[], int nFlags) {
+ParseCode ParseFlags(char *argv[], Flag flags[], int nFlags) {
     assert(argv != NULL);
     assert(flags != NULL);
 
     for (int i = 1; argv[i] != NULL; i++) {
         Flag *flag = ParseFlag(argv[i], flags, nFlags);
-        if (flag == NULL) return -1;
+        if (flag == NULL)
+            return PC_ERROR_UNKNOWN_FLAG;
 
         int j = 0;
         while (argv[i+j+1] != NULL) {
             if (argv[i+j+1][0] == '-') break;
             j++;
         }
-        if (flag->nNextWords != -1 && j != flag->nNextWords) return -2;
+        if (flag->nNextWords != -1 && j != flag->nNextWords)
+            return PC_ERROR_WRONG_WORD_COUNT;
 
         flag->func(argv + i + 1, j);
         i += j;
     }
-    return 0;
+    return PC_NO_ERROR;
 }
 
 void PrintArgumentInfo(Flag flags[], int nFlags) {
@@ -55,5 +57,3 @@ static int getMaxFlagNameLength(Flag flags[], int nFlags) {
             maxWidth = strlen(flags[i].name);
     return (int)maxWidth;
 }
-
-

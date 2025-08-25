@@ -18,15 +18,23 @@ int FLAGS_LENGTH = sizeof(FLAGS)/sizeof(*FLAGS);
 bool shouldRunDefault = true;
 
 int main(int argc, char *argv[]) {
-    int err = ParseFlags(argv, FLAGS, FLAGS_LENGTH);
-    if (err == -1) {
-        printf("Unknown flag\n");
-        PrintHelpCommand(NULL, 0);
-    } else if (err == -2) {
-        printf("Incorrect flag argument count\n");
-        PrintHelpCommand(NULL, 0);
+    ParseCode err = ParseFlags(argv, FLAGS, FLAGS_LENGTH);
+    switch (err) {
+        case PC_NO_ERROR:
+            DefaultCommand(NULL, 0);
+            break;
+        case PC_ERROR_UNKNOWN_FLAG:
+            printf("Unknown flag\n");
+            PrintHelpCommand(NULL, 0);
+            break;
+        case PC_ERROR_WRONG_WORD_COUNT:
+            printf("Incorrect flag argument count\n");
+            PrintHelpCommand(NULL, 0);
+            break;
+        default:
+            assert(0);
+            break;
     }
-    if (shouldRunDefault) DefaultCommand(NULL, 0);
     return 0;
 }
 
