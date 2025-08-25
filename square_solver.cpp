@@ -5,6 +5,8 @@
 #include <assert.h>
 
 static RootCount SolveLinear(const double b, const double c, double *const x) {
+    assert(x);
+
     if (IsZero(b)) {
         if (IsZero(c))
             return RC_INF;
@@ -19,8 +21,8 @@ RootCount SolveSquareEquation(const double a, const double b, const double c, do
     assert(!isnan(a));
     assert(!isnan(b));
     assert(!isnan(c));
-    assert(x1 != NULL);
-    assert(x2 != NULL);
+    assert(x1);
+    assert(x2);
     assert(x1 != x2);
 
     if (IsZero(a))
