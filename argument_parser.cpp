@@ -25,7 +25,7 @@ static const Flag *GetFlag(char *arg, const Flag flags[], int nFlags) {
     return NULL;
 }
 
-ParseCode ParseFlags(char *argv[], int argc, const Flag flags[], int nFlags) {
+ParseCode ParseFlags(char *argv[], int argc, const Flag flags[], int nFlags, void *context) {
     assert(argv != NULL);
     assert(flags != NULL);
 
@@ -43,7 +43,7 @@ ParseCode ParseFlags(char *argv[], int argc, const Flag flags[], int nFlags) {
         if (flag->nNextWords != -1 && nWords != flag->nNextWords)
             return PC_ERROR_WRONG_WORD_COUNT;
 
-        if (!flag->func(argv + argumentIndex + 1, nWords))
+        if (!flag->func(argv + argumentIndex + 1, nWords, context))
             return PC_NO_ERROR_STOP;
         argumentIndex += nWords;
     }

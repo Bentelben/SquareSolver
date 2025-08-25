@@ -1,15 +1,15 @@
 #include "commands.h"
 
+#include <assert.h>
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
+
 #include "argument_parser.h"
 #include "tester.h"
 #include "square_solver.h"
 #include "polynom/reader.h"
 #include "utils/double_comparator.h"
-
-#include <assert.h>
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
 
 static bool ParseBoolean(char *arg);
 static void PrintRoots(RootCount nRoots, double x1, double x2);
@@ -17,68 +17,87 @@ static void PrintRoots(RootCount nRoots, double x1, double x2);
 const size_t N_COEFFICIENT = 3;
 const size_t READ_ATTEMPT_LIMIT = 5;
 
-extern Flag FLAGS[];
+extern const Flag FLAGS[];
 extern const int FLAGS_LENGTH;
 
-extern const char* test_filename;
-extern bool test_shouldCompareNRoots;
-extern bool test_verbose;
-extern bool test_ignore;
-
-bool DefaultCommand(char *args[], int nArgs) {
+bool DefaultCommand(char *args[], int nArgs, void *context) {
+    (void)args;
     assert(nArgs == 0);
 
-    int testsFailed = RunTest(test_filename, test_shouldCompareNRoots, test_verbose);
-    if (!test_ignore && testsFailed)
+    FlagContext *flagContext = (FlagContext*)context;
+    
+    int testsFailed = RunTest(
+        flagContext->test.filename,
+        flagContext->test.shouldCompareNRoots,
+        flagContext->test.verbose
+    );
+    if (!flagContext->test.ignore && testsFailed)
         return false;
     printf("Done testing\n\n");
-    NoTestCommand(NULL, 0);
+    NoTestCommand(NULL, 0, context);
     return false;
 }
 
-bool PrintHelpCommand(char *args[], int nArgs) {
+bool PrintHelpCommand(char *args[], int nArgs, void *context) {
+    (void)args;
     assert(nArgs == 0);
+    (void)context;
 
     printf("help\n");
     PrintArgumentInfo(FLAGS, FLAGS_LENGTH);
     return false;
 }
 
-bool TestCommand(char *args[], int nArgs) {
+bool TestCommand(char *args[], int nArgs, void *context) {
+    (void)args;
     assert(nArgs == 0);
 
-    RunTest(test_filename, test_shouldCompareNRoots, test_verbose);
+    FlagContext *flagContext = (FlagContext*)context;
+    
+    RunTest(
+        flagContext->test.filename,
+        flagContext->test.shouldCompareNRoots,
+        flagContext->test.verbose
+    );
     return false;
 }
-bool Test_set_filenameCommand(char *args[], int nArgs) {
-    assert(nArgs == 1);
-    assert(args != NULL);
 
-    test_filename = args[0];
-    return true;
-}bool Test_set_shouldCompareNRootsCommand(char *args[], int nArgs) {
+bool Test_set_filenameCommand(char *args[], int nArgs, void *context) {
+    assert(args);
     assert(nArgs == 1);
-    assert(args != NULL);
 
-    test_shouldCompareNRoots = ParseBoolean(args[0]);
+    ((FlagContext*)context)->test.filename = args[0];
     return true;
 }
-bool Test_set_verboseCommand(char *args[], int nArgs) {
+
+bool Test_set_shouldCompareNRootsCommand(char *args[], int nArgs, void *context) {
     assert(nArgs == 1);
     assert(args != NULL);
 
-    test_verbose = ParseBoolean(args[0]);
+    ((FlagContext*)context)->test.shouldCompareNRoots = ParseBoolean(args[0]);
     return true;
 }
-bool Test_set_ignoreCommand(char *args[], int nArgs) {
+
+bool Test_set_verboseCommand(char *args[], int nArgs, void *context) {
+    assert(nArgs == 1);
+    assert(args != NULL);
+
+    ((FlagContext*)context)->test.verbose = ParseBoolean(args[0]);
+    return true;
+}
+
+bool Test_set_ignoreCommand(char *args[], int nArgs, void *context) {
+    (void)args;
     assert(nArgs == 0);
 
-    test_ignore = true;
+    ((FlagContext*)context)->test.ignore = true;
     return true;
 }
 
-bool NoTestCommand(char *args[], int nArgs) {
+bool NoTestCommand(char *args[], int nArgs, void *context) {
+    (void)args;
     assert(nArgs == 0);
+    (void)context;
 
     double coefficients[N_COEFFICIENT] = {};
     for (size_t i = 0; i < N_COEFFICIENT; i++) coefficients[i] = NAN;
@@ -99,6 +118,8 @@ bool NoTestCommand(char *args[], int nArgs) {
 }
 
 static bool ParseBoolean(char *arg) {
+    assert(arg);
+
     if (strcmp(arg, "true")==0 || strcmp(arg, "1")==0) return true;
     return false;
 }

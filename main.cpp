@@ -20,28 +20,31 @@ test (default true)",                                             Test_set_verbo
 };
 extern const int FLAGS_LENGTH = sizeof(FLAGS)/sizeof(*FLAGS);
 
-// TODO struct
-
-const char *test_filename = "test.txt";
-bool test_shouldCompareNRoots = true;
-bool test_verbose = true;
-bool test_ignore = false;
-
 int main(int argc, char *argv[]) {
-    ParseCode err = ParseFlags(argv, argc, FLAGS, FLAGS_LENGTH);
+    
+    FlagContext context = {
+        .test = {
+            .filename = "test.txt",
+            .verbose = true,
+            .shouldCompareNRoots = true,
+            .ignore = false
+        }
+    };
+
+    ParseCode err = ParseFlags(argv, argc, FLAGS, FLAGS_LENGTH, (void*)&context);
     switch (err) {
         case PC_NO_ERROR_CONTINUE:
-            DefaultCommand(NULL, 0);
+            DefaultCommand(NULL, 0, (void*)&context);
             break;
         case PC_NO_ERROR_STOP:
             break;
         case PC_ERROR_UNKNOWN_FLAG:
             printf("Unknown flag\n");
-            PrintHelpCommand(NULL, 0);
+            PrintHelpCommand(NULL, 0, (void*)&context);
             break;
         case PC_ERROR_WRONG_WORD_COUNT:
             printf("Incorrect flag argument count\n");
-            PrintHelpCommand(NULL, 0);
+            PrintHelpCommand(NULL, 0, (void*)&context);
             break;
         default:
             assert(0);
