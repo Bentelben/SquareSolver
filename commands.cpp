@@ -9,16 +9,16 @@
 #include <assert.h>
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 
+static bool ParseBoolean(char *arg);
 static void PrintRoots(RootCount nRoots, double x1, double x2);
 
 const size_t N_COEFFICIENT = 3;
 const size_t READ_ATTEMPT_LIMIT = 5;
 
-extern bool shouldRunDefault;
 extern Flag FLAGS[];
 extern int FLAGS_LENGTH;
-
 
 bool DefaultCommand(char *args[], int nArgs) {
     assert(nArgs == 0);
@@ -35,11 +35,32 @@ bool PrintHelpCommand(char *args[], int nArgs) {
     return false;
 }
 
+extern char* test_filename;
+extern bool test_shouldCompareNRoots;
+extern bool test_verbose;
+
 bool TestCommand(char *args[], int nArgs) {
     assert(nArgs == 0);
 
-    RunTest();
+    RunTest(test_filename, test_shouldCompareNRoots, test_verbose);
     return false;
+}
+bool Test_set_filenameCommand(char *args[], int nArgs) {
+    assert(nArgs == 1);
+
+    test_filename = args[0];
+    return true;
+}bool Test_set_shouldCompareNRootsCommand(char *args[], int nArgs) {
+    assert(nArgs == 1);
+
+    test_shouldCompareNRoots = ParseBoolean(args[0]);
+    return true;
+}
+bool Test_set_verboseCommand(char *args[], int nArgs) {
+    assert(nArgs == 1);
+
+    test_verbose = ParseBoolean(args[0]);
+    return true;
 }
 
 bool NoTestCommand(char *args[], int nArgs) {
@@ -63,6 +84,10 @@ bool NoTestCommand(char *args[], int nArgs) {
     return false;
 }
 
+static bool ParseBoolean(char *arg) {
+    if (strcmp(arg, "true")==0 || strcmp(arg, "1")==0) return true;
+    return false;
+}
 
 static void PrintRoots(RootCount nRoots, double x1, double x2) {
     if (IsZero(x1)) x1 = 0;

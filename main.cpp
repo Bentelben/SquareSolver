@@ -10,9 +10,16 @@
 Flag FLAGS[] = {
     {"help",   0, "Prints this text", PrintHelpCommand},
     {"test",   0, "Runs test", TestCommand},
+    {"test_f", 1, "Set name of file for test", Test_set_filenameCommand},
+    {"test_c", 1, "Set should compare root count for test (default true)", Test_set_shouldCompareNRootsCommand},
+    {"test_v", 1, "Set verbose output for test (default true)", Test_set_verboseCommand},
     {"notest", 0, "Runs program without test", NoTestCommand}
 };
 int FLAGS_LENGTH = sizeof(FLAGS)/sizeof(*FLAGS);
+
+bool test_shouldCompareNRoots = true;
+bool test_verbose = true;
+char *test_filename = "test.txt";
 
 int main(int argc, char *argv[]) {
     ParseCode err = ParseFlags(argv, FLAGS, FLAGS_LENGTH);

@@ -8,17 +8,27 @@
 #include <stdio.h>
 #include <math.h>
 
-const char *TEST_FILENAME = "test.txt";
+static bool IsEqualRoots(const RootCount nRoots, const double answer_x1, const double answer_x2, const double x1, const double x2) {
+    if (nRoots == INF || nRoots == ZERO) return true;
+    if (nRoots == ONE) return IsEqual(answer_x1, x1);
+    else return (IsEqual(answer_x1, x1) && IsEqual(answer_x2, x2)) ||
+                (IsEqual(answer_x1, x2) && IsEqual(answer_x2, x1));
+}
 
 static void TestSquareSolver(
     const double a, const double b, const double c,
-    const RootCount answer_nRoots, const double answer_x1, const double answer_x2
+    const RootCount answer_nRoots, const double answer_x1, const double answer_x2,
+    const bool shouldCompareNRoots, const bool verbose
 ) {
     double x1 = 0, x2 = 0;
     const RootCount nRoots = SolveSquareEquation(a, b, c, &x1, &x2);
-    if (nRoots == answer_nRoots && IsEqual(x1, answer_x1) && IsEqual(x2, answer_x2)) {
-        SetColor(GREEN, NORMAL, FOREGROUND);
-        printf("OK");
+    if ((!shouldCompareNRoots || nRoots == answer_nRoots) && IsEqualRoots(nRoots, answer_x1, answer_x2, x1, x2)) {
+        if (verbose) {
+            SetColor(GREEN, NORMAL, FOREGROUND);
+            printf("OK");
+            ResetTextAttributes();
+            printf("\n");
+        }
     }
     else {
         SetColor(RED, NORMAL, BACKGROUND);
@@ -26,23 +36,36 @@ static void TestSquareSolver(
         printf("a = %g b = %g c = %g\n", a, b, c);
         printf("got answer nRoots = %d x1 = %g x2 = %g\n", nRoots, x1, x2);
         printf("should be  nRoots = %d x1 = %g x2 = %g", answer_nRoots, answer_x1, answer_x2);
+        ResetTextAttributes();
+        printf("\n");
     }
-    ResetTextAttributes();
-    printf("\n");
 }
 
-int RunTest() {
+int RunTest(char *filename, const bool shouldCompareNRoots, const bool verbose) {
     printf("Testing...\n");
 
-    FILE *testFile = fopen(TEST_FILENAME, "r");
-    CleanBufferLine(testFile);
+    FILE *testFile = fopen(filename, "r");
 
     double a = 0, b = 0, c = 0;
     RootCount nRoots = INF;
     double x1 = NAN, x2 = NAN;
 
-    while (fscanf(testFile, "%lg %lg %lg %d %lg %lg", &a, &b, &c, (int*)&nRoots, &x1, &x2) == 6)
-        TestSquareSolver(a, b, c, nRoots, x1, x2);
+    int code = 0;
+    while (true) {
+        if (shouldCompareNRoots) {
+            code = fscanf(testFile, "%lg %lg %lg %d %lg %lg", &a, &b, &c, (int*)&nRoots, &x1, &x2);
+            if (code != 6) break;
+        } else {
+            code = fscanf(testFile, "%lg %lg %lg %lg %lg", &a, &b, &c, &x1, &x2);
+            if (code != 5) break;
+        }
+        TestSquareSolver(a, b, c, nRoots, x1, x2, shouldCompareNRoots, verbose);
+    }
+    
+    if (code != EOF) {
+        printf("Error on reading test file\n");
+        return -1;
+    }
     
     printf("Done testing\n\n");
     return 0;
