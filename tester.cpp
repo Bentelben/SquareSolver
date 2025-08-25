@@ -1,18 +1,22 @@
 #include "tester.h"
 
+#include <stdio.h>
+#include <math.h>
+
 #include "square_solver.h"
 #include "utils/display_controller.h"
 #include "utils/double_comparator.h"
 #include "utils/buffer_cleaner.h"
 
-#include <stdio.h>
-#include <math.h>
-
 static bool IsEqualRoots(const RootCount nRoots, const double answer_x1, const double answer_x2, const double x1, const double x2) {
-    if (nRoots == RC_INF || nRoots == RC_ZERO) return true;
-    if (nRoots == RC_ONE) return IsEqual(answer_x1, x1);
-    else return (IsEqual(answer_x1, x1) && IsEqual(answer_x2, x2)) ||
-                (IsEqual(answer_x1, x2) && IsEqual(answer_x2, x1));
+    if (nRoots == RC_INF || nRoots == RC_ZERO)
+        return true;
+    
+    if (nRoots == RC_ONE) 
+        return IsEqual(answer_x1, x1);
+    else 
+        return (IsEqual(answer_x1, x1) && IsEqual(answer_x2, x2)) ||
+               (IsEqual(answer_x1, x2) && IsEqual(answer_x2, x1));
 }
 
 static bool TestSquareSolver(
@@ -20,8 +24,11 @@ static bool TestSquareSolver(
     const RootCount answer_nRoots, const double answer_x1, const double answer_x2,
     const bool shouldCompareNRoots, const bool verbose
 ) {
-    double x1 = 0, x2 = 0;
+    double x1 = 0;
+    double x2 = 0;
+
     const RootCount nRoots = SolveSquareEquation(a, b, c, &x1, &x2);
+
     if ((!shouldCompareNRoots || nRoots == answer_nRoots) && IsEqualRoots(nRoots, answer_x1, answer_x2, x1, x2)) {
         if (verbose) {
             SetColor(GREEN, NORMAL, FOREGROUND);
@@ -33,8 +40,8 @@ static bool TestSquareSolver(
     }
     
     SetColor(RED, NORMAL, BACKGROUND);
-    printf("Wrong answer!\n");
-    printf("a = %g b = %g c = %g\n", a, b, c);
+    printf("Wrong answer!\n"
+           "a = %g b = %g c = %g\n", a, b, c);
     printf("got answer nRoots = %d x1 = %g x2 = %g\n", nRoots, x1, x2);
     printf("should be  nRoots = %d x1 = %g x2 = %g", answer_nRoots, answer_x1, answer_x2);
     ResetTextAttributes();
@@ -71,3 +78,4 @@ int RunTest(const char *filename, const bool shouldCompareNRoots, const bool ver
     
     return failedTests;
 }
+
