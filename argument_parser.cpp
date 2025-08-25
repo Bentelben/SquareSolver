@@ -13,7 +13,7 @@ static bool IsEqualFlag(char *arg, const char *flagName) {
     return arg[i+1] == flagName[i];
 }
 
-static Flag *ParseFlag(char *arg, Flag flags[], int nFlags) {
+static Flag *GetFlag(char *arg, Flag flags[], int nFlags) {
     for (int i = 0; i < nFlags; i++)
         if (IsEqualFlag(arg, flags[i].name)) return flags+i;
     return NULL;
@@ -24,7 +24,7 @@ ParseCode ParseFlags(char *argv[], int argc, Flag flags[], int nFlags) {
     assert(flags != NULL);
 
     for (int i = 1; i < argc; i++) {
-        Flag *flag = ParseFlag(argv[i], flags, nFlags);
+        Flag *flag = GetFlag(argv[i], flags, nFlags);
         if (flag == NULL)
             return PC_ERROR_UNKNOWN_FLAG;
 
