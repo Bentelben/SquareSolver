@@ -8,7 +8,17 @@ OUT := a.out
 MAIN := main
 BUILD_DIR := build
 
-source_files := $(MAIN) utils/double_comparator utils/display_controller utils/buffer_cleaner utils/display_controller polynom/reader polynom/printer tester argument_parser commands square_solver
+source_files := $(MAIN) \
+	utils/double_comparator \
+	utils/display_controller \
+	utils/buffer_cleaner \
+	utils/display_controller \
+	polynom/reader \
+	polynom/printer \
+	argument_parser \
+	commands \
+	square_solver \
+	tester
 
 $(OUT): $(source_files:%=$(BUILD_DIR)/%.o)
 	$(COMPILER) $(COMPILER_FLAGS) $^ -o $@
