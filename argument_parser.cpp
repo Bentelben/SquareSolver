@@ -19,13 +19,10 @@ static const Flag *GetFlag(char *arg, const Flag flags[], size_t nFlags) {
     assert(arg);
     assert(flags);
     
-    for (size_t i = 0; i < nFlags; i++) {
-        if (flags[i].fullName == NULL)
-            continue;
-
+    for (size_t i = 1; i < nFlags; i++)
         if (IsEqualFlag(arg, flags[i].fullName) || IsEqualFlag(arg, flags[i].alias))
             return flags+i;
-    }
+    
     return NULL;
 }
 

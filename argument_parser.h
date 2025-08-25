@@ -31,6 +31,7 @@ struct Flag {
 //! @note Each flag function must return true if parser should continue
 //! @note parsing and false if this flag function should be executed
 //! @note last
+//! @note Default flag function must be first in flags array
 ParseCode ParseFlags(char *argv[], int argc, const Flag flags[], size_t nFlags, void *context);
 
 //! Prints in stdout info about flags
