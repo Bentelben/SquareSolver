@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <string.h>
 
+static int getMaxFlagNameLength(Flag flags[], int nFlags);
+
 static bool IsEqualFlag(char *arg, const char *flagName) {
     int i = 0;
     for (; arg[i+1] != '\0' && flagName[i] != '\0'; i++)
@@ -26,7 +28,6 @@ int ParseFlags(char *argv[], Flag flags[], int nFlags) {
         if (flag == NULL) return -1;
 
         int j = 0;
-
         while (argv[i+j+1] != NULL) {
             if (argv[i+j+1][0] == '-') break;
             j++;
@@ -41,7 +42,18 @@ int ParseFlags(char *argv[], Flag flags[], int nFlags) {
 
 void PrintArgumentInfo(Flag flags[], int nFlags) {
     assert(flags != NULL);
-    for (int i = 0; i < nFlags; i++) {
-        printf(" -%-4s  %s\n", flags[i].name, flags[i].description);
-    }
+
+    int fieldWidth = getMaxFlagNameLength(flags, nFlags);
+    for (int i = 0; i < nFlags; i++)
+        printf(" -%-*s  %s\n", (int)fieldWidth, flags[i].name, flags[i].description);
 }
+
+static int getMaxFlagNameLength(Flag flags[], int nFlags) {
+    size_t maxWidth = 0;
+    for (int i = 0; i < nFlags; i++)
+        if (maxWidth < strlen(flags[i].name))
+            maxWidth = strlen(flags[i].name);
+    return (int)maxWidth;
+}
+
+
