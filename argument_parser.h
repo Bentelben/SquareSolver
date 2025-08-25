@@ -17,7 +17,7 @@ struct Flag {
     bool (*func)(char *args[], int nArgs);
 };
 
-ParseCode ParseFlags(char *args[], Flag flags[], int nFlags);
+ParseCode ParseFlags(char *argv[], int argc, Flag flags[], int nFlags);
 void PrintArgumentInfo(Flag flags[], int nFlags);
 
 #endif

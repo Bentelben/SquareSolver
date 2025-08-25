@@ -24,7 +24,7 @@ bool test_verbose = true;
 char *test_filename = "test.txt";
 
 int main(int argc, char *argv[]) {
-    ParseCode err = ParseFlags(argv, FLAGS, FLAGS_LENGTH);
+    ParseCode err = ParseFlags(argv, argc, FLAGS, FLAGS_LENGTH);
     switch (err) {
         case PC_NO_ERROR_CONTINUE:
             DefaultCommand(NULL, 0);

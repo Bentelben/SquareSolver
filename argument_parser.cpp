@@ -19,17 +19,17 @@ static Flag *ParseFlag(char *arg, Flag flags[], int nFlags) {
     return NULL;
 }
 
-ParseCode ParseFlags(char *argv[], Flag flags[], int nFlags) {
+ParseCode ParseFlags(char *argv[], int argc, Flag flags[], int nFlags) {
     assert(argv != NULL);
     assert(flags != NULL);
 
-    for (int i = 1; argv[i] != NULL; i++) {
+    for (int i = 1; i < argc; i++) {
         Flag *flag = ParseFlag(argv[i], flags, nFlags);
         if (flag == NULL)
             return PC_ERROR_UNKNOWN_FLAG;
 
         int j = 0;
-        while (argv[i+j+1] != NULL) {
+        while (i+j+1 < argc) {
             if (argv[i+j+1][0] == '-') break;
             j++;
         }
