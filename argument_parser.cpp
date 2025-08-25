@@ -1,25 +1,26 @@
 #include "argument_parser.h"
 
+#include <stdlib.h>
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
 
-static int getMaxFlagNameLength(const Flag flags[], int nFlags);
+static void getFieldWidth(const Flag flags[], int nFlags, size_t *fullNameFieldWidth, size_t *aliasFieldWidth);
 
 static bool IsEqualFlag(char *arg, const char *flagName) {
-    if (strlen(arg)-1 != strlen(flagName))
-        return false;
-
-    int i = 0;
-    for (; arg[i+1] != '\0' && flagName[i] != '\0'; i++)
-        if (arg[i+1] != flagName[i])
-            return false;
-    return arg[i+1] == flagName[i];
+    assert(arg);
+    assert(flagName);
+    
+    while (arg[0] == '-') arg++;
+    return strcmp(arg, flagName) == 0;
 }
 
 static const Flag *GetFlag(char *arg, const Flag flags[], int nFlags) {
+    assert(arg);
+    assert(flags);
+    
     for (int i = 0; i < nFlags; i++)
-        if (IsEqualFlag(arg, flags[i].name))
+        if (IsEqualFlag(arg, flags[i].fullName) || IsEqualFlag(arg, flags[i].alias))
             return flags+i;
     return NULL;
 }
@@ -28,22 +29,23 @@ ParseCode ParseFlags(char *argv[], int argc, const Flag flags[], int nFlags) {
     assert(argv != NULL);
     assert(flags != NULL);
 
-    for (int i = 1; i < argc; i++) {
-        const Flag *flag = GetFlag(argv[i], flags, nFlags);
+    for (int argumentIndex = 1; argumentIndex < argc; argumentIndex++) {
+        const Flag *flag = GetFlag(argv[argumentIndex], flags, nFlags);
         if (flag == NULL)
             return PC_ERROR_UNKNOWN_FLAG;
 
-        int j = 0;
-        while (i+j+1 < argc) {
-            if (argv[i+j+1][0] == '-') break;
-            j++;
+        int nWords = 0;
+        while (argumentIndex + nWords + 1 < argc) {
+            if (argv[argumentIndex + nWords + 1][0] == '-')
+                break;
+            nWords++;
         }
-        if (flag->nNextWords != -1 && j != flag->nNextWords)
+        if (flag->nNextWords != -1 && nWords != flag->nNextWords)
             return PC_ERROR_WRONG_WORD_COUNT;
 
-        if (!flag->func(argv + i + 1, j))
+        if (!flag->func(argv + argumentIndex + 1, nWords))
             return PC_NO_ERROR_STOP;
-        i += j;
+        argumentIndex += nWords;
     }
     return PC_NO_ERROR_CONTINUE;
 }
@@ -51,15 +53,23 @@ ParseCode ParseFlags(char *argv[], int argc, const Flag flags[], int nFlags) {
 void PrintArgumentInfo(const Flag flags[], int nFlags) {
     assert(flags != NULL);
 
-    int fieldWidth = getMaxFlagNameLength(flags, nFlags);
+    size_t fullNameFieldWidth = 0;
+    size_t aliasFieldWidth = 0;
+    getFieldWidth(flags, nFlags, &fullNameFieldWidth, &aliasFieldWidth);
+
     for (int i = 0; i < nFlags; i++)
-        printf(" -%-*s  %s\n", (int)fieldWidth, flags[i].name, flags[i].description);
+        printf(" --%-*s -%-*s %s\n", (int)fullNameFieldWidth, flags[i].fullName, (int)aliasFieldWidth, flags[i].alias, flags[i].description);
 }
 
-static int getMaxFlagNameLength(const Flag flags[], int nFlags) {
-    size_t maxWidth = 0;
-    for (int i = 0; i < nFlags; i++)
-        if (maxWidth < strlen(flags[i].name))
-            maxWidth = strlen(flags[i].name);
-    return (int)maxWidth;
+static void getFieldWidth(const Flag flags[], int nFlags, size_t *fullNameFieldWidth, size_t *aliasFieldWidth) {
+    assert(flags);
+    assert(fullNameFieldWidth);
+    assert(aliasFieldWidth);
+
+    for (int i = 0; i < nFlags; i++) {
+        if (*fullNameFieldWidth < strlen(flags[i].fullName))
+            *fullNameFieldWidth = strlen(flags[i].fullName);
+        if (*aliasFieldWidth < strlen(flags[i].alias))
+            *aliasFieldWidth = strlen(flags[i].alias);
+    }
 }

@@ -4,14 +4,15 @@
 #include <stdlib.h>
 
 enum ParseCode {
-    PC_NO_ERROR_CONTINUE,
-    PC_NO_ERROR_STOP,
-    PC_ERROR_UNKNOWN_FLAG,
-    PC_ERROR_WRONG_WORD_COUNT
+    PC_NO_ERROR_CONTINUE      = 0,
+    PC_NO_ERROR_STOP          = 1,
+    PC_ERROR_UNKNOWN_FLAG     = 2,
+    PC_ERROR_WRONG_WORD_COUNT = 3
 };
 
 struct Flag {
-    const char *name;
+    const char *fullName;
+    const char *alias;
     int nNextWords;
     const char *description;
     bool (*func)(char *args[], int nArgs);

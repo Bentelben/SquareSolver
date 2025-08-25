@@ -8,17 +8,19 @@
 
 
 extern const Flag FLAGS[] = {
-    {"h",  0, "Prints this text",          PrintHelpCommand                    },
-    {"T",  0, "Runs test",                 TestCommand                         },
-    {"Tf", 1, "Set name of file for test", Test_set_filenameCommand            },
-    {"Tc", 1, "Set should compare root \
-count for test (default true)",            Test_set_shouldCompareNRootsCommand },
-    {"Tv", 1, "Set verbose output for \
-test (default true)",                      Test_set_verboseCommand             },
-    {"Ti", 0, "Ignore test result",        Test_set_ignoreCommand              },
-    {"NT", 0, "Runs program without test", NoTestCommand                       }
+    {"help",                "h",  0, "Prints this text",          PrintHelpCommand                    },
+    {"test",                "T",  0, "Runs test",                 TestCommand                         },
+    {"test-filename",       "Tf", 1, "Set name of file for test", Test_set_filenameCommand            },
+    {"test-compare-nroots", "Tc", 1, "Set should compare root \
+count for test (default true)",                                   Test_set_shouldCompareNRootsCommand },
+    {"test-verbose",        "Tv", 1, "Set verbose output for \
+test (default true)",                                             Test_set_verboseCommand             },
+    {"test-ignore",         "Ti", 0, "Ignore test result",        Test_set_ignoreCommand              },
+    {"no-test",             "NT", 0, "Runs program without test", NoTestCommand                       }
 };
 extern const int FLAGS_LENGTH = sizeof(FLAGS)/sizeof(*FLAGS);
+
+// TODO struct
 
 const char *test_filename = "test.txt";
 bool test_shouldCompareNRoots = true;
