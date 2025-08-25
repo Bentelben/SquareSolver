@@ -7,15 +7,20 @@
 static int getMaxFlagNameLength(const Flag flags[], int nFlags);
 
 static bool IsEqualFlag(char *arg, const char *flagName) {
+    if (strlen(arg)-1 != strlen(flagName))
+        return false;
+
     int i = 0;
     for (; arg[i+1] != '\0' && flagName[i] != '\0'; i++)
-        if (arg[i+1] != flagName[i]) return false;
+        if (arg[i+1] != flagName[i])
+            return false;
     return arg[i+1] == flagName[i];
 }
 
 static const Flag *GetFlag(char *arg, const Flag flags[], int nFlags) {
     for (int i = 0; i < nFlags; i++)
-        if (IsEqualFlag(arg, flags[i].name)) return flags+i;
+        if (IsEqualFlag(arg, flags[i].name))
+            return flags+i;
     return NULL;
 }
 
