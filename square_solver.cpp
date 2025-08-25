@@ -7,12 +7,12 @@
 static RootCount SolveLinear(const double b, const double c, double *const x) {
     if (IsZero(b)) {
         if (IsZero(c))
-            return INF;
+            return RC_INF;
         else
-            return ZERO;
+            return RC_ZERO;
     }
     *x = -c/b;
-    return ONE;
+    return RC_ONE;
 }
 
 RootCount SolveSquareEquation(const double a, const double b, const double c, double *const x1, double *const x2) {
@@ -28,16 +28,16 @@ RootCount SolveSquareEquation(const double a, const double b, const double c, do
 
     const double discriminant = b*b - 4*a*c;
     if (discriminant < 0)
-        return ZERO;
+        return RC_ZERO;
     const double discriminant_root = sqrt(discriminant);
 
     if (IsZero(discriminant_root)) {
         *x1 = -b/(2*a);
-        return ONE;
+        return RC_ONE;
     } else {
         *x1 = (-b - discriminant_root)/(2*a);
         *x2 = (-b + discriminant_root)/(2*a);
-        return TWO;
+        return RC_TWO;
     }
-    return ZERO;
+    return RC_ZERO;
 }

@@ -9,8 +9,8 @@
 #include <math.h>
 
 static bool IsEqualRoots(const RootCount nRoots, const double answer_x1, const double answer_x2, const double x1, const double x2) {
-    if (nRoots == INF || nRoots == ZERO) return true;
-    if (nRoots == ONE) return IsEqual(answer_x1, x1);
+    if (nRoots == RC_INF || nRoots == RC_ZERO) return true;
+    if (nRoots == RC_ONE) return IsEqual(answer_x1, x1);
     else return (IsEqual(answer_x1, x1) && IsEqual(answer_x2, x2)) ||
                 (IsEqual(answer_x1, x2) && IsEqual(answer_x2, x1));
 }
@@ -48,7 +48,7 @@ int RunTest(const char *filename, const bool shouldCompareNRoots, const bool ver
     FILE *testFile = fopen(filename, "r");
 
     double a = 0, b = 0, c = 0;
-    RootCount nRoots = INF;
+    RootCount nRoots = RC_INF;
     double x1 = NAN, x2 = NAN;
 
     int failedTests = 0;

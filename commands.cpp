@@ -107,21 +107,21 @@ static void PrintRoots(RootCount nRoots, double x1, double x2) {
     if (IsZero(x1)) x1 = 0;
     if (IsZero(x2)) x2 = 0;
 
-    if (nRoots == TWO && IsEqual(x1, x2))
-        nRoots = ONE;
+    if (nRoots == RC_TWO && IsEqual(x1, x2))
+        nRoots = RC_ONE;
 
     switch (nRoots) {
-        case INF:
+        case RC_INF:
             printf("x is any real number\n");
             break;
-        case ZERO:
+        case RC_ZERO:
             printf("x is not real number\n");
             break;
-        case ONE:
+        case RC_ONE:
             assert(!isnan(x1));
             printf("x = %g\n", x1);
             break;
-        case TWO:
+        case RC_TWO:
             assert(!isnan(x1) && !isnan(x2));
             printf("x1 = %g\n", x1);
             printf("x2 = %g\n", x2);

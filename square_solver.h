@@ -2,10 +2,10 @@
 #define SQUARE_SOLVER_H
 
 enum RootCount {
-    INF = -1,
-    ZERO,
-    ONE,
-    TWO
+    RC_INF = -1,
+    RC_ZERO,
+    RC_ONE,
+    RC_TWO
 };
 
 //! Solve square equation a*x^2 + b*x + c = 0
