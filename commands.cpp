@@ -18,7 +18,7 @@ const size_t N_COEFFICIENT = 3;
 const size_t READ_ATTEMPT_LIMIT = 5;
 
 extern const Flag FLAGS[];
-extern const int FLAGS_LENGTH;
+extern const size_t FLAGS_LENGTH;
 
 bool DefaultCommand(char *args[], int nArgs, void *context) {
     (void)args;

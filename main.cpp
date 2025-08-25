@@ -18,7 +18,7 @@ test (default true)",                                             Test_set_verbo
     {"test-ignore",         "Ti", 0, "Ignore test result",        Test_set_ignoreCommand              },
     {"no-test",             "NT", 0, "Runs program without test", NoTestCommand                       }
 };
-extern const int FLAGS_LENGTH = sizeof(FLAGS)/sizeof(*FLAGS);
+extern const size_t FLAGS_LENGTH = sizeof(FLAGS)/sizeof(*FLAGS);
 
 int main(int argc, char *argv[]) {
     
