@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
-static int getMaxFlagNameLength(Flag flags[], int nFlags);
+static int getMaxFlagNameLength(const Flag flags[], int nFlags);
 
 static bool IsEqualFlag(char *arg, const char *flagName) {
     int i = 0;
@@ -13,18 +13,18 @@ static bool IsEqualFlag(char *arg, const char *flagName) {
     return arg[i+1] == flagName[i];
 }
 
-static Flag *GetFlag(char *arg, Flag flags[], int nFlags) {
+static const Flag *GetFlag(char *arg, const Flag flags[], int nFlags) {
     for (int i = 0; i < nFlags; i++)
         if (IsEqualFlag(arg, flags[i].name)) return flags+i;
     return NULL;
 }
 
-ParseCode ParseFlags(char *argv[], int argc, Flag flags[], int nFlags) {
+ParseCode ParseFlags(char *argv[], int argc, const Flag flags[], int nFlags) {
     assert(argv != NULL);
     assert(flags != NULL);
 
     for (int i = 1; i < argc; i++) {
-        Flag *flag = GetFlag(argv[i], flags, nFlags);
+        const Flag *flag = GetFlag(argv[i], flags, nFlags);
         if (flag == NULL)
             return PC_ERROR_UNKNOWN_FLAG;
 
@@ -43,7 +43,7 @@ ParseCode ParseFlags(char *argv[], int argc, Flag flags[], int nFlags) {
     return PC_NO_ERROR_CONTINUE;
 }
 
-void PrintArgumentInfo(Flag flags[], int nFlags) {
+void PrintArgumentInfo(const Flag flags[], int nFlags) {
     assert(flags != NULL);
 
     int fieldWidth = getMaxFlagNameLength(flags, nFlags);
@@ -51,7 +51,7 @@ void PrintArgumentInfo(Flag flags[], int nFlags) {
         printf(" -%-*s  %s\n", (int)fieldWidth, flags[i].name, flags[i].description);
 }
 
-static int getMaxFlagNameLength(Flag flags[], int nFlags) {
+static int getMaxFlagNameLength(const Flag flags[], int nFlags) {
     size_t maxWidth = 0;
     for (int i = 0; i < nFlags; i++)
         if (maxWidth < strlen(flags[i].name))

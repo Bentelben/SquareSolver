@@ -18,7 +18,7 @@ const size_t N_COEFFICIENT = 3;
 const size_t READ_ATTEMPT_LIMIT = 5;
 
 extern Flag FLAGS[];
-extern int FLAGS_LENGTH;
+extern const int FLAGS_LENGTH;
 
 extern const char* test_filename;
 extern bool test_shouldCompareNRoots;

@@ -7,7 +7,7 @@
 #include <assert.h>
 
 
-Flag FLAGS[] = {
+extern const Flag FLAGS[] = {
     {"h",  0, "Prints this text",          PrintHelpCommand                    },
     {"T",  0, "Runs test",                 TestCommand                         },
     {"Tf", 1, "Set name of file for test", Test_set_filenameCommand            },
@@ -18,7 +18,7 @@ test (default true)",                      Test_set_verboseCommand             }
     {"Ti", 0, "Ignore test result",        Test_set_ignoreCommand              },
     {"NT", 0, "Runs program without test", NoTestCommand                       }
 };
-int FLAGS_LENGTH = sizeof(FLAGS)/sizeof(*FLAGS);
+extern const int FLAGS_LENGTH = sizeof(FLAGS)/sizeof(*FLAGS);
 
 const char *test_filename = "test.txt";
 bool test_shouldCompareNRoots = true;
