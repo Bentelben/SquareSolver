@@ -3,9 +3,9 @@
 
 #include <stdlib.h>
 
-void DefaultCommand(char *args[], int nArgs);
-void PrintHelpCommand(char *args[], int nArgs);
-void TestCommand(char *args[], int nArgs);
-void NoTestCommand(char *args[], int nArgs);
+bool DefaultCommand(char *args[], int nArgs);
+bool PrintHelpCommand(char *args[], int nArgs);
+bool TestCommand(char *args[], int nArgs);
+bool NoTestCommand(char *args[], int nArgs);
 
 #endif

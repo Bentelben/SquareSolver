@@ -36,10 +36,11 @@ ParseCode ParseFlags(char *argv[], Flag flags[], int nFlags) {
         if (flag->nNextWords != -1 && j != flag->nNextWords)
             return PC_ERROR_WRONG_WORD_COUNT;
 
-        flag->func(argv + i + 1, j);
+        if (!flag->func(argv + i + 1, j))
+            return PC_NO_ERROR_STOP;
         i += j;
     }
-    return PC_NO_ERROR;
+    return PC_NO_ERROR_CONTINUE;
 }
 
 void PrintArgumentInfo(Flag flags[], int nFlags) {

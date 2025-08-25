@@ -14,14 +14,13 @@ Flag FLAGS[] = {
 };
 int FLAGS_LENGTH = sizeof(FLAGS)/sizeof(*FLAGS);
 
-
-bool shouldRunDefault = true;
-
 int main(int argc, char *argv[]) {
     ParseCode err = ParseFlags(argv, FLAGS, FLAGS_LENGTH);
     switch (err) {
-        case PC_NO_ERROR:
+        case PC_NO_ERROR_CONTINUE:
             DefaultCommand(NULL, 0);
+            break;
+        case PC_NO_ERROR_STOP:
             break;
         case PC_ERROR_UNKNOWN_FLAG:
             printf("Unknown flag\n");

@@ -20,35 +20,36 @@ extern Flag FLAGS[];
 extern int FLAGS_LENGTH;
 
 
-void DefaultCommand(char *args[], int nArgs) {
+bool DefaultCommand(char *args[], int nArgs) {
     assert(nArgs == 0);
     TestCommand(NULL, 0);
     NoTestCommand(NULL, 0);
+    return false;
 }
 
-void PrintHelpCommand(char *args[], int nArgs) {
+bool PrintHelpCommand(char *args[], int nArgs) {
     assert(nArgs == 0);
 
     printf("help\n");
     PrintArgumentInfo(FLAGS, FLAGS_LENGTH);
-    shouldRunDefault = false;
+    return false;
 }
 
-void TestCommand(char *args[], int nArgs) {
+bool TestCommand(char *args[], int nArgs) {
     assert(nArgs == 0);
 
     RunTest();
-    shouldRunDefault = false;
+    return false;
 }
 
-void NoTestCommand(char *args[], int nArgs) {
+bool NoTestCommand(char *args[], int nArgs) {
     assert(nArgs == 0);
 
     double coefficients[N_COEFFICIENT] = {};
     for (size_t i = 0; i < N_COEFFICIENT; i++) coefficients[i] = NAN;
     
     if (ReadNCoefficientsWithAttempts(coefficients, N_COEFFICIENT, READ_ATTEMPT_LIMIT) != 0)
-        return;
+        return false;
 
     double x1 = NAN, x2 = NAN;
     const RootCount nRoots = SolveSquareEquation(
@@ -59,7 +60,7 @@ void NoTestCommand(char *args[], int nArgs) {
     );
     printf("Solving...\n\n");
     PrintRoots(nRoots, x1, x2);
-    shouldRunDefault = false;
+    return false;
 }
 
 
