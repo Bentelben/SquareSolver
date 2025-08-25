@@ -27,6 +27,7 @@ static const Flag *GetFlag(char *arg, const Flag flags[], size_t nFlags) {
 
 ParseCode ParseFlags(char *argv[], int argc, const Flag flags[], size_t nFlags, void *context) {
     assert(argv != NULL);
+    assert(argc > 0);
     assert(flags != NULL);
 
     for (int argumentIndex = 1; argumentIndex < argc; argumentIndex++) {
@@ -61,15 +62,18 @@ void PrintArgumentInfo(const Flag flags[], size_t nFlags) {
         printf(" --%-*s -%-*s %s\n", (int)fullNameFieldWidth, flags[i].fullName, (int)aliasFieldWidth, flags[i].alias, flags[i].description);
 }
 
+static void updateMaxFieldWidth(size_t *size, const char *name) {
+    size_t len = strlen(name);
+    if (*size < len) *size = len;
+}
+
 static void getFieldWidth(const Flag flags[], size_t nFlags, size_t *fullNameFieldWidth, size_t *aliasFieldWidth) {
     assert(flags);
     assert(fullNameFieldWidth);
     assert(aliasFieldWidth);
 
     for (size_t i = 0; i < nFlags; i++) {
-        if (*fullNameFieldWidth < strlen(flags[i].fullName))
-            *fullNameFieldWidth = strlen(flags[i].fullName);
-        if (*aliasFieldWidth < strlen(flags[i].alias))
-            *aliasFieldWidth = strlen(flags[i].alias);
+        updateMaxFieldWidth(fullNameFieldWidth, flags[i].fullName);
+        updateMaxFieldWidth(aliasFieldWidth, flags[i].alias);
     }
 }
