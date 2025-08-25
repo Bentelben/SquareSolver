@@ -20,9 +20,18 @@ const size_t READ_ATTEMPT_LIMIT = 5;
 extern Flag FLAGS[];
 extern int FLAGS_LENGTH;
 
+extern char* test_filename;
+extern bool test_shouldCompareNRoots;
+extern bool test_verbose;
+extern bool test_ignore;
+
 bool DefaultCommand(char *args[], int nArgs) {
     assert(nArgs == 0);
-    TestCommand(NULL, 0);
+
+    int testsFailed = RunTest(test_filename, test_shouldCompareNRoots, test_verbose);
+    if (!test_ignore && testsFailed)
+        return false;
+    printf("Done testing\n\n");
     NoTestCommand(NULL, 0);
     return false;
 }
@@ -34,10 +43,6 @@ bool PrintHelpCommand(char *args[], int nArgs) {
     PrintArgumentInfo(FLAGS, FLAGS_LENGTH);
     return false;
 }
-
-extern char* test_filename;
-extern bool test_shouldCompareNRoots;
-extern bool test_verbose;
 
 bool TestCommand(char *args[], int nArgs) {
     assert(nArgs == 0);
@@ -60,6 +65,12 @@ bool Test_set_verboseCommand(char *args[], int nArgs) {
     assert(nArgs == 1);
 
     test_verbose = ParseBoolean(args[0]);
+    return true;
+}
+bool Test_set_ignoreCommand(char *args[], int nArgs) {
+    assert(nArgs == 0);
+
+    test_ignore = true;
     return true;
 }
 

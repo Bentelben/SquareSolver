@@ -15,7 +15,7 @@ static bool IsEqualRoots(const RootCount nRoots, const double answer_x1, const d
                 (IsEqual(answer_x1, x2) && IsEqual(answer_x2, x1));
 }
 
-static void TestSquareSolver(
+static bool TestSquareSolver(
     const double a, const double b, const double c,
     const RootCount answer_nRoots, const double answer_x1, const double answer_x2,
     const bool shouldCompareNRoots, const bool verbose
@@ -29,16 +29,17 @@ static void TestSquareSolver(
             ResetTextAttributes();
             printf("\n");
         }
+        return true;
     }
-    else {
-        SetColor(RED, NORMAL, BACKGROUND);
-        printf("Wrong answer!\n");
-        printf("a = %g b = %g c = %g\n", a, b, c);
-        printf("got answer nRoots = %d x1 = %g x2 = %g\n", nRoots, x1, x2);
-        printf("should be  nRoots = %d x1 = %g x2 = %g", answer_nRoots, answer_x1, answer_x2);
-        ResetTextAttributes();
-        printf("\n");
-    }
+    
+    SetColor(RED, NORMAL, BACKGROUND);
+    printf("Wrong answer!\n");
+    printf("a = %g b = %g c = %g\n", a, b, c);
+    printf("got answer nRoots = %d x1 = %g x2 = %g\n", nRoots, x1, x2);
+    printf("should be  nRoots = %d x1 = %g x2 = %g", answer_nRoots, answer_x1, answer_x2);
+    ResetTextAttributes();
+    printf("\n");
+    return false;
 }
 
 int RunTest(char *filename, const bool shouldCompareNRoots, const bool verbose) {
@@ -50,23 +51,23 @@ int RunTest(char *filename, const bool shouldCompareNRoots, const bool verbose) 
     RootCount nRoots = INF;
     double x1 = NAN, x2 = NAN;
 
-    int code = 0;
+    int failedTests = 0;
+    int scanfCode = 0;
     while (true) {
         if (shouldCompareNRoots) {
-            code = fscanf(testFile, "%lg %lg %lg %d %lg %lg", &a, &b, &c, (int*)&nRoots, &x1, &x2);
-            if (code != 6) break;
+            scanfCode = fscanf(testFile, "%lg %lg %lg %d %lg %lg", &a, &b, &c, (int*)&nRoots, &x1, &x2);
+            if (scanfCode != 6) break;
         } else {
-            code = fscanf(testFile, "%lg %lg %lg %lg %lg", &a, &b, &c, &x1, &x2);
-            if (code != 5) break;
+            scanfCode = fscanf(testFile, "%lg %lg %lg %lg %lg", &a, &b, &c, &x1, &x2);
+            if (scanfCode != 5) break;
         }
-        TestSquareSolver(a, b, c, nRoots, x1, x2, shouldCompareNRoots, verbose);
+        failedTests += !TestSquareSolver(a, b, c, nRoots, x1, x2, shouldCompareNRoots, verbose);
     }
     
-    if (code != EOF) {
+    if (scanfCode != EOF) {
         printf("Error on reading test file\n");
         return -1;
     }
     
-    printf("Done testing\n\n");
-    return 0;
+    return failedTests;
 }
