@@ -12,6 +12,7 @@ static bool IsEqualFlag(char *arg, const char *flagName) {
     assert(flagName);
     
     while (arg[0] == '-') arg++;
+
     return strcmp(arg, flagName) == 0;
 }
 

@@ -11,3 +11,18 @@ void CleanBufferLine(FILE* stream) {
         c = getc(stream);
     } while ( c != EOF && c != '\n');
 }
+
+void CleanBufferSpaces(FILE* stream) {
+    assert(stream);
+
+    int c = 0;
+    do {
+        c = getc(stream);
+    } while (c == ' ' || c == '\t');
+
+    if (c != EOF) {
+        int z = ungetc(c, stream);
+        assert(z);
+    }
+}
+

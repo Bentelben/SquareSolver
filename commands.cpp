@@ -9,10 +9,10 @@
 #include "tester.h"
 #include "square_solver.h"
 #include "polynom/reader.h"
+#include "utils/ccomplex.h"
 #include "utils/double_comparator.h"
 
-static bool ParseBoolean(char *arg);
-static void PrintRoots(RootCount nRoots, double x1, double x2);
+static void PrintRoots(RootCount nRoots, ccomplex x1, ccomplex x2);
 
 const size_t N_COEFFICIENT = 3;
 const size_t READ_ATTEMPT_LIMIT = 5;
@@ -29,7 +29,8 @@ bool DefaultCommand(char *args[], int nArgs, void *context) {
     int testsFailed = RunTest(
         flagContext->test.filename,
         flagContext->test.shouldCompareNRoots,
-        flagContext->test.verbose
+        flagContext->test.verbose,
+        flagContext->isComplex
     );
     if (!flagContext->test.ignore && testsFailed)
         return false;
@@ -57,7 +58,8 @@ bool TestCommand(char *args[], int nArgs, void *context) {
     RunTest(
         flagContext->test.filename,
         flagContext->test.shouldCompareNRoots,
-        flagContext->test.verbose
+        flagContext->test.verbose,
+        flagContext->isComplex
     );
     return false;
 }
@@ -71,18 +73,18 @@ bool Test_set_filenameCommand(char *args[], int nArgs, void *context) {
 }
 
 bool Test_set_shouldCompareNRootsCommand(char *args[], int nArgs, void *context) {
-    assert(nArgs == 1);
+    assert(nArgs == 0);
     assert(args != NULL);
 
-    ((FlagContext*)context)->test.shouldCompareNRoots = ParseBoolean(args[0]);
+    ((FlagContext*)context)->test.shouldCompareNRoots = false;
     return true;
 }
 
 bool Test_set_verboseCommand(char *args[], int nArgs, void *context) {
-    assert(nArgs == 1);
+    assert(nArgs == 0);
     assert(args != NULL);
 
-    ((FlagContext*)context)->test.verbose = ParseBoolean(args[0]);
+    ((FlagContext*)context)->test.verbose = true;
     return true;
 }
 
@@ -97,7 +99,8 @@ bool Test_set_ignoreCommand(char *args[], int nArgs, void *context) {
 bool NoTestCommand(char *args[], int nArgs, void *context) {
     (void)args;
     assert(nArgs == 0);
-    (void)context;
+
+    const bool isComplex = ((FlagContext*)context)->isComplex;
 
     double coefficients[N_COEFFICIENT] = {};
     for (size_t i = 0; i < N_COEFFICIENT; i++) coefficients[i] = NAN;
@@ -105,30 +108,33 @@ bool NoTestCommand(char *args[], int nArgs, void *context) {
     if (ReadNCoefficientsWithAttempts(coefficients, N_COEFFICIENT, READ_ATTEMPT_LIMIT) != 0)
         return false;
 
-    double x1 = NAN, x2 = NAN;
+    ccomplex x1 = {NAN, NAN};
+    ccomplex x2 = {NAN, NAN};
     const RootCount nRoots = SolveSquareEquation(
         coefficients[0],
         coefficients[1], 
         coefficients[2], 
-        &x1, &x2
-    );
+        &x1, &x2,
+        isComplex 
+     );
     printf("Solving...\n\n");
     PrintRoots(nRoots, x1, x2);
     return false;
 }
 
-static bool ParseBoolean(char *arg) {
-    assert(arg);
-
-    if (strcmp(arg, "true")==0 || strcmp(arg, "1")==0) return true;
-    return false;
+bool Set_isComplexCommand(char *args[], int nArgs, void *context) {
+    (void)args;
+    assert(nArgs == 0);
+    
+    ((FlagContext*)context)->isComplex = true;
+    return true;
 }
 
-static void PrintRoots(RootCount nRoots, double x1, double x2) {
-    if (IsZero(x1)) x1 = 0;
-    if (IsZero(x2)) x2 = 0;
+static void PrintRoots(RootCount nRoots, ccomplex x1, ccomplex x2) {
+    ZeroizeComplex(&x1);
+    ZeroizeComplex(&x2);
 
-    if (nRoots == RC_TWO && IsEqual(x1, x2))
+    if (nRoots == RC_TWO && IsComplexEqual(x1, x2))
         nRoots = RC_ONE;
 
     switch (nRoots) {
@@ -139,13 +145,20 @@ static void PrintRoots(RootCount nRoots, double x1, double x2) {
             printf("x is not real number\n");
             break;
         case RC_ONE:
-            assert(!isnan(x1));
-            printf("x = %g\n", x1);
+            assert(!IsComplexNan(x1));
+            printf("x = ");
+            PrintComplex(x1);
+            printf("\n");
             break;
         case RC_TWO:
-            assert(!isnan(x1) && !isnan(x2));
-            printf("x1 = %g\n", x1);
-            printf("x2 = %g\n", x2);
+            assert(!IsComplexNan(x1) && !IsComplexNan(x2));
+            printf("x1 = ");
+            PrintComplex(x1);
+            printf("\n");
+
+            printf("x2 = ");
+            PrintComplex(x2);
+            printf("\n");
             break;
         default:
             assert(0);

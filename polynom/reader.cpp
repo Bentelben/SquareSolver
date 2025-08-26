@@ -10,7 +10,7 @@ int ReadCoefficient(const char coefficientName, double *const resultValue) {
     assert(resultValue != NULL);
     
     printf("Enter %c: ", coefficientName);
-    if (scanf("%lf", resultValue) != 1)
+    if (scanf("%lg", resultValue) != 1)
         return -1;
     
     const int nextChar = getchar();
@@ -21,7 +21,6 @@ int ReadCoefficient(const char coefficientName, double *const resultValue) {
 
 int ReadNCoefficients(double *const resultCoefficients, const size_t nCoefficient) {
     assert(resultCoefficients != NULL);
-    assert(nCoefficient > 0);
 
     PrintLetterPolynom(nCoefficient-1);
 
@@ -34,7 +33,6 @@ int ReadNCoefficients(double *const resultCoefficients, const size_t nCoefficien
 
 int ReadNCoefficientsWithAttempts(double *const resultCoefficients, const size_t nCoefficient, const size_t attemptLimit) {
     assert(resultCoefficients != NULL);
-    assert(nCoefficient > 0);
 
     for (size_t i = 0; i < attemptLimit; i++) {
         if (i > 0)

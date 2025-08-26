@@ -13,6 +13,7 @@ source_files := $(MAIN) \
 	utils/display_controller \
 	utils/buffer_cleaner \
 	utils/display_controller \
+	utils/ccomplex \
 	polynom/reader \
 	polynom/printer \
 	argument_parser \

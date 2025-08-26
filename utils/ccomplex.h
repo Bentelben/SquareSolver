@@ -1,0 +1,25 @@
+#ifndef CCOMPLEX_H
+#define CCOMPLEX_H
+
+#include <math.h>
+#include <stdio.h>
+
+struct ccomplex {
+    double real;
+    double imag;
+};
+
+void FPrintComplex(FILE *stream, ccomplex value);
+void PrintComplex(ccomplex value);
+
+//int FScanComplex(FILE *stream , ccomplex *resultValue);
+//int ScanComplex(ccomplex *resultValue);
+
+bool IsComplexEqual(ccomplex value1, ccomplex value2);
+bool IsComplexZero(ccomplex value);
+
+bool IsComplexNan(ccomplex value);
+
+void ZeroizeComplex(ccomplex *value);
+
+#endif

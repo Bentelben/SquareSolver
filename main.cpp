@@ -8,25 +8,29 @@
 
 
 extern const Flag FLAGS[] = {
-    {NULL,                  NULL, 0, "Solves square equation",    DefaultCommand                      },
-    {"help",                "h",  0, "Prints this text",          PrintHelpCommand                    },
-    {"test",                "T",  0, "Runs test",                 TestCommand                         },
-    {"test-filename",       "Tf", 1, "Set name of file for test", Test_set_filenameCommand            },
-    {"test-compare-nroots", "Tc", 1, "Set should compare root \
-count for test (default true)",                                   Test_set_shouldCompareNRootsCommand },
-    {"test-verbose",        "Tv", 1, "Set verbose output for \
+    {NULL,                     NULL, 0, "Solves square equation",    DefaultCommand                      },
+    {"help",                   "h",  0, "Prints this text",          PrintHelpCommand                    },
+    {"test",                   "t",  0, "Runs test",                 TestCommand                         },
+    {"test-filename",          "tf", 1, "Set name of file for test", Test_set_filenameCommand            },
+    {"test-no-compare-nroots", "tc", 0, "Disable root count\
+comparison for test",                                             Test_set_shouldCompareNRootsCommand },
+    {"test-verbose",           "tv", 0, "Set verbose output for \
 test (default true)",                                             Test_set_verboseCommand             },
-    {"test-ignore",         "Ti", 0, "Ignore test result",        Test_set_ignoreCommand              },
-    {"no-test",             "NT", 0, "Runs program without test", NoTestCommand                       }
+    {"test-ignore",            "ti", 0, "Ignore test result",        Test_set_ignoreCommand              },
+    {"no-test",                "nt", 0, "Runs program without test", NoTestCommand                       },
+    {"complex",                "c",  0, "Solves equation in \
+complex values (default disabled)",                             Set_isComplexCommand                  }
 };
 extern const size_t FLAGS_LENGTH = sizeof(FLAGS)/sizeof(*FLAGS);
 
 int main(int argc, char *argv[]) {
+    printf("Meow! (c) Poltorashka\n\n");
     
     FlagContext context = {
+        .isComplex = false,
         .test = {
             .filename = "test.txt",
-            .verbose = true,
+            .verbose = false,
             .shouldCompareNRoots = true,
             .ignore = false
         }
@@ -48,6 +52,8 @@ int main(int argc, char *argv[]) {
             assert(0);
             break;
     }
+
+    printf("\n\nCOMMIT GITHUB\n");
     return 0;
 }
 
