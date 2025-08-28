@@ -1,11 +1,10 @@
-#include "commands.h"
-#include "argument_parser.h"
-
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include <assert.h>
 
+#include "commands.h"
+#include "argument_parser.h"
+#include "myassert.h"
 
 extern const Flag FLAGS[] = {
     {NULL,                     NULL, 0, "Solves square equation",    DefaultCommand                      },
@@ -25,7 +24,9 @@ extern const size_t FLAGS_LENGTH = sizeof(FLAGS)/sizeof(*FLAGS);
 
 int main(int argc, char *argv[]) {
     printf("Meow! (c) Poltorashka\n\n");
-    
+
+    myassert(0, "some text %s", argv[0]);
+
     FlagContext context = {
         .isComplex = false,
         .test = {
@@ -49,7 +50,7 @@ int main(int argc, char *argv[]) {
             PrintHelpCommand(NULL, 0, (void*)&context);
             break;
         default:
-            assert(0);
+            myassert(0, "");
             break;
     }
 

@@ -1,10 +1,10 @@
 #include "buffer_cleaner.h"
 
 #include <stdio.h>
-#include <assert.h>
+#include "../myassert.h"
 
 void CleanBufferLine(FILE* stream) {
-    assert(stream);
+    myassert(stream, "");
 
     int c = 0;
     do {
@@ -13,7 +13,7 @@ void CleanBufferLine(FILE* stream) {
 }
 
 void CleanBufferSpaces(FILE* stream) {
-    assert(stream);
+    myassert(stream, "");
 
     int c = 0;
     do {
@@ -22,7 +22,7 @@ void CleanBufferSpaces(FILE* stream) {
 
     if (c != EOF) {
         int z = ungetc(c, stream);
-        assert(z);
+        myassert(z, "");
     }
 }
 

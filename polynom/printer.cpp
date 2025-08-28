@@ -4,10 +4,10 @@
 
 #include <stdio.h>
 #include <math.h>
-#include <assert.h>
+#include "../myassert.h"
 
 char GetCoefficientName(const size_t index) {
-    assert('a' + (char)index <= 'z');
+    myassert('a' + (char)index <= 'z', "");
     return 'a' + (char)index;
 }
 
@@ -29,7 +29,7 @@ void PrintPolynom(double *const coefficients, const size_t nCoefficients) {
 
         if (!isPositive)   printf("-");
         else if (!isFirst) printf("+");
-        
+
         if (!isFirst) printf(" ");
 
         if (i == nCoefficients-1 || !IsEqual(absValue, 1)) printf("%lg", absValue);

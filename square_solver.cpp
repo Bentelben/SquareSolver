@@ -2,12 +2,12 @@
 #include "utils/double_comparator.h"
 
 #include <math.h>
-#include <assert.h>
+#include "myassert.h"
 
 #include "utils/ccomplex.h"
 
 static RootCount SolveLinear(const double b, const double c, ccomplex *const x) {
-    assert(x);
+    myassert(x, "");
 
     if (IsZero(b)) {
         if (IsZero(c))
@@ -24,12 +24,12 @@ RootCount SolveSquareEquation(
     const double a, const double b, const double c, ccomplex *const x1, ccomplex *const x2,
     const bool isComplex
 ) {
-    assert(!isnan(a));
-    assert(!isnan(b));
-    assert(!isnan(c));
-    assert(x1);
-    assert(x2);
-    assert(x1 != x2);
+    myassert(!isnan(a), "");
+    myassert(!isnan(b), "");
+    myassert(!isnan(c), "");
+    myassert(x1, "");
+    myassert(x2, "");
+    myassert(x1 != x2, "");
 
     if (IsZero(a))
         return SolveLinear(b, c, x1);
@@ -37,7 +37,7 @@ RootCount SolveSquareEquation(
     const double discriminant = b*b - 4*a*c;
     if (!isComplex && discriminant < 0)
         return RC_ZERO;
-    
+
     const double discriminant_root = sqrt(fabs(discriminant));
 
     if (IsZero(discriminant_root)) {
@@ -48,7 +48,7 @@ RootCount SolveSquareEquation(
         if (discriminant > 0) {
             x1->real = (-b - discriminant_root)/(2*a);
             x1->imag = 0;
-            
+
             x2->real = (-b + discriminant_root)/(2*a);
             x2->imag = 0;
         } else {

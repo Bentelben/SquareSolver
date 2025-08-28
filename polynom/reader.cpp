@@ -4,15 +4,15 @@
 #include "../utils/buffer_cleaner.h"
 
 #include <stdio.h>
-#include <assert.h>
+#include "../myassert.h"
 
 int ReadCoefficient(const char coefficientName, double *const resultValue) {
-    assert(resultValue != NULL);
-    
+    myassert(resultValue != NULL, "");
+
     printf("Enter %c: ", coefficientName);
     if (scanf("%lg", resultValue) != 1)
         return -1;
-    
+
     const int nextChar = getchar();
     if (nextChar == EOF || nextChar == '\n')
         return 0;
@@ -20,7 +20,7 @@ int ReadCoefficient(const char coefficientName, double *const resultValue) {
 }
 
 int ReadNCoefficients(double *const resultCoefficients, const size_t nCoefficient) {
-    assert(resultCoefficients != NULL);
+    myassert(resultCoefficients != NULL, "");
 
     PrintLetterPolynom(nCoefficient-1);
 
@@ -32,7 +32,7 @@ int ReadNCoefficients(double *const resultCoefficients, const size_t nCoefficien
 }
 
 int ReadNCoefficientsWithAttempts(double *const resultCoefficients, const size_t nCoefficient, const size_t attemptLimit) {
-    assert(resultCoefficients != NULL);
+    myassert(resultCoefficients != NULL, "");
 
     for (size_t i = 0; i < attemptLimit; i++) {
         if (i > 0)

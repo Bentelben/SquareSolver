@@ -1,6 +1,6 @@
 #include "commands.h"
 
-#include <assert.h>
+#include "myassert.h"
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
@@ -22,10 +22,10 @@ extern const size_t FLAGS_LENGTH;
 
 bool DefaultCommand(char *args[], int nArgs, void *context) {
     (void)args;
-    assert(nArgs == 0);
+    myassert(nArgs == 0, "", "");
 
     FlagContext *flagContext = (FlagContext*)context;
-    
+
     int testsFailed = RunTest(
         flagContext->test.filename,
         flagContext->test.shouldCompareNRoots,
@@ -41,7 +41,7 @@ bool DefaultCommand(char *args[], int nArgs, void *context) {
 
 bool PrintHelpCommand(char *args[], int nArgs, void *context) {
     (void)args;
-    assert(nArgs == 0);
+    myassert(nArgs == 0, "");
     (void)context;
 
     printf("Here is help:\n");
@@ -51,10 +51,10 @@ bool PrintHelpCommand(char *args[], int nArgs, void *context) {
 
 bool TestCommand(char *args[], int nArgs, void *context) {
     (void)args;
-    assert(nArgs == 0);
+    myassert(nArgs == 0, "");
 
     FlagContext *flagContext = (FlagContext*)context;
-    
+
     RunTest(
         flagContext->test.filename,
         flagContext->test.shouldCompareNRoots,
@@ -65,24 +65,24 @@ bool TestCommand(char *args[], int nArgs, void *context) {
 }
 
 bool Test_set_filenameCommand(char *args[], int nArgs, void *context) {
-    assert(args);
-    assert(nArgs == 1);
+    myassert(args, "");
+    myassert(nArgs == 1, "");
 
     ((FlagContext*)context)->test.filename = args[0];
     return true;
 }
 
 bool Test_set_shouldCompareNRootsCommand(char *args[], int nArgs, void *context) {
-    assert(nArgs == 0);
-    assert(args != NULL);
+    myassert(nArgs == 0, "");
+    myassert(args != NULL, "");
 
     ((FlagContext*)context)->test.shouldCompareNRoots = false;
     return true;
 }
 
 bool Test_set_verboseCommand(char *args[], int nArgs, void *context) {
-    assert(nArgs == 0);
-    assert(args != NULL);
+    myassert(nArgs == 0, "");
+    myassert(args != NULL, "");
 
     ((FlagContext*)context)->test.verbose = true;
     return true;
@@ -90,7 +90,7 @@ bool Test_set_verboseCommand(char *args[], int nArgs, void *context) {
 
 bool Test_set_ignoreCommand(char *args[], int nArgs, void *context) {
     (void)args;
-    assert(nArgs == 0);
+    myassert(nArgs == 0, "");
 
     ((FlagContext*)context)->test.ignore = true;
     return true;
@@ -98,13 +98,13 @@ bool Test_set_ignoreCommand(char *args[], int nArgs, void *context) {
 
 bool NoTestCommand(char *args[], int nArgs, void *context) {
     (void)args;
-    assert(nArgs == 0);
+    myassert(nArgs == 0, "");
 
     const bool isComplex = ((FlagContext*)context)->isComplex;
 
     double coefficients[N_COEFFICIENT] = {};
     for (size_t i = 0; i < N_COEFFICIENT; i++) coefficients[i] = NAN;
-    
+
     if (ReadNCoefficientsWithAttempts(coefficients, N_COEFFICIENT, READ_ATTEMPT_LIMIT) != 0)
         return false;
 
@@ -112,10 +112,10 @@ bool NoTestCommand(char *args[], int nArgs, void *context) {
     ccomplex x2 = {NAN, NAN};
     const RootCount nRoots = SolveSquareEquation(
         coefficients[0],
-        coefficients[1], 
-        coefficients[2], 
+        coefficients[1],
+        coefficients[2],
         &x1, &x2,
-        isComplex 
+        isComplex
      );
     printf("Solving...\n\n");
     PrintRoots(nRoots, x1, x2);
@@ -124,8 +124,8 @@ bool NoTestCommand(char *args[], int nArgs, void *context) {
 
 bool Set_isComplexCommand(char *args[], int nArgs, void *context) {
     (void)args;
-    assert(nArgs == 0);
-    
+    myassert(nArgs == 0, "");
+
     ((FlagContext*)context)->isComplex = true;
     return true;
 }
@@ -145,13 +145,13 @@ static void PrintRoots(RootCount nRoots, ccomplex x1, ccomplex x2) {
             printf("x is not real number\n");
             break;
         case RC_ONE:
-            assert(!IsComplexNan(x1));
+            myassert(!IsComplexNan(x1), "");
             printf("x = ");
             PrintComplex(x1);
             printf("\n");
             break;
         case RC_TWO:
-            assert(!IsComplexNan(x1) && !IsComplexNan(x2));
+            myassert(!IsComplexNan(x1) && !IsComplexNan(x2), "");
             printf("x1 = ");
             PrintComplex(x1);
             printf("\n");
@@ -161,7 +161,7 @@ static void PrintRoots(RootCount nRoots, ccomplex x1, ccomplex x2) {
             printf("\n");
             break;
         default:
-            assert(0);
+            myassert(0, "");
             break;
     }
 }

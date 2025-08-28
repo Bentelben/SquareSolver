@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 #include <math.h>
-#include <assert.h>
+#include "myassert.h"
 
 #include "square_solver.h"
 #include "utils/display_controller.h"
@@ -13,10 +13,10 @@
 static bool IsEqualRoots(const RootCount nRoots, const ccomplex answer_x1, const ccomplex answer_x2, const ccomplex x1, const ccomplex x2) {
     if (nRoots == RC_INF || nRoots == RC_ZERO)
         return true;
-    
-    if (nRoots == RC_ONE) 
+
+    if (nRoots == RC_ONE)
         return IsComplexEqual(answer_x1, x1);
-    else 
+    else
         return (IsComplexEqual(answer_x1, x1) && IsComplexEqual(answer_x2, x2)) ||
                (IsComplexEqual(answer_x1, x2) && IsComplexEqual(answer_x2, x1));
 }
@@ -62,10 +62,12 @@ static bool TestSquareSolver(
 }
 
 int RunTest(const char *filename, const bool shouldCompareNRoots, const bool verbose, const bool isComplex) {
+    myassert(filename, "");
+
     printf("Testing...\n");
 
     FILE *testFile = fopen(filename, "r");
-    assert(testFile);
+    myassert(testFile, "");
 
     double a = 0, b = 0, c = 0;
     RootCount nRoots = RC_INF;
@@ -78,7 +80,7 @@ int RunTest(const char *filename, const bool shouldCompareNRoots, const bool ver
         if ((scanfCode = fscanf(testFile, "%lg %lg %lg", &a, &b, &c)) != 3)
             break;
 
-        if (shouldCompareNRoots) 
+        if (shouldCompareNRoots)
             if ((scanfCode = fscanf(testFile, "%d", (int*)&nRoots)) != 1)
                 break;
 
@@ -87,12 +89,14 @@ int RunTest(const char *filename, const bool shouldCompareNRoots, const bool ver
 
         failedTests += !TestSquareSolver(a, b, c, nRoots, x1, x2, shouldCompareNRoots, verbose, isComplex);
     }
-    
+
+    fclose(testFile);
+
     if (scanfCode != EOF) {
         printf("Error on reading test file\n");
         return -1;
     }
-    
+
     return failedTests;
 }
 

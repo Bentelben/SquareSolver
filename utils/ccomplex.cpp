@@ -2,13 +2,15 @@
 
 #include <stdio.h>
 #include <math.h>
-#include <assert.h>
+#include "../myassert.h"
 #include <ctype.h>
 
 #include "double_comparator.h"
 #include "buffer_cleaner.h"
 
 void FPrintComplex(FILE *stream, ccomplex value) {
+    myassert(stream, "");
+
     if (IsZero(value.real)) value.real = 0;
 
     if (IsZero(value.imag)) {
