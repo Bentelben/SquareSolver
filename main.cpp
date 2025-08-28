@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "commands.h"
+#include "io/error.h"
 #include "io/argument_parser.h"
 #include "io/display_controller.h"
 #include "utils/myassert.h"
@@ -39,26 +40,24 @@ int main(int argc, char *argv[]) {
     };
 
     ParseCode err = ParseFlags(argv, argc, FLAGS, FLAGS_LENGTH, (void*)&context);
-    SetColor(RED, NORMAL, FOREGROUND);
     switch (err) {
         case PC_NO_ERROR:
             break;
         case PC_ERROR_UNKNOWN_FLAG:
-            printf("Error: unknown flag\n");
+            PrintError("unknown flag");
             PrintHelpCommand(NULL, 0, (void*)&context);
             break;
         case PC_ERROR_WRONG_WORD_COUNT:
-            printf("Error: incorrect flag argument count\n");
+            PrintError("wrong argument count for flag");
             PrintHelpCommand(NULL, 0, (void*)&context);
             break;
         case PC_ERROR_FLAG_FUNCTION_FAILURE:
-            printf("Program stopped\n");
+            PrintError("Stopping program...");
             break;
         default:
             myassert(0, "");
             break;
     }
-    ResetTextAttributes();
 
     printf("\n\nCOMMIT GITHUB\n");
     return 0;

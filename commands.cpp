@@ -6,6 +6,7 @@
 
 #include "tester.h"
 #include "square_solver.h"
+#include "io/error.h"
 #include "io/argument_parser.h"
 #include "io/display_controller.h"
 #include "utils/myassert.h"
@@ -113,8 +114,10 @@ bool NoTestCommand(char *args[], int nArgs, void *context) {
 
     ccomplex coefficients[N_COEFFICIENT] = {};
 
-    if (ReadNCoefficientsWithAttempts(coefficients, N_COEFFICIENT, READ_ATTEMPT_LIMIT, isComplex) != 0)
+    if (ReadNCoefficientsWithAttempts(coefficients, N_COEFFICIENT, READ_ATTEMPT_LIMIT, isComplex) != 0) {
+        PrintError("Attempt limit reached");
         return false;
+    }
 
     ccomplex x1 = {NAN, NAN};
     ccomplex x2 = {NAN, NAN};

@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #include "square_solver.h"
+#include "io/error.h"
 #include "io/buffer_cleaner.h"
 #include "io/display_controller.h"
 #include "utils/ccomplex.h"
@@ -70,7 +71,10 @@ int RunTest(const char *filename, const bool shouldCompareNRoots, const bool ver
     printf("Testing...\n");
 
     FILE *const testFile = fopen(filename, "r");
-    myassert(testFile, "");
+    if (testFile == NULL) {
+        PrintError("Unable to open file `%s`", filename);
+        return -1;
+    }
 
     double a = 0, b = 0, c = 0;
     RootCount nRoots = RC_INF;

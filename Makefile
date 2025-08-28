@@ -12,6 +12,7 @@ source_files := $(MAIN) \
 	tester \
 	commands \
 	square_solver \
+	io/error \
 	io/buffer_cleaner \
 	io/argument_parser \
 	io/display_controller \
