@@ -7,18 +7,18 @@
 #include "myassert.h"
 
 extern const Flag FLAGS[] = {
-    {NULL,                     NULL, 0, "Solves square equation",    DefaultCommand                    },
-    {"help",                   "h",  0, "Prints this text",          PrintHelpCommand                  },
-    {"test",                   "t",  0, "Runs test",                 TestCommand                       },
-    {"test-filename",          "tf", 1, "Set name of file for test", SetTestFilenameCommand            },
-    {"test-no-compare-nroots", "tc", 0, "Disable root count "
-                                        "comparison for test",       SetTestShouldCompareNRootsCommand },
-    {"test-verbose",           "tv", 0, "Set verbose test output",   SetTestVerboseCommand             },
-    {"test-ignore",            "ti", 0, "Ignore test result",        SetTestIgnoreCommand              },
-    {"no-test",                "nt", 0, "Runs program without test", NoTestCommand                     },
-    {"complex",                "c",  0, "Solves equation in "
-                                        "complex values "
-                                        "(default disabled)",        SetIsComplexCommand               }
+    {NULL,                     NULL, 0, true,  "Solves square equation",    DefaultCommand                    },
+    {"help",                   "h",  0, true,  "Prints this text",          PrintHelpCommand                  },
+    {"test",                   "t",  0, true,  "Runs test",                 TestCommand                       },
+    {"test-filename",          "tf", 1, false, "Set name of file for test", SetTestFilenameCommand            },
+    {"test-no-compare-nroots", "tc", 0, false, "Disable root count "
+                                               "comparison for test",       SetTestShouldCompareNRootsCommand },
+    {"test-verbose",           "tv", 0, false, "Set verbose test output",   SetTestVerboseCommand             },
+    {"test-ignore",            "ti", 0, false, "Ignore test result",        SetTestIgnoreCommand              },
+    {"no-test",                "nt", 0, true,  "Runs program without test", NoTestCommand                     },
+    {"complex",                "c",  0, false, "Solves equation in "
+                                               "complex values "
+                                               "(default disabled)",        SetIsComplexCommand               }
 };
 extern const size_t FLAGS_LENGTH = sizeof(FLAGS)/sizeof(*FLAGS);
 
@@ -48,6 +48,9 @@ int main(int argc, char *argv[]) {
         case PC_ERROR_WRONG_WORD_COUNT:
             printf("Incorrect flag argument count\n");
             PrintHelpCommand(NULL, 0, (void*)&context);
+            break;
+        case PC_ERROR_FLAG_FUNCTION_FAILURE:
+            printf("Program stopped\n");
             break;
         default:
             myassert(0, "");

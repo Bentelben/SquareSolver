@@ -33,11 +33,11 @@ bool DefaultCommand(char *args[], int nArgs, void *context) {
         flagContext->test.verbose,
         flagContext->isComplex
     );
-    if (!flagContext->test.ignore && testsFailed)
+    if (!flagContext->test.ignore && testsFailed) {
         return false;
+    }
     printf("Done testing\n\n");
-    NoTestCommand(NULL, 0, context);
-    return false;
+    return NoTestCommand(NULL, 0, context);
 }
 
 bool PrintHelpCommand(char *args[], int nArgs, void *context) {
@@ -47,7 +47,7 @@ bool PrintHelpCommand(char *args[], int nArgs, void *context) {
 
     printf("Here is help:\n");
     PrintArgumentInfo(FLAGS, FLAGS_LENGTH);
-    return false;
+    return true;
 }
 
 bool TestCommand(char *args[], int nArgs, void *context) {
@@ -63,7 +63,7 @@ bool TestCommand(char *args[], int nArgs, void *context) {
         flagContext->test.verbose,
         flagContext->isComplex
     );
-    return false;
+    return true;
 }
 
 bool SetTestFilenameCommand(char *args[], int nArgs, void *context) {
@@ -125,7 +125,7 @@ bool NoTestCommand(char *args[], int nArgs, void *context) {
      );
     printf("Solving...\n\n");
     PrintRoots(nRoots, x1, x2);
-    return false;
+    return true;
 }
 
 bool SetIsComplexCommand(char *args[], int nArgs, void *context) {

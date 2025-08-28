@@ -4,17 +4,21 @@
 #include <stdlib.h>
 
 enum ParseCode {
-    PC_NO_ERROR               = 0,
-    PC_ERROR_UNKNOWN_FLAG     = 1,
-    PC_ERROR_WRONG_WORD_COUNT = 2
+    PC_NO_ERROR                    = 0,
+    PC_ERROR_UNKNOWN_FLAG          = 1,
+    PC_ERROR_WRONG_WORD_COUNT      = 2,
+    PC_ERROR_FLAG_FUNCTION_FAILURE = 3
 };
+
+typedef bool (*FlagFunction_t)(char *[], int, void *);
 
 struct Flag {
     const char *fullName;
     const char *alias;
     int nNextWords;
+    bool isModeFlag;
     const char *description;
-    bool (*func)(char *args[], int nArgs, void *context);
+    FlagFunction_t func;
 };
 
 //! Parses flags for command line and executes functions corresponding to them

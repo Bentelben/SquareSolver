@@ -32,10 +32,14 @@ ParseCode ParseFlags(char *argv[], int argc, const Flag flags[], size_t nFlags, 
     myassert(argc > 0, "");
     myassert(flags, "Ptr to flags array is NULL");
 
+    FlagFunction_t modeFunction = flags[0].func;
+
     for (int argumentIndex = 1; argumentIndex < argc; argumentIndex++) {
         const Flag *flag = GetFlag(argv[argumentIndex], flags, nFlags);
         if (flag == NULL)
             return PC_ERROR_UNKNOWN_FLAG;
+
+        myassert(!flag->isModeFlag || flag->nNextWords==0, "Mode flag has arguments");
 
         int nWords = 0;
         while (argumentIndex + nWords + 1 < argc) {
@@ -46,12 +50,18 @@ ParseCode ParseFlags(char *argv[], int argc, const Flag flags[], size_t nFlags, 
         if (flag->nNextWords != -1 && nWords != flag->nNextWords)
             return PC_ERROR_WRONG_WORD_COUNT;
 
+        if (flag->isModeFlag) {
+            modeFunction = flag->func;
+            continue;
+        }
+
         if (!flag->func(argv + argumentIndex + 1, nWords, context))
-            return PC_NO_ERROR;
+            return PC_ERROR_FLAG_FUNCTION_FAILURE;
         argumentIndex += nWords;
     }
-    flags[0].func(NULL, 0, context); // Default command
-    return PC_NO_ERROR;
+    if (modeFunction(NULL, 0, context))
+        return PC_NO_ERROR;
+    return PC_ERROR_FLAG_FUNCTION_FAILURE;
 }
 
 void PrintArgumentInfo(const Flag flags[], size_t nFlags) {
