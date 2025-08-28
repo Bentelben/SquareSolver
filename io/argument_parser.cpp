@@ -8,13 +8,20 @@
 
 static void getFieldWidth(const Flag flags[], size_t nFlags, size_t *fullNameFieldWidth, size_t *aliasFieldWidth);
 
-static bool IsEqualFlag(char *arg, const char *flagName) {
+static bool IsEqualFlag(char *arg, const Flag *flag) {
     myassert(arg, "Argument is NULL");
-    myassert(flagName, "Flag name is NULL");
+    myassert(flag, "Ptr to flag is NULL");
 
-    while (arg[0] == '-') arg++;
+    size_t minusCount = 0;
+    while (arg[0] == '-' && minusCount <= 2) {
+        minusCount++;
+        arg++;
+    }
 
-    return strcmp(arg, flagName) == 0;
+    if (minusCount == 1) return strcmp(arg, flag->alias) == 0;
+    else if (minusCount == 2) return strcmp(arg, flag->fullName) == 0;
+
+    return false;
 }
 
 static const Flag *GetFlag(char *arg, const Flag flags[], size_t nFlags) {
@@ -22,7 +29,7 @@ static const Flag *GetFlag(char *arg, const Flag flags[], size_t nFlags) {
     myassert(flags, "Ptr to flag name is NULL");
 
     for (size_t i = 1; i < nFlags; i++)
-        if (IsEqualFlag(arg, flags[i].fullName) || IsEqualFlag(arg, flags[i].alias))
+        if (IsEqualFlag(arg, flags + i))
             return flags+i;
 
     return NULL;
