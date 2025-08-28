@@ -1,16 +1,16 @@
 #include "commands.h"
 
-#include "myassert.h"
-#include <stdio.h>
 #include <math.h>
+#include <stdio.h>
 #include <string.h>
 
-#include "argument_parser.h"
 #include "tester.h"
 #include "square_solver.h"
-#include "polynom/reader.h"
+#include "io/argument_parser.h"
+#include "utils/myassert.h"
 #include "utils/ccomplex.h"
 #include "utils/double_comparator.h"
+#include "polynom/reader.h"
 
 static void PrintRoots(RootCount nRoots, ccomplex x1, ccomplex x2);
 

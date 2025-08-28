@@ -1,14 +1,14 @@
 #include "tester.h"
 
-#include <stdio.h>
 #include <math.h>
-#include "myassert.h"
+#include <stdio.h>
 
 #include "square_solver.h"
-#include "utils/display_controller.h"
-#include "utils/double_comparator.h"
+#include "io/buffer_cleaner.h"
+#include "io/display_controller.h"
 #include "utils/ccomplex.h"
-#include "utils/buffer_cleaner.h"
+#include "utils/myassert.h"
+#include "utils/double_comparator.h"
 
 static bool IsEqualRoots(const RootCount nRoots, const ccomplex answer_x1, const ccomplex answer_x2, const ccomplex x1, const ccomplex x2) {
     if (nRoots == RC_INF || nRoots == RC_ZERO)

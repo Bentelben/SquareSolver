@@ -2,6 +2,7 @@
 #define INPUT_READER_H
 
 #include <stdlib.h>
+
 #include "../utils/ccomplex.h"
 
 //! Reads one double coefficient

@@ -2,6 +2,7 @@
 #define POLYNOM_PRINTER_H
 
 #include <stdlib.h>
+
 #include "../utils/ccomplex.h"
 
 //! Returns coefficient name for polynom

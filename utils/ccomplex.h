@@ -1,7 +1,6 @@
 #ifndef CCOMPLEX_H
 #define CCOMPLEX_H
 
-#include <math.h>
 #include <stdio.h>
 
 struct ccomplex {

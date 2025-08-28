@@ -1,10 +1,10 @@
 #include "square_solver.h"
-#include "utils/double_comparator.h"
 
 #include <math.h>
-#include "myassert.h"
 
+#include "utils/myassert.h"
 #include "utils/ccomplex.h"
+#include "utils/double_comparator.h"
 
 static const ccomplex COMPLEX_FOUR =      {.real =  4, .imag = 0};
 static const ccomplex COMPLEX_TWO =       {.real =  2, .imag = 0};

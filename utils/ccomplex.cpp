@@ -1,12 +1,11 @@
 #include "ccomplex.h"
 
-#include <stdio.h>
 #include <math.h>
-#include "../myassert.h"
-#include <ctype.h>
+#include <stdio.h>
 
+#include "myassert.h"
 #include "double_comparator.h"
-#include "buffer_cleaner.h"
+#include "../io/buffer_cleaner.h"
 
 void FPrintComplex(FILE *const stream, ccomplex value) {
     myassert(stream, "Ptr to stream is NULL");

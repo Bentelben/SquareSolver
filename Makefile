@@ -9,18 +9,17 @@ MAIN := main
 BUILD_DIR := build
 
 source_files := $(MAIN) \
-	utils/double_comparator \
-	utils/display_controller \
-	utils/buffer_cleaner \
-	utils/display_controller \
-	utils/ccomplex \
-	polynom/reader \
-	polynom/printer \
-	argument_parser \
+	tester \
 	commands \
 	square_solver \
-	myassert \
-	tester
+	io/buffer_cleaner \
+	io/argument_parser \
+	io/display_controller \
+	utils/ccomplex \
+	utils/myassert \
+	utils/double_comparator \
+	polynom/reader \
+	polynom/printer
 
 $(OUT): $(source_files:%=$(BUILD_DIR)/%.o)
 	$(COMPILER) $(COMPILER_FLAGS) $^ -o $@

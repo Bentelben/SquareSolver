@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
-#include "utils/display_controller.h"
+#include "../io/display_controller.h"
 
 static void printRedLine(size_t length) {
     SetColor(RED, NORMAL, BACKGROUND);

@@ -1,10 +1,10 @@
+#include <math.h>
 #include <stdio.h>
 #include <string.h>
-#include <math.h>
 
 #include "commands.h"
-#include "argument_parser.h"
-#include "myassert.h"
+#include "io/argument_parser.h"
+#include "utils/myassert.h"
 
 extern const Flag FLAGS[] = {
     {NULL,                     NULL, 0, true,  "Solves square equation",    DefaultCommand                    },

@@ -1,12 +1,12 @@
 #include "reader.h"
 
+#include <stdio.h>
+
 #include "printer.h"
-#include "../utils/buffer_cleaner.h"
+#include "../io/buffer_cleaner.h"
+#include "../utils/myassert.h"
 #include "../utils/ccomplex.h"
 #include "../utils/double_comparator.h"
-
-#include <stdio.h>
-#include "../myassert.h"
 
 int ReadCoefficient(const char coefficientName, ccomplex *const resultValue, bool isComplex) {
     myassert(resultValue, "Ptr for out value is NULL");

@@ -1,7 +1,8 @@
 #include "buffer_cleaner.h"
 
 #include <stdio.h>
-#include "../myassert.h"
+
+#include "../utils/myassert.h"
 
 void CleanBufferLine(FILE *const stream) {
     myassert(stream, "Ptr to stream is NULL");

@@ -1,11 +1,11 @@
 #include "printer.h"
 
-#include "../utils/double_comparator.h"
-#include "../utils/ccomplex.h"
-
 #include <stdio.h>
 #include <math.h>
-#include "../myassert.h"
+
+#include "../utils/ccomplex.h"
+#include "../utils/myassert.h"
+#include "../utils/double_comparator.h"
 
 char GetCoefficientName(const size_t index) {
     myassert('a' + (char)index <= 'z', "Coefficient name is not in [a-z]");

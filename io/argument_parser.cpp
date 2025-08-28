@@ -1,9 +1,10 @@
 #include "argument_parser.h"
 
-#include <stdlib.h>
-#include "myassert.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+
+#include "../utils/myassert.h"
 
 static void getFieldWidth(const Flag flags[], size_t nFlags, size_t *fullNameFieldWidth, size_t *aliasFieldWidth);
 
