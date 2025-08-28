@@ -22,7 +22,8 @@ extern const size_t FLAGS_LENGTH;
 
 bool DefaultCommand(char *args[], int nArgs, void *context) {
     (void)args;
-    myassert(nArgs == 0, "", "");
+    myassert(nArgs == 0, "Wrong command argument count");
+    myassert(context, "Context is NULL");
 
     FlagContext *flagContext = (FlagContext*)context;
 
@@ -41,7 +42,7 @@ bool DefaultCommand(char *args[], int nArgs, void *context) {
 
 bool PrintHelpCommand(char *args[], int nArgs, void *context) {
     (void)args;
-    myassert(nArgs == 0, "");
+    myassert(nArgs == 0, "Wrong command argument count");
     (void)context;
 
     printf("Here is help:\n");
@@ -51,7 +52,8 @@ bool PrintHelpCommand(char *args[], int nArgs, void *context) {
 
 bool TestCommand(char *args[], int nArgs, void *context) {
     (void)args;
-    myassert(nArgs == 0, "");
+    myassert(nArgs == 0, "Wrong command argument count");
+    myassert(context, "Context is NULL");
 
     FlagContext *flagContext = (FlagContext*)context;
 
@@ -64,33 +66,37 @@ bool TestCommand(char *args[], int nArgs, void *context) {
     return false;
 }
 
-bool Test_set_filenameCommand(char *args[], int nArgs, void *context) {
+bool SetTestFilenameCommand(char *args[], int nArgs, void *context) {
     myassert(args, "");
-    myassert(nArgs == 1, "");
+    myassert(nArgs == 1, "Wrong command argument count");
+    myassert(context, "Context is NULL");
 
     ((FlagContext*)context)->test.filename = args[0];
     return true;
 }
 
-bool Test_set_shouldCompareNRootsCommand(char *args[], int nArgs, void *context) {
-    myassert(nArgs == 0, "");
+bool SetTestShouldCompareNRootsCommand(char *args[], int nArgs, void *context) {
     myassert(args != NULL, "");
+    myassert(nArgs == 0, "Wrong command argument count");
+    myassert(context, "Context is NULL");
 
     ((FlagContext*)context)->test.shouldCompareNRoots = false;
     return true;
 }
 
-bool Test_set_verboseCommand(char *args[], int nArgs, void *context) {
-    myassert(nArgs == 0, "");
+bool SetTestVerboseCommand(char *args[], int nArgs, void *context) {
     myassert(args != NULL, "");
+    myassert(nArgs == 0, "Wrong command argument count");
+    myassert(context, "Context is NULL");
 
     ((FlagContext*)context)->test.verbose = true;
     return true;
 }
 
-bool Test_set_ignoreCommand(char *args[], int nArgs, void *context) {
+bool SetTestIgnoreCommand(char *args[], int nArgs, void *context) {
     (void)args;
-    myassert(nArgs == 0, "");
+    myassert(nArgs == 0, "Wrong command argument count");
+    myassert(context, "Context is NULL");
 
     ((FlagContext*)context)->test.ignore = true;
     return true;
@@ -98,7 +104,8 @@ bool Test_set_ignoreCommand(char *args[], int nArgs, void *context) {
 
 bool NoTestCommand(char *args[], int nArgs, void *context) {
     (void)args;
-    myassert(nArgs == 0, "");
+    myassert(nArgs == 0, "Wrong command argument count");
+    myassert(context, "Context is NULL");
 
     const bool isComplex = ((FlagContext*)context)->isComplex;
 
@@ -122,9 +129,10 @@ bool NoTestCommand(char *args[], int nArgs, void *context) {
     return false;
 }
 
-bool Set_isComplexCommand(char *args[], int nArgs, void *context) {
+bool SetIsComplexCommand(char *args[], int nArgs, void *context) {
     (void)args;
-    myassert(nArgs == 0, "");
+    myassert(nArgs == 0, "Wrong command argument count");
+    myassert(context, "Context is NULL");
 
     ((FlagContext*)context)->isComplex = true;
     return true;

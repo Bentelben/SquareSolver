@@ -11,14 +11,14 @@ struct FlagContext {
     } test;
 };
 
-bool DefaultCommand(char *args[], int nArgs, void *context);
-bool PrintHelpCommand(char *args[], int nArgs, void *context);
-bool TestCommand(char *args[], int nArgs, void *context);
-bool Test_set_filenameCommand(char *args[], int nArgs, void *context);
-bool Test_set_shouldCompareNRootsCommand(char *args[], int nArgs, void *context);
-bool Test_set_verboseCommand(char *args[], int nArgs, void *context);
-bool Test_set_ignoreCommand(char *args[], int nArgs, void *context);
-bool NoTestCommand(char *args[], int nArgs, void *context);
-bool Set_isComplexCommand(char *args[], int nArgs, void *context);
+bool DefaultCommand                    (char *[], int, void *);
+bool PrintHelpCommand                  (char *[], int, void *);
+bool TestCommand                       (char *[], int, void *);
+bool SetTestFilenameCommand            (char *[], int, void *);
+bool SetTestShouldCompareNRootsCommand (char *[], int, void *);
+bool SetTestVerboseCommand             (char *[], int, void *);
+bool SetTestIgnoreCommand              (char *[], int, void *);
+bool NoTestCommand                     (char *[], int, void *);
+bool SetIsComplexCommand               (char *[], int, void *);
 
 #endif
