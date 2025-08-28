@@ -111,7 +111,7 @@ double getComplexAngle(const ccomplex value) {
     return atan(value.imag/value.real) + ((value.real < 0) ? M_PI : 0);
 }
 
-ccomplex ComplexRoot(const ccomplex value) {
+ccomplex ComplexSqrt(const ccomplex value) {
     double norm = sqrt(getComplexNorm(value));
     double angle = getComplexAngle(value)*0.5;
     ccomplex result = {
@@ -129,11 +129,11 @@ ccomplex ComplexMultiply(const ccomplex value1, const ccomplex value2) {
     return result;
 }
 
-ccomplex ComplexDivide(const ccomplex value1, const ccomplex value2) {
-    double squareNorm2 = value2.real*value2.real + value2.imag*value2.imag;
+ccomplex ComplexDivide(const ccomplex divident, const ccomplex divider) {
+    double dividerNorm = divider.real*divider.real + divider.imag*divider.imag;
     ccomplex result = {
-        .real = (value1.real*value2.real + value1.imag*value2.imag)/squareNorm2,
-        .imag = (-value1.real*value2.imag + value1.imag*value2.real)/squareNorm2
+        .real = (divident.real*divider.real + divident.imag*divider.imag)/dividerNorm,
+        .imag = (-divident.real*divider.imag + divident.imag*divider.real)/dividerNorm
     };
     return result;
 }

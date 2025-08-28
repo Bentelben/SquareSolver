@@ -47,7 +47,7 @@ RootCount SolveSquareEquation(
     if (!isComplex && discriminant.real < 0)
         return RC_ZERO;
 
-    const ccomplex discriminant_root = ComplexRoot(discriminant);
+    const ccomplex discriminant_root = ComplexSqrt(discriminant);
     
     if (IsComplexZero(discriminant_root)) {
         *x1 = ComplexDivide(
