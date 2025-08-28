@@ -13,8 +13,7 @@ extern const Flag FLAGS[] = {
     {"test-filename",          "tf", 1, "Set name of file for test", SetTestFilenameCommand            },
     {"test-no-compare-nroots", "tc", 0, "Disable root count "
                                         "comparison for test",       SetTestShouldCompareNRootsCommand },
-    {"test-verbose",           "tv", 0, "Set verbose output for "
-                                        "test (default true)",       SetTestVerboseCommand             },
+    {"test-verbose",           "tv", 0, "Set verbose test output",   SetTestVerboseCommand             },
     {"test-ignore",            "ti", 0, "Ignore test result",        SetTestIgnoreCommand              },
     {"no-test",                "nt", 0, "Runs program without test", NoTestCommand                     },
     {"complex",                "c",  0, "Solves equation in "
