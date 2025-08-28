@@ -26,12 +26,12 @@ static bool TestSquareSolver(
     const RootCount answer_nRoots, const ccomplex answer_x1, const ccomplex answer_x2,
     const bool shouldCompareNRoots, const bool verbose, const bool isComplex
 ) {
-    ccomplex x1 = {};
-    ccomplex x2 = {};
+    ccomplex x1 = {NAN, NAN};
+    ccomplex x2 = {NAN, NAN};
 
     const RootCount nRoots = SolveSquareEquation(a, b, c, &x1, &x2, isComplex);
 
-    bool isCorrect = (!shouldCompareNRoots || nRoots == answer_nRoots) && IsEqualRoots(nRoots, answer_x1, answer_x2, x1, x2);
+    const bool isCorrect = (!shouldCompareNRoots || nRoots == answer_nRoots) && IsEqualRoots(nRoots, answer_x1, answer_x2, x1, x2);
 
     if (isCorrect) {
         if (!verbose) return true;
@@ -66,7 +66,7 @@ int RunTest(const char *filename, const bool shouldCompareNRoots, const bool ver
 
     printf("Testing...\n");
 
-    FILE *testFile = fopen(filename, "r");
+    FILE *const testFile = fopen(filename, "r");
     myassert(testFile, "");
 
     double a = 0, b = 0, c = 0;

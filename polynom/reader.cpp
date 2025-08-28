@@ -7,7 +7,7 @@
 #include "../myassert.h"
 
 int ReadCoefficient(const char coefficientName, double *const resultValue) {
-    myassert(resultValue != NULL, "");
+    myassert(resultValue, "Ptr for out value is NULL");
 
     printf("Enter %c: ", coefficientName);
     if (scanf("%lg", resultValue) != 1)
@@ -20,7 +20,7 @@ int ReadCoefficient(const char coefficientName, double *const resultValue) {
 }
 
 int ReadNCoefficients(double *const resultCoefficients, const size_t nCoefficient) {
-    myassert(resultCoefficients != NULL, "");
+    myassert(resultCoefficients, "Ptr for out array of coefficients is NULL");
 
     PrintLetterPolynom(nCoefficient-1);
 
@@ -32,7 +32,7 @@ int ReadNCoefficients(double *const resultCoefficients, const size_t nCoefficien
 }
 
 int ReadNCoefficientsWithAttempts(double *const resultCoefficients, const size_t nCoefficient, const size_t attemptLimit) {
-    myassert(resultCoefficients != NULL, "");
+    myassert(resultCoefficients, "Ptr for out array of coefficients is NULL");
 
     for (size_t i = 0; i < attemptLimit; i++) {
         if (i > 0)

@@ -21,8 +21,7 @@ void _myassert(const char *filename, const int line, const char *func, const cha
 
     printRedLine(40);
     SetColor(RED, NORMAL, FOREGROUND);
-    printf(""
-           "%s:%d in function `%s`\n"
+    printf("%s:%d in function `%s`\n"
            "Assertion failed: `%s`\n", filename, line, func, stringStatement);
     SetColor(CYAN, NORMAL, FOREGROUND);
     vprintf(format, va_args);

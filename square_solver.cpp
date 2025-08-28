@@ -7,7 +7,7 @@
 #include "utils/ccomplex.h"
 
 static RootCount SolveLinear(const double b, const double c, ccomplex *const x) {
-    myassert(x, "");
+    myassert(x, "Ptr for out value is NULL");
 
     if (IsZero(b)) {
         if (IsZero(c))
@@ -24,12 +24,12 @@ RootCount SolveSquareEquation(
     const double a, const double b, const double c, ccomplex *const x1, ccomplex *const x2,
     const bool isComplex
 ) {
-    myassert(!isnan(a), "");
-    myassert(!isnan(b), "");
-    myassert(!isnan(c), "");
-    myassert(x1, "");
-    myassert(x2, "");
-    myassert(x1 != x2, "");
+    myassert(!isnan(a), "Coefficeint a is NAN");
+    myassert(!isnan(b), "Coefficeint b is NAN");
+    myassert(!isnan(c), "Coefficeint c is NAN");
+    myassert(x1, "Ptr for out value is NULL");
+    myassert(x2, "Ptr for out value is NULL");
+    myassert(x1 != x2, "Ptrs for out values are equal");
 
     if (IsZero(a))
         return SolveLinear(b, c, x1);

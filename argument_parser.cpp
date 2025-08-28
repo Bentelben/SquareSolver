@@ -17,8 +17,8 @@ static bool IsEqualFlag(char *arg, const char *flagName) {
 }
 
 static const Flag *GetFlag(char *arg, const Flag flags[], size_t nFlags) {
-    myassert(arg, "ptr to argument is NULL");
-    myassert(flags, "ptr to flag name is NULL");
+    myassert(arg, "Ptr to argument is NULL");
+    myassert(flags, "Ptr to flag name is NULL");
 
     for (size_t i = 1; i < nFlags; i++)
         if (IsEqualFlag(arg, flags[i].fullName) || IsEqualFlag(arg, flags[i].alias))
@@ -30,7 +30,7 @@ static const Flag *GetFlag(char *arg, const Flag flags[], size_t nFlags) {
 ParseCode ParseFlags(char *argv[], int argc, const Flag flags[], size_t nFlags, void *context) {
     myassert(argv, "Argv is NULL");
     myassert(argc > 0, "");
-    myassert(flags, "ptr to flags array is NULL");
+    myassert(flags, "Ptr to flags array is NULL");
 
     for (int argumentIndex = 1; argumentIndex < argc; argumentIndex++) {
         const Flag *flag = GetFlag(argv[argumentIndex], flags, nFlags);
@@ -55,7 +55,7 @@ ParseCode ParseFlags(char *argv[], int argc, const Flag flags[], size_t nFlags, 
 }
 
 void PrintArgumentInfo(const Flag flags[], size_t nFlags) {
-    myassert(flags, "ptr to flags array in NULL");
+    myassert(flags, "Ptr to flags array in NULL");
 
     printf("\n%s\n\n", flags[0].description);
 
@@ -68,16 +68,16 @@ void PrintArgumentInfo(const Flag flags[], size_t nFlags) {
 }
 
 static void updateMaxFieldWidth(size_t *size, const char *name) {
-    myassert(size, "ptr for out value is NULL");
+    myassert(size, "Ptr for out value is NULL");
     myassert(name, "name is NULL");
     size_t len = strlen(name);
     if (*size < len) *size = len;
 }
 
 static void getFieldWidth(const Flag flags[], size_t nFlags, size_t *fullNameFieldWidth, size_t *aliasFieldWidth) {
-    myassert(flags, "ptr to flags array is NULL");
-    myassert(fullNameFieldWidth, "ptr for out value is NULL");
-    myassert(aliasFieldWidth, "ptr for out value is NULL");
+    myassert(flags, "Ptr to flags array is NULL");
+    myassert(fullNameFieldWidth, "Ptr for out value is NULL");
+    myassert(aliasFieldWidth, "Ptr for out value is NULL");
 
     for (size_t i = 0; i < nFlags; i++) {
         updateMaxFieldWidth(fullNameFieldWidth, flags[i].fullName);

@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include "../myassert.h"
 
-void CleanBufferLine(FILE* stream) {
-    myassert(stream, "");
+void CleanBufferLine(FILE *const stream) {
+    myassert(stream, "Ptr to stream is NULL");
 
     int c = 0;
     do {
@@ -12,8 +12,8 @@ void CleanBufferLine(FILE* stream) {
     } while ( c != EOF && c != '\n');
 }
 
-void CleanBufferSpaces(FILE* stream) {
-    myassert(stream, "");
+void CleanBufferSpaces(FILE *const stream) {
+    myassert(stream, "Ptr to stream is NULL");
 
     int c = 0;
     do {

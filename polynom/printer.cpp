@@ -7,7 +7,7 @@
 #include "../myassert.h"
 
 char GetCoefficientName(const size_t index) {
-    myassert('a' + (char)index <= 'z', "");
+    myassert('a' + (char)index <= 'z', "Coefficient name is not in [a-z]");
     return 'a' + (char)index;
 }
 
@@ -19,6 +19,8 @@ void PrintLetterPolynom(const size_t polynomPower) {
 }
 
 void PrintPolynom(double *const coefficients, const size_t nCoefficients) {
+    myassert(coefficients, "Ptr to array of coefficients is zero");
+
     bool isFirst = true;
     for (size_t i = 0; i < nCoefficients; i++) {
         if (IsZero(coefficients[i]))
