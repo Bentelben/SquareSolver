@@ -7,18 +7,19 @@
 #include "myassert.h"
 
 extern const Flag FLAGS[] = {
-    {NULL,                     NULL, 0, "Solves square equation",    DefaultCommand                      },
-    {"help",                   "h",  0, "Prints this text",          PrintHelpCommand                    },
-    {"test",                   "t",  0, "Runs test",                 TestCommand                         },
+    {NULL,                     NULL, 0, "Solves square equation",    DefaultCommand                    },
+    {"help",                   "h",  0, "Prints this text",          PrintHelpCommand                  },
+    {"test",                   "t",  0, "Runs test",                 TestCommand                       },
     {"test-filename",          "tf", 1, "Set name of file for test", SetTestFilenameCommand            },
-    {"test-no-compare-nroots", "tc", 0, "Disable root count\
-comparison for test",                                                SetTestShouldCompareNRootsCommand },
-    {"test-verbose",           "tv", 0, "Set verbose output for \
-test (default true)",                                                SetTestVerboseCommand             },
+    {"test-no-compare-nroots", "tc", 0, "Disable root count "
+                                        "comparison for test",       SetTestShouldCompareNRootsCommand },
+    {"test-verbose",           "tv", 0, "Set verbose output for "
+                                        "test (default true)",       SetTestVerboseCommand             },
     {"test-ignore",            "ti", 0, "Ignore test result",        SetTestIgnoreCommand              },
-    {"no-test",                "nt", 0, "Runs program without test", NoTestCommand                       },
-    {"complex",                "c",  0, "Solves equation in \
-complex values (default disabled)",                                  SetIsComplexCommand                  }
+    {"no-test",                "nt", 0, "Runs program without test", NoTestCommand                     },
+    {"complex",                "c",  0, "Solves equation in "
+                                        "complex values "
+                                        "(default disabled)",        SetIsComplexCommand               }
 };
 extern const size_t FLAGS_LENGTH = sizeof(FLAGS)/sizeof(*FLAGS);
 
