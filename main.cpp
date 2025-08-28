@@ -4,6 +4,7 @@
 
 #include "commands.h"
 #include "io/argument_parser.h"
+#include "io/display_controller.h"
 #include "utils/myassert.h"
 
 extern const Flag FLAGS[] = {
@@ -38,15 +39,16 @@ int main(int argc, char *argv[]) {
     };
 
     ParseCode err = ParseFlags(argv, argc, FLAGS, FLAGS_LENGTH, (void*)&context);
+    SetColor(RED, NORMAL, FOREGROUND);
     switch (err) {
         case PC_NO_ERROR:
             break;
         case PC_ERROR_UNKNOWN_FLAG:
-            printf("Unknown flag\n");
+            printf("Error: unknown flag\n");
             PrintHelpCommand(NULL, 0, (void*)&context);
             break;
         case PC_ERROR_WRONG_WORD_COUNT:
-            printf("Incorrect flag argument count\n");
+            printf("Error: incorrect flag argument count\n");
             PrintHelpCommand(NULL, 0, (void*)&context);
             break;
         case PC_ERROR_FLAG_FUNCTION_FAILURE:
@@ -56,6 +58,7 @@ int main(int argc, char *argv[]) {
             myassert(0, "");
             break;
     }
+    ResetTextAttributes();
 
     printf("\n\nCOMMIT GITHUB\n");
     return 0;

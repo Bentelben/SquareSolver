@@ -7,6 +7,7 @@
 #include "tester.h"
 #include "square_solver.h"
 #include "io/argument_parser.h"
+#include "io/display_controller.h"
 #include "utils/myassert.h"
 #include "utils/ccomplex.h"
 #include "utils/double_comparator.h"
@@ -45,6 +46,7 @@ bool PrintHelpCommand(char *args[], int nArgs, void *context) {
     myassert(nArgs == 0, "Wrong command argument count");
     (void)context;
 
+    ResetTextAttributes();
     printf("Here is help:\n");
     PrintArgumentInfo(FLAGS, FLAGS_LENGTH);
     return true;
