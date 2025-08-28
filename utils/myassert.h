@@ -2,7 +2,7 @@
 #define MYASSERT_H
 
 
-#ifndef NO_MY_ASSERT
+#ifndef NDEBUG
     #define myassert(statement, format, ...) _myassert((__FILE__), (__LINE__), (__func__), (#statement), (statement), (format), ##__VA_ARGS__)
 #else
     #define myassert(...)
