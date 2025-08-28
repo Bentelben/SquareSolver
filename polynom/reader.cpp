@@ -2,16 +2,20 @@
 
 #include "printer.h"
 #include "../utils/buffer_cleaner.h"
+#include "../utils/ccomplex.h"
+#include "../utils/double_comparator.h"
 
 #include <stdio.h>
 #include "../myassert.h"
 
-int ReadCoefficient(const char coefficientName, double *const resultValue) {
+int ReadCoefficient(const char coefficientName, ccomplex *const resultValue, bool isComplex) {
     myassert(resultValue, "Ptr for out value is NULL");
 
     printf("Enter %c: ", coefficientName);
-    if (scanf("%lg", resultValue) != 1)
+    if (ScanComplex(resultValue) != 1)
         return -1;
+
+    if (!isComplex && !IsZero(resultValue->imag)) return -1;
 
     const int nextChar = getchar();
     if (nextChar == EOF || nextChar == '\n')
@@ -19,25 +23,25 @@ int ReadCoefficient(const char coefficientName, double *const resultValue) {
     return -1;
 }
 
-int ReadNCoefficients(double *const resultCoefficients, const size_t nCoefficient) {
+int ReadNCoefficients(ccomplex *const resultCoefficients, const size_t nCoefficient, bool isComplex) {
     myassert(resultCoefficients, "Ptr for out array of coefficients is NULL");
 
     PrintLetterPolynom(nCoefficient-1);
 
     for (size_t i = 0; i < nCoefficient; i++)
-        if (ReadCoefficient(GetCoefficientName(i), resultCoefficients + i) != 0)
+        if (ReadCoefficient(GetCoefficientName(i), resultCoefficients + i, isComplex) != 0)
             return -1;
     PrintPolynom(resultCoefficients, nCoefficient);
     return 0;
 }
 
-int ReadNCoefficientsWithAttempts(double *const resultCoefficients, const size_t nCoefficient, const size_t attemptLimit) {
+int ReadNCoefficientsWithAttempts(ccomplex *const resultCoefficients, const size_t nCoefficient, const size_t attemptLimit, bool isComplex) {
     myassert(resultCoefficients, "Ptr for out array of coefficients is NULL");
 
     for (size_t i = 0; i < attemptLimit; i++) {
         if (i > 0)
             printf("Attemt %lu/%lu\n", i+1, attemptLimit);
-        if (ReadNCoefficients(resultCoefficients, nCoefficient) != -1)
+        if (ReadNCoefficients(resultCoefficients, nCoefficient, isComplex) != -1)
             return 0;
         printf("Wrong input\n\n");
         CleanBufferLine(stdin);

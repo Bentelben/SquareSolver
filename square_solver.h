@@ -20,6 +20,6 @@ enum RootCount {
 //! @param[in]  isComplex Should solve equation in complex values
 //!
 //! @return Number of roots 
-RootCount SolveSquareEquation(double a, double b, double c, ccomplex *x1, ccomplex *x2, bool isComplex);
+RootCount SolveSquareEquation(ccomplex a, ccomplex b, ccomplex c, ccomplex *x1, ccomplex *x2, bool isComplex);
 
 #endif

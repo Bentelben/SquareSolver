@@ -109,10 +109,9 @@ bool NoTestCommand(char *args[], int nArgs, void *context) {
 
     const bool isComplex = ((FlagContext*)context)->isComplex;
 
-    double coefficients[N_COEFFICIENT] = {};
-    for (size_t i = 0; i < N_COEFFICIENT; i++) coefficients[i] = NAN;
+    ccomplex coefficients[N_COEFFICIENT] = {};
 
-    if (ReadNCoefficientsWithAttempts(coefficients, N_COEFFICIENT, READ_ATTEMPT_LIMIT) != 0)
+    if (ReadNCoefficientsWithAttempts(coefficients, N_COEFFICIENT, READ_ATTEMPT_LIMIT, isComplex) != 0)
         return false;
 
     ccomplex x1 = {NAN, NAN};

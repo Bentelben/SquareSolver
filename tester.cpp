@@ -22,12 +22,15 @@ static bool IsEqualRoots(const RootCount nRoots, const ccomplex answer_x1, const
 }
 
 static bool TestSquareSolver(
-    const double a, const double b, const double c,
+    const double da, const double db, const double dc,
     const RootCount answer_nRoots, const ccomplex answer_x1, const ccomplex answer_x2,
     const bool shouldCompareNRoots, const bool verbose, const bool isComplex
 ) {
     ccomplex x1 = {NAN, NAN};
     ccomplex x2 = {NAN, NAN};
+    ccomplex a = {da, 0};
+    ccomplex b = {db, 0};
+    ccomplex c = {dc, 0};
 
     const RootCount nRoots = SolveSquareEquation(a, b, c, &x1, &x2, isComplex);
 
@@ -43,7 +46,7 @@ static bool TestSquareSolver(
         printf("Wrong answer!");
     }
 
-    printf("\na = %g b = %g c = %g\n", a, b, c);
+    printf("\na = %g b = %g c = %g\n", da, db, dc);
     printf("got answer nRoots = %d x1 = ", nRoots);
 
     PrintComplex(x1);

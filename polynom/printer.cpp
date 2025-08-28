@@ -1,6 +1,7 @@
 #include "printer.h"
 
 #include "../utils/double_comparator.h"
+#include "../utils/ccomplex.h"
 
 #include <stdio.h>
 #include <math.h>
@@ -18,23 +19,31 @@ void PrintLetterPolynom(const size_t polynomPower) {
     printf("%c = 0\n", GetCoefficientName(polynomPower));
 }
 
-void PrintPolynom(double *const coefficients, const size_t nCoefficients) {
+void PrintPolynom(ccomplex *const coefficients, const size_t nCoefficients) {
     myassert(coefficients, "Ptr to array of coefficients is zero");
 
     bool isFirst = true;
     for (size_t i = 0; i < nCoefficients; i++) {
-        if (IsZero(coefficients[i]))
+        if (IsComplexZero(coefficients[i]))
             continue;
 
-        const double absValue = fabs(coefficients[i]);
-        const bool isPositive = coefficients[i] > 0;
+        if (!IsZero(coefficients[i].real) && !IsZero(coefficients[i].imag)) {
+            printf("+ ");
+            PrintComplex(coefficients[i]);
+        } else {
+            const bool isImag = IsZero(coefficients[i].real);
+            const double value = (isImag) ? coefficients[i].imag : coefficients[i].real;
+            const double absValue = fabs(value);
+            const bool isPositive = value > 0;
 
-        if (!isPositive)   printf("-");
-        else if (!isFirst) printf("+");
+            if (!isPositive)   printf("-");
+            else if (!isFirst) printf("+");
 
-        if (!isFirst) printf(" ");
+            if (!isFirst) printf(" ");
 
-        if (i == nCoefficients-1 || !IsEqual(absValue, 1)) printf("%lg", absValue);
+            if ((i == nCoefficients-1 && !isImag) || !IsEqual(absValue, 1)) printf("%lg", absValue);
+            if (isImag) printf("i");
+        }
 
         if (i < nCoefficients-1) printf("x");
         if (i < nCoefficients-2) printf("^%zu", nCoefficients-1-i);

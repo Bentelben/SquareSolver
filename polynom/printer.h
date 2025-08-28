@@ -2,6 +2,7 @@
 #define POLYNOM_PRINTER_H
 
 #include <stdlib.h>
+#include "../utils/ccomplex.h"
 
 //! Returns coefficient name for polynom
 //!
@@ -19,6 +20,6 @@ void PrintLetterPolynom(size_t polynomPower);
 //!
 //! @param[in] coefficients  Coefficients of polynom
 //! @param[in] nCoefficients Count of coefficients
-void PrintPolynom(double *coefficients, size_t nCoefficients);
+void PrintPolynom(ccomplex *coefficients, size_t nCoefficients);
 
 #endif
