@@ -22,4 +22,11 @@ enum RootCount {
 //! @return Number of roots 
 RootCount SolveSquareEquation(ccomplex a, ccomplex b, ccomplex c, ccomplex *x1, ccomplex *x2, bool isComplex);
 
+//! Prints roots of square equation in stdout
+//!
+//! @param[in] nRoots Number of roots
+//! @param[in] x1     First root
+//! @param[in] x2     Second root
+void PrintRoots(RootCount nRoots, ccomplex x1, ccomplex x2);
+
 #endif

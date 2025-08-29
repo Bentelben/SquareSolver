@@ -74,3 +74,39 @@ RootCount SolveSquareEquation(
     }
     return RC_ZERO;
 }
+
+void PrintRoots(RootCount nRoots, ccomplex x1, ccomplex x2) {
+    ZeroizeComplex(&x1);
+    ZeroizeComplex(&x2);
+
+    if (nRoots == RC_TWO && IsComplexEqual(x1, x2))
+        nRoots = RC_ONE;
+
+    switch (nRoots) {
+        case RC_INF:
+            printf("x is any real number\n");
+            break;
+        case RC_ZERO:
+            printf("x is not real number\n");
+            break;
+        case RC_ONE:
+            myassert(!IsComplexNan(x1), "");
+            printf("x = ");
+            PrintComplex(x1);
+            printf("\n");
+            break;
+        case RC_TWO:
+            myassert(!IsComplexNan(x1) && !IsComplexNan(x2), "");
+            printf("x1 = ");
+            PrintComplex(x1);
+            printf("\n");
+
+            printf("x2 = ");
+            PrintComplex(x2);
+            printf("\n");
+            break;
+        default:
+            myassert(0, "");
+            break;
+    }
+}
