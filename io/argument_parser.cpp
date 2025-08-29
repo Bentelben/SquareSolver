@@ -6,7 +6,7 @@
 
 #include "../utils/myassert.h"
 
-static void getFieldWidth(const Flag flags[], size_t nFlags, size_t *fullNameFieldWidth, size_t *aliasFieldWidth);
+static void getFieldWidth(const Flag flags[], const size_t nFlags, size_t *const fullNameFieldWidth, size_t *const aliasFieldWidth);
 
 static bool IsEqualFlag(const char *arg, const Flag *const flag) {
     myassert(arg, "Argument is NULL");
@@ -40,6 +40,7 @@ ParseCode ParseFlags(char *argv[], const int argc, const Flag flags[], const siz
     myassert(argc > 0, "Wrong argument count");
     myassert(flags, "Ptr to flags array is NULL");
 
+    myassert(flags[0].fullName == NULL && flags[0].alias == NULL, "Default flag function must not have name");
     FlagFunction_t modeFunction = flags[0].func;
 
     for (int argumentIndex = 1; argumentIndex < argc; argumentIndex++) {
@@ -51,7 +52,8 @@ ParseCode ParseFlags(char *argv[], const int argc, const Flag flags[], const siz
 
         int nWords = 0;
         while (argumentIndex + nWords + 1 < argc) {
-            if (argv[argumentIndex + nWords + 1][0] == '-')
+            char *word = argv[argumentIndex + nWords + 1];
+            if (word[0] == '-')
                 break;
             nWords++;
         }
