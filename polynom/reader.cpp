@@ -40,7 +40,7 @@ int ReadNCoefficientsWithAttempts(ccomplex *const resultCoefficients, const size
 
     for (size_t i = 0; i < attemptLimit; i++) {
         if (i > 0)
-            printf("Attemt %lu/%lu\n", i+1, attemptLimit);
+            printf("Attempt %lu/%lu\n", i+1, attemptLimit);
         if (ReadNCoefficients(resultCoefficients, nCoefficient, isComplex) != -1)
             return 0;
         printf("Wrong input\n\n");
