@@ -21,9 +21,7 @@ void CleanBufferSpaces(FILE *const stream) {
         c = getc(stream);
     } while (c == ' ' || c == '\t');
 
-    if (c != EOF) {
-        int z = ungetc(c, stream);
-        myassert(z, "");
-    }
+    if (c != EOF)
+        ungetc(c, stream);
 }
 
