@@ -35,7 +35,6 @@ bool DefaultCommand(char *args[], const int nArgs, void *const context) {
     if (!flagContext->test.ignore && testsFailed)
         return false;
     
-    printf("Done testing\n\n");
     return NoTestCommand(NULL, 0, context);
 }
 

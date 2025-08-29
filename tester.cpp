@@ -118,5 +118,6 @@ int RunTest(const char *const filename, const bool shouldCompareNRoots, const bo
         return -1;
     }
 
+    printf("Done testing\n");
     return failedTests;
 }

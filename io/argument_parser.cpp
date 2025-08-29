@@ -18,8 +18,10 @@ static bool IsEqualFlag(const char *arg, const Flag *const flag) {
         arg++;
     }
 
-    if (minusCount == 1) return strcmp(arg, flag->alias) == 0;
-    else if (minusCount == 2) return strcmp(arg, flag->fullName) == 0;
+    if (minusCount == 1)
+        return strcmp(arg, flag->alias) == 0;
+    else if (minusCount == 2)
+        return strcmp(arg, flag->fullName) == 0;
 
     return false;
 }
@@ -35,6 +37,15 @@ static const Flag *GetFlag(const char *arg, const Flag flags[], const size_t nFl
     return NULL;
 }
 
+static int CountNextWords(char *argv[], const int argc) {
+    myassert(argv, "Argv is NULL");
+    myassert(argc >= 0, "Argument count is negative");
+
+    int nWords = 0;
+    for (;nWords + 1 < argc && argv[nWords + 1][0] != '-' ; nWords++);
+    return nWords; 
+}
+
 ParseCode ParseFlags(char *argv[], const int argc, const Flag flags[], const size_t nFlags, void *context) {
     myassert(argv, "Argv is NULL");
     myassert(argc > 0, "Wrong argument count");
@@ -48,15 +59,10 @@ ParseCode ParseFlags(char *argv[], const int argc, const Flag flags[], const siz
         if (flag == NULL)
             return PC_ERROR_UNKNOWN_FLAG;
 
-        myassert(!flag->isModeFlag || flag->nNextWords==0, "Mode flag has arguments");
+        myassert(!(flag->isModeFlag && flag->nNextWords != 0), "Mode flag has arguments");
 
-        int nWords = 0;
-        while (argumentIndex + nWords + 1 < argc) {
-            char *word = argv[argumentIndex + nWords + 1];
-            if (word[0] == '-')
-                break;
-            nWords++;
-        }
+        const int nWords = CountNextWords(argv + argumentIndex, argc - argumentIndex);
+
         if (flag->nNextWords != -1 && nWords != flag->nNextWords)
             return PC_ERROR_WRONG_WORD_COUNT;
 
@@ -67,11 +73,14 @@ ParseCode ParseFlags(char *argv[], const int argc, const Flag flags[], const siz
 
         if (!flag->func(argv + argumentIndex + 1, nWords, context))
             return PC_ERROR_FLAG_FUNCTION_FAILURE;
+
         argumentIndex += nWords;
     }
-    if (modeFunction(NULL, 0, context))
-        return PC_NO_ERROR;
-    return PC_ERROR_FLAG_FUNCTION_FAILURE;
+
+    if (!modeFunction(NULL, 0, context))
+        return PC_ERROR_FLAG_FUNCTION_FAILURE;
+    
+    return PC_NO_ERROR;
 }
 
 void PrintArgumentInfo(const Flag flags[], const size_t nFlags) {
