@@ -22,6 +22,13 @@ static bool IsEqualRoots(const RootCount nRoots, const ccomplex answer_x1, const
                (IsComplexEqual(answer_x1, x2) && IsComplexEqual(answer_x2, x1));
 }
 
+static void PrintTestResult(const char *text, const RootCount nRoots, const ccomplex x1, const ccomplex x2) {
+    printf("\n%s nRoots = %d x1 = ", text, nRoots);
+    PrintComplex(x1);
+    printf(" x2 = ");
+    PrintComplex(x2);
+}
+
 static bool TestSquareSolver(
     const ccomplex a, const ccomplex b, const ccomplex c,
     const RootCount answer_nRoots, const ccomplex answer_x1, const ccomplex answer_x2,
@@ -51,25 +58,44 @@ static bool TestSquareSolver(
     printf(" c = ");
     PrintComplex(c);
 
-    printf("\ngot answer nRoots = %d x1 = ", nRoots);
-
-    PrintComplex(x1);
-    printf(" x2 = ");
-    PrintComplex(x2);
-
-    printf("\nshould be  nRoots = %d x1 = ", answer_nRoots);
-
-    PrintComplex(answer_x1);
-    printf(" x2 = ");
-    PrintComplex(answer_x2);
+    PrintTestResult("got result", nRoots, x1, x2);
+    PrintTestResult("should be ", answer_nRoots, answer_x1, answer_x2);
 
     ResetTextAttributes();
     printf("\n");
     return isCorrect;
 }
 
+static int ScanTest(FILE *const testFile, ccomplex *const a, ccomplex *const b, ccomplex *const c, RootCount *const nRoots, ccomplex *const x1, ccomplex *const x2, const bool shouldCompareNRoots) {
+    myassert(testFile, "Ptr to file is NULL");
+    myassert(a, "Ptr to a is NULL");
+    myassert(b, "Ptr to b is NULL");
+    myassert(c, "Ptr to c is NULL");
+    myassert(nRoots, "Ptr to nRoots is NULL");
+    myassert(x1, "Ptr to x1 is NULL");
+    myassert(x2, "Ptr to x2 is NULL");
+
+    if (FScanComplex(testFile, a) != 1)
+        return 0;
+
+    if (FScanComplex(testFile, b) != 1)
+        return -1;
+    if (FScanComplex(testFile, c) != 1)
+        return -1;
+
+    if (shouldCompareNRoots)
+        if (fscanf(testFile, "%d", (int*)nRoots) != 1)
+            return -1;
+
+    if (FScanComplex(testFile, x1) != 1)
+        return -1;
+    if (FScanComplex(testFile, x2) != 1)
+        return -1;
+    return 1;
+}
+
 int RunTest(const char *const filename, const bool shouldCompareNRoots, const bool verbose, const bool isComplex) {
-    myassert(filename, "");
+    myassert(filename, "Filename is NULL");
 
     printf("Testing...\n");
 
@@ -87,33 +113,17 @@ int RunTest(const char *const filename, const bool shouldCompareNRoots, const bo
     ccomplex c  = {};
 
     int failedTests = 0;
-    bool isRead = false;
+    int scanCode = 1;
     while (true) {
-        isRead = false;
-        if (FScanComplex(testFile, &a) != 1)
+        scanCode = ScanTest(testFile, &a, &b, &c, &nRoots, &x1, &x2, shouldCompareNRoots);
+        if (scanCode != 1)
             break;
-        isRead = true;
-
-        if (FScanComplex(testFile, &b) != 1)
-            break;
-        if (FScanComplex(testFile, &c) != 1)
-            break;
-
-        if (shouldCompareNRoots)
-            if (fscanf(testFile, "%d", (int*)&nRoots) != 1)
-                break;
-
-        if (FScanComplex(testFile, &x1) != 1)
-            break;
-        if (FScanComplex(testFile, &x2) != 1)
-            break;
-
         failedTests += !TestSquareSolver(a, b, c, nRoots, x1, x2, shouldCompareNRoots, verbose, isComplex);
     }
 
     fclose(testFile);
 
-    if (isRead) {
+    if (scanCode == -1) {
         PrintError("Reading test file failed");
         return -1;
     }
