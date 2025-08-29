@@ -43,11 +43,11 @@ int main(int argc, char *argv[]) {
         case PC_NO_ERROR:
             break;
         case PC_ERROR_UNKNOWN_FLAG:
-            PrintError("unknown flag");
+            PrintError("Unknown flag");
             PrintHelpCommand(NULL, 0, (void*)&context);
             break;
         case PC_ERROR_WRONG_WORD_COUNT:
-            PrintError("wrong argument count for flag");
+            PrintError("Wrong argument count for flag");
             PrintHelpCommand(NULL, 0, (void*)&context);
             break;
         case PC_ERROR_FLAG_FUNCTION_FAILURE:
@@ -61,5 +61,3 @@ int main(int argc, char *argv[]) {
     printf("\n\nCOMMIT GITHUB\n");
     return 0;
 }
-
-
