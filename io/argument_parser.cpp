@@ -50,6 +50,7 @@ ParseCode ParseFlags(char *argv[], const int argc, const Flag flags[], const siz
     myassert(argv, "Argv is NULL");
     myassert(argc > 0, "Wrong argument count");
     myassert(flags, "Ptr to flags array is NULL");
+    myassert(nFlags > 0, "Flag count must be bigger than zero");
 
     myassert(flags[0].fullName == NULL && flags[0].alias == NULL, "Default flag function must not have name");
     FlagFunction_t modeFunction = flags[0].func;
