@@ -47,20 +47,19 @@ int FScanComplex(FILE *const stream , ccomplex *resultValue) {
             break;
         case '+':
         case '-':
-            sign = getc(stream);
-            if (!isdigit(sign) && sign!='.') {
-                ungetc(sign, stream);
+        {
+            int nextChar = getc(stream);
+            ungetc(nextChar, stream);
+            if (!isdigit(nextChar) && nextChar != '.')
                 return 0;
-            }
 
             resultValue->real = value;
-            if (getc(stream) == ' ')
 
             if ((scanfCode = fscanf(stream, "%lg", &resultValue->imag)) != 1)
                 return scanfCode;
 
             if (sign == '-') resultValue->imag *= -1;
-
+            
             sign = getc(stream);
             if (sign == EOF)
                 return EOF;
@@ -69,6 +68,7 @@ int FScanComplex(FILE *const stream , ccomplex *resultValue) {
                 return 0;
             }
             break;
+        }
         case EOF:
             return EOF;
         default:
