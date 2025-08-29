@@ -5,7 +5,6 @@
 #include "commands.h"
 #include "io/error.h"
 #include "io/argument_parser.h"
-#include "io/display_controller.h"
 #include "utils/myassert.h"
 
 extern const Flag FLAGS[] = {
@@ -55,7 +54,7 @@ int main(int argc, char *argv[]) {
             PrintError("Stopping program...");
             break;
         default:
-            myassert(0, "");
+            myassert(0, "Unhandled argument parser code");
             break;
     }
 
