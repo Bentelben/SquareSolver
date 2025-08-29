@@ -31,7 +31,7 @@ int main(const int argc, char * argv[]) {
     FlagContext context = {
         .isComplex = false,
         .test = {
-            .filename = "test.txt",
+            .filename = "file_test_normal.txt",
             .verbose = false,
             .shouldCompareNRoots = true,
             .ignore = false
