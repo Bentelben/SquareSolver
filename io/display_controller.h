@@ -30,14 +30,14 @@ enum ColorType {
 //! @param[in] stream     Destination stream
 //! @param[in] color      Color of text
 //! @param[in] brightness Brightness of color
-//! @param[in] type       Foregound/background
+//! @param[in] type       Foreground/background
 void FSetColor(FILE *stream, Color color, ColorBrightness brightness, ColorType type);
 
 //! Changes text stdout color
 //!
 //! @param[in] color      Color of text
 //! @param[in] brightness Brightness of color
-//! @param[in] type       Foregound/background
+//! @param[in] type       Foreground/background
 void SetColor(Color color, ColorBrightness brightness, ColorType type);
 
 //! Resets all text attributes (include color) of stream
