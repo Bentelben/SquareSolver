@@ -24,15 +24,19 @@ void PrintPolynom(ccomplex *const coefficients, const size_t nCoefficients) {
 
     bool isFirst = true;
     for (size_t i = 0; i < nCoefficients; i++) {
-        if (IsComplexZero(coefficients[i]))
+
+        const bool hasReal = !IsZero(coefficients[i].real);
+        const bool hasImag = !IsZero(coefficients[i].imag);
+
+        if (!hasReal && !hasImag)
             continue;
 
-        if (!IsZero(coefficients[i].real) && !IsZero(coefficients[i].imag)) {
-            if (!isFirst) printf("+ ");
+        if (hasReal && hasImag) {
+            if (!isFirst)
+                printf("+ ");
             PrintComplex(coefficients[i]);
         } else {
-            const bool isImag = IsZero(coefficients[i].real);
-            const double value = (isImag) ? coefficients[i].imag : coefficients[i].real;
+            const double value = (hasReal) ? coefficients[i].real : coefficients[i].imag;
             const double absValue = fabs(value);
             const bool isPositive = value > 0;
 
@@ -41,8 +45,10 @@ void PrintPolynom(ccomplex *const coefficients, const size_t nCoefficients) {
 
             if (!isFirst) printf(" ");
 
-            if ((i == nCoefficients-1 && !isImag) || !IsEqual(absValue, 1)) printf("%lg", absValue);
-            if (isImag) printf("i");
+            if ((i == nCoefficients-1 && hasReal) || !IsEqual(absValue, 1))
+                printf("%lg", absValue);
+            if (hasImag)
+                printf("i");
         }
 
         if (i < nCoefficients-1) printf("x");
