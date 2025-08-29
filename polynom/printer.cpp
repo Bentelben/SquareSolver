@@ -28,7 +28,7 @@ void PrintPolynom(ccomplex *const coefficients, const size_t nCoefficients) {
             continue;
 
         if (!IsZero(coefficients[i].real) && !IsZero(coefficients[i].imag)) {
-            printf("+ ");
+            if (!isFirst) printf("+ ");
             PrintComplex(coefficients[i]);
         } else {
             const bool isImag = IsZero(coefficients[i].real);
