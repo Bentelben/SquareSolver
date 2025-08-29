@@ -6,7 +6,7 @@
 
 #include "../utils/myassert.h"
 
-static void getFieldWidth(const Flag flags[], const size_t nFlags, size_t *const fullNameFieldWidth, size_t *const aliasFieldWidth);
+static void GetFieldWidth(const Flag flags[], const size_t nFlags, size_t *const fullNameFieldWidth, size_t *const aliasFieldWidth);
 
 static bool IsEqualFlag(const char *arg, const Flag *const flag) {
     myassert(arg, "Argument is NULL");
@@ -43,7 +43,7 @@ static int CountNextWords(char *argv[], const int argc) {
 
     int nWords = 0;
     for (;nWords + 1 < argc && argv[nWords + 1][0] != '-' ; nWords++);
-    return nWords; 
+    return nWords;
 }
 
 ParseCode ParseFlags(char *argv[], const int argc, const Flag flags[], const size_t nFlags, void *context) {
@@ -80,7 +80,7 @@ ParseCode ParseFlags(char *argv[], const int argc, const Flag flags[], const siz
 
     if (!modeFunction(NULL, 0, context))
         return PC_ERROR_FLAG_FUNCTION_FAILURE;
-    
+
     return PC_NO_ERROR;
 }
 
@@ -91,26 +91,26 @@ void PrintArgumentInfo(const Flag flags[], const size_t nFlags) {
 
     size_t fullNameFieldWidth = 0;
     size_t aliasFieldWidth = 0;
-    getFieldWidth(flags+1, nFlags-1, &fullNameFieldWidth, &aliasFieldWidth);
+    GetFieldWidth(flags+1, nFlags-1, &fullNameFieldWidth, &aliasFieldWidth);
 
     for (size_t i = 1; i < nFlags; i++)
         printf(" --%-*s -%-*s %s\n", (int)fullNameFieldWidth, flags[i].fullName, (int)aliasFieldWidth, flags[i].alias, flags[i].description);
 }
 
-static void updateMaxFieldWidth(size_t *const size, const char *const name) {
+static void UpdateMaxFieldWidth(size_t *const size, const char *const name) {
     myassert(size, "Ptr for out value is NULL");
     myassert(name, "name is NULL");
     size_t len = strlen(name);
     if (*size < len) *size = len;
 }
 
-static void getFieldWidth(const Flag flags[], const size_t nFlags, size_t *const fullNameFieldWidth, size_t *const aliasFieldWidth) {
+static void GetFieldWidth(const Flag flags[], const size_t nFlags, size_t *const fullNameFieldWidth, size_t *const aliasFieldWidth) {
     myassert(flags, "Ptr to flags array is NULL");
     myassert(fullNameFieldWidth, "Ptr for out value is NULL");
     myassert(aliasFieldWidth, "Ptr for out value is NULL");
 
     for (size_t i = 0; i < nFlags; i++) {
-        updateMaxFieldWidth(fullNameFieldWidth, flags[i].fullName);
-        updateMaxFieldWidth(aliasFieldWidth, flags[i].alias);
+        UpdateMaxFieldWidth(fullNameFieldWidth, flags[i].fullName);
+        UpdateMaxFieldWidth(aliasFieldWidth, flags[i].alias);
     }
 }
