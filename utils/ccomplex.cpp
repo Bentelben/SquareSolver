@@ -11,18 +11,29 @@
 void FPrintComplex(FILE *const stream, ccomplex value) {
     myassert(stream, "Ptr to stream is NULL");
 
-    if (IsZero(value.real)) value.real = 0;
+    const bool hasReal = !IsZero(value.real);
+    const bool hasImag = !IsZero(value.imag);
 
-    if (IsZero(value.imag)) {
+    if (hasReal && hasImag)
+        fprintf(stream, "(");
+
+    if (hasReal)
         fprintf(stream, "%lg", value.real);
-    } else if (IsZero(value.real)) {
-        fprintf(stream, "i%lg", value.imag);
-    } else {
-        fprintf(stream,
-            "(%lg %c i%lg)",
-            value.real, (value.imag < 0) ? '-' : '+', fabs(value.imag)
-        );
+
+    if (hasReal && hasImag) fprintf(stream, " ");
+
+    if (hasImag) {
+        fprintf(stream, (value.imag) < 0 ? "-" : "+");
+        
+        if (hasReal && hasImag) fprintf(stream, " ");
+        
+        if (!IsEqual(fabs(value.imag), 1))
+            fprintf(stream, "%lg", fabs(value.imag));
+        fprintf(stream, "i");
     }
+    
+    if (hasReal && hasImag)
+        fprintf(stream, ")");
 }
 
 void PrintComplex(const ccomplex value) {
@@ -36,10 +47,14 @@ int FScanComplex(FILE *const stream , ccomplex *resultValue) {
     int scanfCode = 0;
     double value = 0;
     
-    if ((scanfCode = fscanf(stream, "%lg", &value)) != 1)
+    const int firstChar = getc(stream);
+    ungetc(firstChar, stream);
+    if (firstChar == 'i')
+        value = 1;    
+    else if ((scanfCode = fscanf(stream, "%lg", &value)) != 1)
         return scanfCode;
 
-    int sign = getc(stream);
+    const int sign = getc(stream);
     switch (sign) {
         case 'i':
             resultValue->real = 0;
@@ -48,23 +63,26 @@ int FScanComplex(FILE *const stream , ccomplex *resultValue) {
         case '+':
         case '-':
         {
-            int nextChar = getc(stream);
+            const int nextChar = getc(stream);
             ungetc(nextChar, stream);
-            if (!isdigit(nextChar) && nextChar != '.')
+            if (!isdigit(nextChar) && nextChar != 'i' && nextChar != '.')
                 return 0;
 
             resultValue->real = value;
 
-            if ((scanfCode = fscanf(stream, "%lg", &resultValue->imag)) != 1)
-                return scanfCode;
+            if (nextChar == 'i')
+                resultValue->imag = 1;
+            else
+                if ((scanfCode = fscanf(stream, "%lg", &resultValue->imag)) != 1)
+                    return scanfCode;
 
             if (sign == '-') resultValue->imag *= -1;
             
-            sign = getc(stream);
-            if (sign == EOF)
+            const int lastChar = getc(stream);
+            if (lastChar == EOF)
                 return EOF;
-            if (sign != 'i') {
-                ungetc(sign, stream);
+            if (lastChar != 'i') {
+                ungetc(lastChar, stream);
                 return 0;
             }
             break;
