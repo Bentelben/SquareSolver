@@ -2,6 +2,7 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <ctype.h>
 
 #include "myassert.h"
 #include "double_comparator.h"
@@ -38,8 +39,6 @@ int FScanComplex(FILE *const stream , ccomplex *resultValue) {
     if ((scanfCode = fscanf(stream, "%lg", &value)) != 1)
         return scanfCode;
 
-    CleanBufferSpaces(stream);
-
     int sign = getc(stream);
     switch (sign) {
         case 'i':
@@ -48,8 +47,14 @@ int FScanComplex(FILE *const stream , ccomplex *resultValue) {
             break;
         case '+':
         case '-':
+            sign = getc(stream);
+            if (!isdigit(sign) && sign!='.') {
+                ungetc(sign, stream);
+                return 0;
+            }
+
             resultValue->real = value;
-            CleanBufferSpaces(stream);
+            if (getc(stream) == ' ')
 
             if ((scanfCode = fscanf(stream, "%lg", &resultValue->imag)) != 1)
                 return scanfCode;

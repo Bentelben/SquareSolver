@@ -23,15 +23,12 @@ static bool IsEqualRoots(const RootCount nRoots, const ccomplex answer_x1, const
 }
 
 static bool TestSquareSolver(
-    const double da, const double db, const double dc,
+    const ccomplex a, const ccomplex b, const ccomplex c,
     const RootCount answer_nRoots, const ccomplex answer_x1, const ccomplex answer_x2,
     const bool shouldCompareNRoots, const bool verbose, const bool isComplex
 ) {
     ccomplex x1 = {NAN, NAN};
     ccomplex x2 = {NAN, NAN};
-    ccomplex a = {da, 0};
-    ccomplex b = {db, 0};
-    ccomplex c = {dc, 0};
 
     const RootCount nRoots = SolveSquareEquation(a, b, c, &x1, &x2, isComplex);
 
@@ -47,8 +44,14 @@ static bool TestSquareSolver(
         printf("Wrong answer!");
     }
 
-    printf("\na = %g b = %g c = %g\n", da, db, dc);
-    printf("got answer nRoots = %d x1 = ", nRoots);
+    printf("\na = ");
+    PrintComplex(a);
+    printf(" b = ");
+    PrintComplex(b);
+    printf(" c = ");
+    PrintComplex(c);
+
+    printf("\ngot answer nRoots = %d x1 = ", nRoots);
 
     PrintComplex(x1);
     printf(" x2 = ");
@@ -76,22 +79,33 @@ int RunTest(const char *const filename, const bool shouldCompareNRoots, const bo
         return -1;
     }
 
-    double a = 0, b = 0, c = 0;
     RootCount nRoots = RC_INF;
     ccomplex x1 = {};
     ccomplex x2 = {};
+    ccomplex a  = {};
+    ccomplex b  = {};
+    ccomplex c  = {};
 
     int failedTests = 0;
-    int scanfCode = 0;
+    bool isRead = false;
     while (true) {
-        if ((scanfCode = fscanf(testFile, "%lg %lg %lg", &a, &b, &c)) != 3)
+        isRead = false;
+        if (FScanComplex(testFile, &a) != 1)
+            break;
+        isRead = true;
+
+        if (FScanComplex(testFile, &b) != 1)
+            break;
+        if (FScanComplex(testFile, &c) != 1)
             break;
 
         if (shouldCompareNRoots)
-            if ((scanfCode = fscanf(testFile, "%d", (int*)&nRoots)) != 1)
+            if (fscanf(testFile, "%d", (int*)&nRoots) != 1)
                 break;
 
-        if ((scanfCode = fscanf(testFile, "%lg %lg", &x1.real, &x2.real)) != 2)
+        if (FScanComplex(testFile, &x1) != 1)
+            break;
+        if (FScanComplex(testFile, &x2) != 1)
             break;
 
         failedTests += !TestSquareSolver(a, b, c, nRoots, x1, x2, shouldCompareNRoots, verbose, isComplex);
@@ -99,7 +113,7 @@ int RunTest(const char *const filename, const bool shouldCompareNRoots, const bo
 
     fclose(testFile);
 
-    if (scanfCode != EOF) {
+    if (isRead) {
         PrintError("Reading test file failed");
         return -1;
     }
