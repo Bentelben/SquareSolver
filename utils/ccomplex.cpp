@@ -14,6 +14,11 @@ void FPrintComplex(FILE *const stream, ccomplex value) {
     const bool hasReal = !IsZero(value.real);
     const bool hasImag = !IsZero(value.imag);
 
+    if (!hasReal && !hasImag) {
+        fprintf(stream, "0");
+        return;
+    }
+
     if (hasReal && hasImag)
         fprintf(stream, "(");
 
