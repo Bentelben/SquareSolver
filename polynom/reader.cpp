@@ -8,7 +8,7 @@
 #include "../utils/ccomplex.h"
 #include "../utils/double_comparator.h"
 
-int ReadCoefficient(const char coefficientName, ccomplex *const resultValue, bool isComplex) {
+int ReadCoefficient(const char coefficientName, ccomplex *const resultValue, const bool isComplex) {
     myassert(resultValue, "Ptr for out value is NULL");
 
     printf("Enter %c: ", coefficientName);
@@ -23,7 +23,7 @@ int ReadCoefficient(const char coefficientName, ccomplex *const resultValue, boo
     return -1;
 }
 
-int ReadNCoefficients(ccomplex *const resultCoefficients, const size_t nCoefficient, bool isComplex) {
+int ReadNCoefficients(ccomplex *const resultCoefficients, const size_t nCoefficient, const bool isComplex) {
     myassert(resultCoefficients, "Ptr for out array of coefficients is NULL");
 
     PrintLetterPolynom(nCoefficient-1);
@@ -35,7 +35,7 @@ int ReadNCoefficients(ccomplex *const resultCoefficients, const size_t nCoeffici
     return 0;
 }
 
-int ReadNCoefficientsWithAttempts(ccomplex *const resultCoefficients, const size_t nCoefficient, const size_t attemptLimit, bool isComplex) {
+int ReadNCoefficientsWithAttempts(ccomplex *const resultCoefficients, const size_t nCoefficient, const size_t attemptLimit, const bool isComplex) {
     myassert(resultCoefficients, "Ptr for out array of coefficients is NULL");
 
     for (size_t i = 0; i < attemptLimit; i++) {

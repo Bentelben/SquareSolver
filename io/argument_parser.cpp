@@ -8,7 +8,7 @@
 
 static void getFieldWidth(const Flag flags[], size_t nFlags, size_t *fullNameFieldWidth, size_t *aliasFieldWidth);
 
-static bool IsEqualFlag(char *arg, const Flag *flag) {
+static bool IsEqualFlag(const char *arg, const Flag *const flag) {
     myassert(arg, "Argument is NULL");
     myassert(flag, "Ptr to flag is NULL");
 
@@ -24,7 +24,7 @@ static bool IsEqualFlag(char *arg, const Flag *flag) {
     return false;
 }
 
-static const Flag *GetFlag(char *arg, const Flag flags[], size_t nFlags) {
+static const Flag *GetFlag(const char *arg, const Flag flags[], const size_t nFlags) {
     myassert(arg, "Ptr to argument is NULL");
     myassert(flags, "Ptr to flag name is NULL");
 
@@ -35,15 +35,15 @@ static const Flag *GetFlag(char *arg, const Flag flags[], size_t nFlags) {
     return NULL;
 }
 
-ParseCode ParseFlags(char *argv[], int argc, const Flag flags[], size_t nFlags, void *context) {
+ParseCode ParseFlags(char *argv[], const int argc, const Flag flags[], const size_t nFlags, void *context) {
     myassert(argv, "Argv is NULL");
-    myassert(argc > 0, "");
+    myassert(argc > 0, "Wrong argument count");
     myassert(flags, "Ptr to flags array is NULL");
 
     FlagFunction_t modeFunction = flags[0].func;
 
     for (int argumentIndex = 1; argumentIndex < argc; argumentIndex++) {
-        const Flag *flag = GetFlag(argv[argumentIndex], flags, nFlags);
+        const Flag *const flag = GetFlag(argv[argumentIndex], flags, nFlags);
         if (flag == NULL)
             return PC_ERROR_UNKNOWN_FLAG;
 
@@ -72,7 +72,7 @@ ParseCode ParseFlags(char *argv[], int argc, const Flag flags[], size_t nFlags, 
     return PC_ERROR_FLAG_FUNCTION_FAILURE;
 }
 
-void PrintArgumentInfo(const Flag flags[], size_t nFlags) {
+void PrintArgumentInfo(const Flag flags[], const size_t nFlags) {
     myassert(flags, "Ptr to flags array in NULL");
 
     printf("\n%s\n\n", flags[0].description);
@@ -85,14 +85,14 @@ void PrintArgumentInfo(const Flag flags[], size_t nFlags) {
         printf(" --%-*s -%-*s %s\n", (int)fullNameFieldWidth, flags[i].fullName, (int)aliasFieldWidth, flags[i].alias, flags[i].description);
 }
 
-static void updateMaxFieldWidth(size_t *size, const char *name) {
+static void updateMaxFieldWidth(size_t *const size, const char *const name) {
     myassert(size, "Ptr for out value is NULL");
     myassert(name, "name is NULL");
     size_t len = strlen(name);
     if (*size < len) *size = len;
 }
 
-static void getFieldWidth(const Flag flags[], size_t nFlags, size_t *fullNameFieldWidth, size_t *aliasFieldWidth) {
+static void getFieldWidth(const Flag flags[], const size_t nFlags, size_t *const fullNameFieldWidth, size_t *const aliasFieldWidth) {
     myassert(flags, "Ptr to flags array is NULL");
     myassert(fullNameFieldWidth, "Ptr for out value is NULL");
     myassert(aliasFieldWidth, "Ptr for out value is NULL");

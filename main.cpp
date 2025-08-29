@@ -23,7 +23,7 @@ extern const Flag FLAGS[] = {
 };
 extern const size_t FLAGS_LENGTH = sizeof(FLAGS)/sizeof(*FLAGS);
 
-int main(int argc, char *argv[]) {
+int main(const int argc, char * argv[]) {
     printf("Meow! (c) Poltorashka\n\n");
 
     //myassert(0, "some text %s", argv[0]);

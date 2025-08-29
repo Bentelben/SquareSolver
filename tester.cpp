@@ -65,7 +65,7 @@ static bool TestSquareSolver(
     return isCorrect;
 }
 
-int RunTest(const char *filename, const bool shouldCompareNRoots, const bool verbose, const bool isComplex) {
+int RunTest(const char *const filename, const bool shouldCompareNRoots, const bool verbose, const bool isComplex) {
     myassert(filename, "");
 
     printf("Testing...\n");
@@ -100,10 +100,9 @@ int RunTest(const char *filename, const bool shouldCompareNRoots, const bool ver
     fclose(testFile);
 
     if (scanfCode != EOF) {
-        printf("Error on reading test file\n");
+        PrintError("Reading test file failed");
         return -1;
     }
 
     return failedTests;
 }
-
